@@ -1,0 +1,290 @@
+/**
+ * Havenlytics Realty — Layout engine (Astra-style)
+ * Shared row + sidebar module, breadcrumbs, pagination.
+ */
+
+/* ==========================================================================
+   CORE LAYOUT ENGINE
+   ========================================================================== */
+
+.hvn-theme-layout {
+	width: 100%;
+	/* padding: clamp(1.5rem, 4vw, 3rem) 0; */
+}
+
+/* Sidebar layout only — no grid row when sidebar is off */
+.hvn-theme-layout.hvn-has-sidebar .hvn-theme-layout-row {
+	display: grid;
+	gap: 40px;
+	align-items: start;
+	grid-template-columns: minmax(0, 1fr) 320px;
+}
+
+.hvn-theme-layout.hvn-has-sidebar.hvn-sidebar-left .hvn-theme-layout-row {
+	grid-template-columns: 320px minmax(0, 1fr);
+}
+
+.hvn-theme-layout.hvn-has-sidebar.hvn-sidebar-left .hvn-theme-content-area {
+	order: 2;
+}
+
+.hvn-theme-layout.hvn-has-sidebar.hvn-sidebar-left .hvn-theme-sidebar-area {
+	order: 1;
+}
+
+.hvn-theme-layout.hvn-has-sidebar .hvn-theme-layout-row > .hvn-theme-content-area:only-child {
+	grid-column: 1 / -1;
+}
+
+.hvn-theme-content-area {
+	min-width: 0;
+	width: 100%;
+	grid-column: auto;
+	order: unset;
+	max-width: none;
+	margin: 0;
+}
+
+/* Beat legacy 12-col span rules in theme.css / polish.css (body.hvn-theme-sidebar-left). */
+.hvn-theme-layout.hvn-has-sidebar .hvn-theme-layout-row > .hvn-theme-content-area,
+.hvn-theme-layout.hvn-has-sidebar .hvn-theme-layout-row > .hvn-theme-sidebar-area,
+.hvn-theme-sidebar-left .hvn-theme-layout .hvn-theme-content-area,
+.hvn-theme-sidebar-left .hvn-theme-layout .hvn-theme-sidebar-area {
+	grid-column: auto;
+	min-width: 0;
+	width: 100%;
+	max-width: 100%;
+}
+
+.hvn-theme-layout .hvn-theme-sidebar-area {
+	grid-column: auto;
+	order: unset;
+}
+
+/* ==========================================================================
+   SIDEBAR MODULE
+   ========================================================================== */
+
+.hvn-theme-sidebar-area {
+	min-width: 0;
+	width: 100%;
+	max-width: 320px;
+	position: sticky;
+	top: calc(var(--hvn-theme-header-height, 80px) + 1rem);
+}
+
+.hvn-theme-layout:not(.hvn-has-sidebar) .hvn-theme-sidebar-area {
+	display: none;
+}
+
+.hvn-theme-sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.hvn-theme-sidebar-area .hvn-theme-widget,
+.hvn-theme-sidebar .hvn-theme-widget {
+	margin-bottom: 0;
+}
+
+@media (max-width: 991px) {
+	.hvn-theme-layout.hvn-has-sidebar .hvn-theme-layout-row > .hvn-theme-content-area,
+	.hvn-theme-layout.hvn-has-sidebar .hvn-theme-layout-row > .hvn-theme-sidebar-area,
+	.hvn-theme-sidebar-left .hvn-theme-layout .hvn-theme-content-area,
+	.hvn-theme-sidebar-left .hvn-theme-layout .hvn-theme-sidebar-area {
+		grid-column: auto !important;
+	}
+}
+
+@media (max-width: 767px) {
+	.hvn-theme-layout.hvn-has-sidebar .hvn-theme-layout-row {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.hvn-theme-layout.hvn-has-sidebar .hvn-theme-content-area,
+	.hvn-theme-layout.hvn-has-sidebar .hvn-theme-sidebar-area {
+		order: unset;
+	}
+
+	.hvn-theme-sidebar-area {
+		max-width: none;
+		position: static;
+	}
+}
+
+/* Header — solid color only (no image / overlay) */
+.hvn-theme-header,
+.hvn-theme-site-header {
+	background-color: var(--hvn-theme-header-bg, var(--hvn-theme-color-white, #fff));
+	background-image: none !important;
+}
+
+.hvn-theme-header::before,
+.hvn-theme-site-header::before,
+.hvn-theme-header.has-header-image::before,
+.hvn-theme-site-header.has-header-image::before {
+	display: none !important;
+	content: none !important;
+}
+
+.hvn-theme-header.has-header-image,
+.hvn-theme-site-header.has-header-image {
+	background-image: none !important;
+}
+
+/* Neutralize legacy global grid inside layout shells */
+.hvn-theme-layout .hvn-theme-row {
+	display: block;
+	grid-column: auto;
+	max-width: none;
+	margin: 0;
+}
+
+/* ==========================================================================
+   BREADCRUMBS
+   ========================================================================== */
+
+.hvn-theme-breadcrumbs,
+.hvn-breadcrumb-wrapper.hvn-theme-breadcrumbs {
+	margin-bottom: 1.25rem;
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.hvn-theme-breadcrumbs .hvn-breadcrumb-list,
+.hvn-theme-breadcrumbs .hvn-breadcrumb-container {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0.5rem;
+}
+
+.hvn-theme-breadcrumbs .hvn-breadcrumb-link {
+	color: var(--hvn-theme-text-muted);
+	text-decoration: none;
+	transition: color 0.15s ease;
+}
+
+.hvn-theme-breadcrumbs .hvn-breadcrumb-link:hover,
+.hvn-theme-breadcrumbs .hvn-breadcrumb-link:focus {
+	color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+}
+
+.hvn-theme-breadcrumbs .hvn-breadcrumb-current,
+.hvn-theme-breadcrumbs .hvn-breadcrumb-current span {
+	color: var(--hvn-text, var(--hvn-theme-text-primary));
+	font-weight: 500;
+}
+
+.hvn-theme-breadcrumbs .hvn-breadcrumb-separator {
+	color: var(--hvn-theme-text-muted);
+	opacity: 0.7;
+	user-select: none;
+}
+
+.hvn-theme-breadcrumbs .hvn-breadcrumb-home-icon {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+}
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.hvn-theme-pagination,
+.navigation.hvn-theme-pagination {
+	margin-top: 2.5rem;
+}
+
+.hvn-theme-pagination .hvn-theme-pagination-links,
+.hvn-theme-pagination .nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.hvn-theme-pagination .page-numbers,
+.hvn-theme-pagination .nav-links a,
+.hvn-theme-pagination .nav-links span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 42px;
+	min-height: 42px;
+	padding: 0.375rem 0.875rem;
+	border: 1px solid var(--hvn-border, var(--hvn-theme-border-color));
+	border-radius: var(--hvn-radius, 8px);
+	background: var(--hvn-theme-color-white, #fff);
+	color: var(--hvn-text, var(--hvn-theme-text-primary));
+	font-size: 0.875rem;
+	font-weight: 500;
+	text-decoration: none;
+	line-height: 1.2;
+	transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.hvn-theme-pagination .page-numbers:hover,
+.hvn-theme-pagination .page-numbers:focus,
+.hvn-theme-pagination .nav-links a:hover,
+.hvn-theme-pagination .nav-links a:focus {
+	background: var(--hvn-bg, var(--hvn-theme-color-gray-100));
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+}
+
+.hvn-theme-pagination .page-numbers.current,
+.hvn-theme-pagination .nav-links .current {
+	background: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	color: var(--hvn-theme-color-white, #fff);
+}
+
+.hvn-theme-pagination .page-numbers.dots {
+	border-color: transparent;
+	background: transparent;
+	min-width: auto;
+	padding: 0.375rem 0.25rem;
+}
+
+.hvn-theme-pagination .hvn-theme-pagination-prev,
+.hvn-theme-pagination .hvn-theme-pagination-next {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+/* Prevent double boxes from global .nav-links span rules in theme.css / polish.css */
+.hvn-theme-pagination .page-numbers .hvn-theme-pagination-number,
+.hvn-theme-pagination .page-numbers .hvn-theme-pagination-prev,
+.hvn-theme-pagination .page-numbers .hvn-theme-pagination-next,
+.hvn-theme-pagination .nav-links .page-numbers span {
+	display: inline;
+	min-width: 0;
+	min-height: 0;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	border-radius: 0;
+	font: inherit;
+	color: inherit;
+	line-height: inherit;
+	transform: none;
+}
+
+.hvn-theme-pagination .page-numbers.prev,
+.hvn-theme-pagination .page-numbers.next {
+	font-weight: 600;
+}
+
+@media (max-width: 480px) {
+	.hvn-theme-pagination .page-numbers:not(.prev):not(.next):not(.current) {
+		min-width: 36px;
+		min-height: 36px;
+		padding: 0.25rem 0.5rem;
+	}
+}

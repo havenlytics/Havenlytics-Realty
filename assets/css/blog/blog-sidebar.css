@@ -1,0 +1,164 @@
+/**
+ * Blog sidebar — 70/30 layout + widget styling (blog archives and singles only).
+ */
+
+/* --------------------------------------------------------------------------
+   Content / sidebar split: 70% + 30%
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 992px) {
+	.hvn-layout-blog.hvn-has-sidebar .hvn-theme-layout-row,
+	.hvn-layout-single.hvn-has-sidebar .hvn-theme-layout-row {
+		grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+		gap: clamp(1.5rem, 3vw, 2.5rem);
+		align-items: start;
+	}
+
+	.hvn-layout-blog.hvn-has-sidebar.hvn-sidebar-left .hvn-theme-layout-row,
+	.hvn-layout-single.hvn-has-sidebar.hvn-sidebar-left .hvn-theme-layout-row {
+		grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+	}
+
+	.hvn-layout-blog.hvn-has-sidebar .hvn-theme-sidebar-area,
+	.hvn-layout-single.hvn-has-sidebar .hvn-theme-sidebar-area {
+		max-width: none;
+		width: 100%;
+	}
+}
+
+@media (max-width: 991px) {
+	.hvn-layout-blog.hvn-has-sidebar .hvn-theme-layout-row,
+	.hvn-layout-single.hvn-has-sidebar .hvn-theme-layout-row {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.hvn-layout-blog.hvn-has-sidebar .hvn-theme-sidebar-area,
+	.hvn-layout-single.hvn-has-sidebar .hvn-theme-sidebar-area {
+		max-width: none;
+		position: static;
+		margin-top: 1.5rem;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Container width — body carries hvn-container-* classes
+   -------------------------------------------------------------------------- */
+
+body.hvn-container-boxed .hvn-layout-blog .hvn-theme-container,
+body.hvn-container-boxed .hvn-layout-single .hvn-theme-container {
+	width: 100%;
+	max-width: min(var(--hvn-container, 1280px), 100%);
+	margin-inline: auto;
+}
+
+body.hvn-container-full .hvn-layout-blog .hvn-theme-container,
+body.hvn-container-full .hvn-layout-single .hvn-theme-container {
+	max-width: 100%;
+}
+
+body.hvn-container-full .hvn-layout-blog.hvn-has-sidebar .hvn-theme-layout-row,
+body.hvn-container-full .hvn-layout-single.hvn-has-sidebar .hvn-theme-layout-row {
+	max-width: min(var(--hvn-container, 1280px), 100%);
+	margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar widget cards
+   -------------------------------------------------------------------------- */
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget {
+	margin-bottom: 0;
+	padding: clamp(1.15rem, 2vw, 1.5rem);
+	background: var(--hvn-theme-color-white, #fff);
+	border: 1px solid var(--hvn-border, var(--hvn-theme-border-color, #e4e4ed));
+	border-radius: var(--hvn-radius, 12px);
+	box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
+	transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget::before,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget::before {
+	display: none;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget-title,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget-title {
+	font-family: var(--hvn-font-heading, var(--hvn-theme-font-family-heading, 'Poppins', sans-serif));
+	font-size: 1rem;
+	font-weight: 700;
+	margin: 0 0 1rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 2px solid color-mix(in srgb, var(--hvn-primary, #6c60fe) 35%, transparent);
+	color: var(--hvn-text, var(--hvn-theme-text-primary));
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget-title::before,
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget-title::after,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget-title::before,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget-title::after {
+	display: none;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget ul,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget li,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget li {
+	margin: 0;
+	padding: 0.65rem 0;
+	border-bottom: 1px solid var(--hvn-border, var(--hvn-theme-border-color-light, #eee));
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget li:last-child,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget li:last-child {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget a,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget a {
+	color: var(--hvn-text, var(--hvn-theme-text-primary));
+	text-decoration: none;
+	transition: color 0.15s ease;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget a:hover,
+.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget a:focus-visible,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget a:hover,
+.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget a:focus-visible {
+	color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .tagcloud a,
+.hvn-layout-blog .hvn-theme-sidebar-area .wp-block-tag-cloud a,
+.hvn-layout-single .hvn-theme-sidebar-area .tagcloud a,
+.hvn-layout-single .hvn-theme-sidebar-area .wp-block-tag-cloud a {
+	display: inline-block;
+	padding: 0.35rem 0.75rem;
+	margin: 0 0.35rem 0.35rem 0;
+	border-radius: 999px;
+	font-size: 0.8125rem !important;
+	background: color-mix(in srgb, var(--hvn-primary, #6c60fe) 8%, transparent);
+	border: 1px solid color-mix(in srgb, var(--hvn-primary, #6c60fe) 18%, transparent);
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .tagcloud a:hover,
+.hvn-layout-blog .hvn-theme-sidebar-area .wp-block-tag-cloud a:hover,
+.hvn-layout-single .hvn-theme-sidebar-area .tagcloud a:hover,
+.hvn-layout-single .hvn-theme-sidebar-area .wp-block-tag-cloud a:hover {
+	background: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	color: var(--hvn-theme-color-white, #fff);
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget,
+	.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget {
+		transition: none;
+	}
+}

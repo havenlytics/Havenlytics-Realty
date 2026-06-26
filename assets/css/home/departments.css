@@ -1,0 +1,96 @@
+/**
+ * Homepage — department tabs and property grid.
+ *
+ * @package Havenlytics_Realty
+ */
+
+.hvn-realty-dept-tabs__nav {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-bottom: 1.75rem;
+}
+
+.hvn-realty-dept-tabs__btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	border: 1px solid var(--hvn-border, #e4e4ed);
+	background: #fff;
+	color: var(--hvn-text, #1e1e2f);
+	border-radius: var(--hvn-radius, 8px);
+	padding: 0.65rem 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.hvn-realty-dept-tabs__btn:hover,
+.hvn-realty-dept-tabs__btn:focus {
+	border-color: var(--hvn-primary, #6c60fe);
+	color: var(--hvn-primary, #6c60fe);
+}
+
+.hvn-realty-dept-tabs__btn.is-active {
+	background: var(--hvn-primary, #6c60fe);
+	border-color: var(--hvn-primary, #6c60fe);
+	color: #fff;
+}
+
+.hvn-realty-dept-tabs__btn.is-active .hvn-realty-dept-tabs__count {
+	background: rgba(255, 255, 255, 0.2);
+	color: #fff;
+}
+
+.hvn-realty-dept-tabs__count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.75rem;
+	padding: 0.1rem 0.45rem;
+	border-radius: 999px;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	line-height: 1.2;
+	background: color-mix(in srgb, var(--hvn-primary, #6c60fe) 12%, #fff);
+	color: var(--hvn-primary, #6c60fe);
+}
+
+.hvn-realty-dept-tabs__panel:not(.is-active) {
+	display: none;
+}
+
+.hvn-realty-dept-tabs__panel .hvnly-property-grid-view.hvnly-grid-view,
+.hvn-realty-dept-tabs__panel .hvnly-property-grid-view.grid-view,
+.hvn-realty-dept-tabs__grid .hvnly-property-grid-view.hvnly-grid-view,
+.hvn-realty-dept-tabs__grid .hvnly-property-grid-view.grid-view {
+	display: grid !important;
+	grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+	gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+	.hvn-realty-dept-tabs__panel .hvnly-property-grid-view.hvnly-grid-view,
+	.hvn-realty-dept-tabs__panel .hvnly-property-grid-view.grid-view,
+	.hvn-realty-dept-tabs__grid .hvnly-property-grid-view.hvnly-grid-view,
+	.hvn-realty-dept-tabs__grid .hvnly-property-grid-view.grid-view {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+	}
+}
+
+@media (max-width: 640px) {
+	.hvn-realty-dept-tabs__nav {
+		justify-content: flex-start;
+		overflow-x: auto;
+		
+		padding-bottom: 0.25rem;
+	}
+
+	.hvn-realty-dept-tabs__panel .hvnly-property-grid-view.hvnly-grid-view,
+	.hvn-realty-dept-tabs__panel .hvnly-property-grid-view.grid-view,
+	.hvn-realty-dept-tabs__grid .hvnly-property-grid-view.hvnly-grid-view,
+	.hvn-realty-dept-tabs__grid .hvnly-property-grid-view.grid-view {
+		grid-template-columns: 1fr !important;
+	}
+}

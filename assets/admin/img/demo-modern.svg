@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Modern Realty preview">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6c60fe"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect x="48" y="56" width="704" height="48" rx="12" fill="#ffffff" opacity="0.95"/>
+  <rect x="48" y="132" width="704" height="180" rx="16" fill="#ffffff" opacity="0.18"/>
+  <rect x="72" y="156" width="220" height="132" rx="10" fill="#ffffff" opacity="0.35"/>
+  <rect x="312" y="156" width="416" height="20" rx="6" fill="#ffffff" opacity="0.55"/>
+  <rect x="312" y="188" width="340" height="14" rx="4" fill="#ffffff" opacity="0.35"/>
+  <rect x="312" y="214" width="280" height="14" rx="4" fill="#ffffff" opacity="0.25"/>
+  <rect x="48" y="340" width="220" height="64" rx="12" fill="#ffffff" opacity="0.92"/>
+  <rect x="284" y="340" width="220" height="64" rx="12" fill="#ffffff" opacity="0.92"/>
+  <rect x="520" y="340" width="232" height="64" rx="12" fill="#ffffff" opacity="0.92"/>
+</svg>

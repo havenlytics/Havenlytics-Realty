@@ -1,0 +1,158 @@
+/**
+ * Homepage — blog carousel cards.
+ *
+ * @package Havenlytics_Realty
+ */
+
+.hvn-realty-blog-carousel__viewport {
+	overflow: hidden;
+}
+
+.hvn-realty-blog-carousel__track {
+	display: flex;
+	gap: var(--hvn-realty-carousel-gap, 1rem);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	will-change: transform;
+}
+
+.hvn-realty-blog-carousel__slide {
+	flex: 0 0 auto;
+	min-width: 0;
+	box-sizing: border-box;
+}
+
+.hvn-realty-blog-card {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	background: #fff;
+	border: 1px solid var(--hvn-border, #e4e4ed);
+	border-radius: calc(var(--hvn-radius, 8px) + 2px);
+	overflow: hidden;
+	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hvn-realty-blog-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+}
+
+.hvn-realty-blog-card__media {
+	display: block;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	background: linear-gradient(135deg, rgba(108, 96, 254, 0.1), rgba(118, 75, 162, 0.08));
+}
+
+.hvn-realty-blog-card__image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.35s ease;
+}
+
+.hvn-realty-blog-card:hover .hvn-realty-blog-card__image {
+	transform: scale(1.04);
+}
+
+.hvn-realty-blog-card__placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	min-height: 180px;
+	color: var(--hvn-primary, #6c60fe);
+	font-size: 2.5rem;
+	opacity: 0.65;
+}
+
+.hvn-realty-blog-card__body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+	padding: 1rem 1.1rem 1.15rem;
+	flex: 1;
+}
+
+.hvn-realty-blog-card__category {
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.hvn-realty-blog-card__category a {
+	color: var(--hvn-primary, #6c60fe);
+	text-decoration: none;
+}
+
+.hvn-realty-blog-card__title {
+	margin: 0;
+	font-size: 1.05rem;
+	line-height: 1.35;
+}
+
+.hvn-realty-blog-card__title a {
+	color: var(--hvn-text, #1e1e2f);
+	text-decoration: none;
+}
+
+.hvn-realty-blog-card__title a:hover,
+.hvn-realty-blog-card__title a:focus {
+	color: var(--hvn-primary, #6c60fe);
+}
+
+.hvn-realty-blog-card__meta {
+	margin: 0;
+	font-size: 0.85rem;
+	color: color-mix(in srgb, var(--hvn-text, #1e1e2f) 60%, transparent);
+}
+
+.hvn-realty-blog-card__excerpt {
+	margin: 0;
+	font-size: 0.9rem;
+	line-height: 1.5;
+	color: color-mix(in srgb, var(--hvn-text, #1e1e2f) 75%, transparent);
+	flex: 1;
+}
+
+.hvn-realty-blog-card__link {
+	margin-top: 0.35rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--hvn-primary, #6c60fe);
+	text-decoration: none;
+}
+
+.hvn-realty-section--blog .hvn-realty-section__header--split {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	max-width: none;
+	text-align: left;
+	margin-bottom: 1.25rem;
+}
+
+.hvn-realty-section--blog .hvn-realty-section__header-copy {
+	flex: 1;
+	min-width: 0;
+}
+
+.hvn-realty-section--blog .hvn-realty-section__subtitle--inline {
+	margin: 0.35rem 0 0;
+	text-align: left;
+}
+
+@media (max-width: 640px) {
+	.hvn-realty-section--blog .hvn-realty-section__header--split {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}

@@ -1,0 +1,46 @@
+/**
+ * Block editor styles using theme CSS variables.
+ */
+
+body#tinymce.wp-editor,
+.editor-styles-wrapper {
+	font-family: var(--hvn-font-body, var(--hvn-theme-font-family-base, 'Inter', sans-serif));
+	font-size: var(--hvn-font-size, var(--hvn-theme-font-size-md, 16px));
+	line-height: var(--hvn-line-height, var(--hvn-theme-line-height-normal, 1.6));
+	color: var(--hvn-text, var(--hvn-theme-text-primary, #1E1E2F));
+}
+
+body#tinymce.wp-editor h1,
+body#tinymce.wp-editor h2,
+body#tinymce.wp-editor h3,
+body#tinymce.wp-editor h4,
+body#tinymce.wp-editor h5,
+body#tinymce.wp-editor h6,
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6 {
+	font-family: var(--hvn-font-heading, var(--hvn-theme-font-family-heading, 'Poppins', sans-serif));
+	font-weight: var(--hvn-theme-font-weight-bold, 700);
+	color: var(--hvn-text, var(--hvn-theme-text-primary, #1E1E2F));
+}
+
+body#tinymce.wp-editor a,
+.editor-styles-wrapper a {
+	color: var(--hvn-primary, var(--hvn-theme-brand-primary, #6C60FE));
+}
+
+body#tinymce.wp-editor blockquote,
+.editor-styles-wrapper blockquote {
+	border-left: 4px solid var(--hvn-primary, var(--hvn-theme-brand-primary, #6C60FE));
+	background: var(--hvn-bg, var(--hvn-theme-color-gray-100, #f8f9fa));
+	padding: var(--hvn-theme-space-md, 1rem) var(--hvn-theme-space-lg, 1.5rem);
+	border-radius: var(--hvn-radius, var(--hvn-theme-border-radius-md, 8px));
+}
+
+body#tinymce.wp-editor .wp-caption-text,
+.editor-styles-wrapper .wp-caption-text {
+	color: var(--hvn-theme-text-muted, #6c757d);
+}

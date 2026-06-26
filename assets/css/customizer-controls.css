@@ -1,0 +1,334 @@
+/**
+ * Havenlytics Customizer UI framework.
+ * Scoped to Havenlytics control types only — does not style WordPress core controls.
+ */
+
+.customize-control-hvn_realty_testimonials .hvn-realty-cx,
+.customize-control-hvn_realty_section_order .hvn-realty-cx,
+.customize-control[class*="customize-control-hvn_realty_"] .hvn-realty-cx {
+	--hvn-cx-radius: 10px;
+	--hvn-cx-radius-sm: 8px;
+	--hvn-cx-border: #d8dee6;
+	--hvn-cx-border-soft: #e8edf3;
+	--hvn-cx-bg: #f3f5f7;
+	--hvn-cx-card-bg: #ffffff;
+	--hvn-cx-text: #1d2327;
+	--hvn-cx-muted: #646970;
+	--hvn-cx-primary: #3858e9;
+	--hvn-cx-primary-soft: #edf1ff;
+	--hvn-cx-danger: #d63638;
+	--hvn-cx-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 8px 20px rgba(16, 24, 40, 0.05);
+	--hvn-cx-space-xs: 0.375rem;
+	--hvn-cx-space-sm: 0.625rem;
+	--hvn-cx-space-md: 0.875rem;
+	--hvn-cx-space-lg: 1.125rem;
+	color: var(--hvn-cx-text);
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+.customize-control-hvn_realty_testimonials .customize-control-title,
+.customize-control-hvn_realty_section_order .customize-control-title,
+.customize-control[class*="customize-control-hvn_realty_"] .customize-control-title {
+	margin-bottom: var(--hvn-cx-space-sm);
+	font-weight: 600;
+}
+
+.customize-control-hvn_realty_testimonials .customize-control-description,
+.customize-control-hvn_realty_section_order .customize-control-description,
+.customize-control[class*="customize-control-hvn_realty_"] .customize-control-description {
+	margin-bottom: var(--hvn-cx-space-md);
+	color: var(--hvn-cx-muted);
+}
+
+.hvn-realty-cx__stack {
+	display: flex;
+	flex-direction: column;
+	gap: var(--hvn-cx-space-md);
+}
+
+.hvn-realty-cx__list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--hvn-cx-space-sm);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.hvn-realty-cx__card {
+	overflow: hidden;
+	border: 1px solid var(--hvn-cx-border-soft);
+	border-radius: var(--hvn-cx-radius);
+	background: var(--hvn-cx-card-bg);
+	box-shadow: var(--hvn-cx-shadow);
+}
+
+.hvn-realty-cx__card.is-collapsed .hvn-realty-cx__card-body {
+	display: none;
+}
+
+.hvn-realty-cx__card.is-collapsed .hvn-realty-cx__toggle .dashicons {
+	transform: rotate(-90deg);
+}
+
+.hvn-realty-cx__card-head {
+	display: flex;
+	align-items: center;
+	gap: var(--hvn-cx-space-sm);
+	min-height: 44px;
+	padding: var(--hvn-cx-space-sm) var(--hvn-cx-space-md);
+	border-bottom: 1px solid var(--hvn-cx-border-soft);
+	background: linear-gradient(180deg, #fff 0%, #fafbfc 100%);
+}
+
+.hvn-realty-cx__card-head-main {
+	display: flex;
+	align-items: center;
+	gap: var(--hvn-cx-space-sm);
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.hvn-realty-cx__card-icon-wrap {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 999px;
+	background: var(--hvn-cx-primary-soft);
+	color: var(--hvn-cx-primary);
+	flex: 0 0 auto;
+}
+
+.hvn-realty-cx__icon {
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
+	line-height: 1;
+}
+
+.hvn-realty-cx__card-title-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+
+.hvn-realty-cx__card-title {
+	margin: 0;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.3;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.hvn-realty-cx__card-meta {
+	color: var(--hvn-cx-muted);
+	font-size: 12px;
+	line-height: 1.3;
+}
+
+.hvn-realty-cx__card-actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	flex: 0 0 auto;
+}
+
+.hvn-realty-cx__handle,
+.hvn-realty-cx__toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: var(--hvn-cx-radius-sm);
+	background: transparent;
+	color: var(--hvn-cx-muted);
+	cursor: pointer;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.hvn-realty-cx__handle:hover,
+.hvn-realty-cx__toggle:hover,
+.hvn-realty-cx__btn:hover {
+	background: var(--hvn-cx-bg);
+	color: var(--hvn-cx-text);
+}
+
+.hvn-realty-cx__handle {
+	cursor: grab;
+}
+
+.hvn-realty-cx__handle:active {
+	cursor: grabbing;
+}
+
+.hvn-realty-cx__toggle .dashicons {
+	transition: transform 0.2s ease;
+}
+
+.hvn-realty-cx__card-body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--hvn-cx-space-md);
+	padding: var(--hvn-cx-space-md);
+}
+
+.hvn-realty-cx__field {
+	display: flex;
+	flex-direction: column;
+	gap: var(--hvn-cx-space-xs);
+	margin: 0;
+}
+
+.hvn-realty-cx__field-label {
+	font-weight: 600;
+	color: var(--hvn-cx-text);
+}
+
+.hvn-realty-cx__field-control input[type="text"],
+.hvn-realty-cx__field-control textarea,
+.hvn-realty-cx__field-control select {
+	width: 100%;
+	border: 1px solid var(--hvn-cx-border);
+	border-radius: var(--hvn-cx-radius-sm);
+	padding: 8px 10px;
+	background: #fff;
+	box-shadow: none;
+}
+
+.hvn-realty-cx__field-control input[type="text"]:focus,
+.hvn-realty-cx__field-control textarea:focus,
+.hvn-realty-cx__field-control select:focus {
+	border-color: var(--hvn-cx-primary);
+	box-shadow: 0 0 0 1px var(--hvn-cx-primary);
+	outline: none;
+}
+
+.hvn-realty-cx__media-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--hvn-cx-space-sm);
+}
+
+.hvn-realty-cx__preview {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 999px;
+	overflow: hidden;
+	background: var(--hvn-cx-bg);
+	border: 1px solid var(--hvn-cx-border-soft);
+}
+
+.hvn-realty-cx__preview img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.hvn-realty-cx__toolbar {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.hvn-realty-cx__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	min-height: 34px;
+	margin: 0;
+	padding: 0 14px;
+	border: 1px solid transparent;
+	border-radius: var(--hvn-cx-radius-sm);
+	background: transparent;
+	color: var(--hvn-cx-text);
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hvn-realty-cx__btn--primary {
+	border-color: var(--hvn-cx-primary);
+	background: var(--hvn-cx-primary);
+	color: #fff;
+	box-shadow: 0 1px 2px rgba(56, 88, 233, 0.28);
+}
+
+.hvn-realty-cx__btn--primary:hover {
+	background: #2f4ad4;
+	border-color: #2f4ad4;
+	color: #fff;
+}
+
+.hvn-realty-cx__btn--ghost {
+	border-color: var(--hvn-cx-border);
+	background: #fff;
+}
+
+.hvn-realty-cx__btn--danger {
+	color: var(--hvn-cx-danger);
+}
+
+.hvn-realty-cx__btn--danger:hover {
+	background: #fff1f1;
+	color: #b32d2e;
+}
+
+.hvn-realty-cx__btn--icon {
+	width: 30px;
+	min-width: 30px;
+	padding: 0;
+}
+
+.hvn-realty-cx__btn--icon .hvn-realty-cx__icon {
+	margin: 0;
+}
+
+.hvn-realty-cx__hint {
+	margin: 0;
+	color: var(--hvn-cx-muted);
+	font-size: 12px;
+	line-height: 1.45;
+}
+
+.hvn-realty-cx__placeholder {
+	min-height: 44px;
+	margin-bottom: var(--hvn-cx-space-sm);
+	border: 1px dashed var(--hvn-cx-primary);
+	border-radius: var(--hvn-cx-radius);
+	background: var(--hvn-cx-primary-soft);
+}
+
+.hvn-realty-cx--sortable .hvn-realty-cx__card-head {
+	border-bottom: 0;
+}
+
+.hvn-realty-cx__rating-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	color: #dba617;
+	font-size: 12px;
+}
+
+.hvn-realty-cx__rating-badge .dashicons {
+	width: 14px;
+	height: 14px;
+	font-size: 14px;
+}

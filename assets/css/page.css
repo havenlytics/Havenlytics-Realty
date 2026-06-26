@@ -1,0 +1,84 @@
+/**
+ * Havenlytics Realty — Static pages only
+ */
+
+.hvn-theme-page-content {
+	display: block;
+	width: 100%;
+}
+
+.hvn-theme-page-article {
+	width: 100%;
+}
+
+.hvn-theme-page-hero {
+	margin: 0 0 1.5rem;
+	line-height: 0;
+}
+
+.hvn-theme-page-hero-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: 420px;
+	object-fit: cover;
+	border-radius: var(--hvn-radius, 8px);
+}
+
+.hvn-theme-page-header {
+	margin-bottom: 1.5rem;
+}
+
+.hvn-theme-page-title {
+	font-family: var(--hvn-font-heading, 'Poppins', sans-serif);
+	font-size: clamp(1.875rem, 4vw, 2.5rem);
+	font-weight: 600;
+	line-height: 1.2;
+	margin: 0;
+}
+
+.hvn-theme-page-body {
+	font-size: 1.0625rem;
+	line-height: 1.75;
+}
+
+.hvn-theme-page-body > *:first-child {
+	margin-top: 0;
+}
+
+.hvn-theme-page-body p {
+	margin: 0 0 1rem;
+}
+
+.hvn-theme-page-body h2,
+.hvn-theme-page-body h3,
+.hvn-theme-page-body h4 {
+	font-family: var(--hvn-font-heading, 'Poppins', sans-serif);
+	margin: 1.75rem 0 0.75rem;
+}
+
+.hvn-theme-page-body img,
+.hvn-theme-page-body iframe,
+.hvn-theme-page-body video {
+	max-width: 100%;
+	height: auto;
+}
+
+.hvn-theme-page-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 2rem;
+	padding-top: 1.25rem;
+	border-top: 1px solid var(--hvn-border, var(--hvn-theme-border-color));
+	font-size: 0.875rem;
+}
+
+.hvn-theme-page-footer {
+	margin-top: 1.5rem;
+	font-size: 0.875rem;
+}
+
+.hvn-layout-page .hvn-theme-error-404-modern {
+	width: 100%;
+}

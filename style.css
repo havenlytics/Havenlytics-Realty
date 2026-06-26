@@ -1,0 +1,263 @@
+/*
+Theme Name: Havenlytics Realty
+Theme URI: https://demo.havenlytics.com/
+Author: Havenlytics
+Author URI: https://profiles.wordpress.org/havenlytics/
+Description: Official companion theme for the free Havenlytics plugin — build a real estate, realtor, or estate agency website with property listings, map search, agent directories, and agency directories. Live demo: https://demo.havenlytics.com/
+Version: 1.24.0
+Requires at least: 6.0
+Tested up to: 7.0
+Requires PHP: 7.4
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: havenlytics-realty
+Domain Path: /languages
+Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, full-width-template, theme-options, translation-ready, block-styles, wide-blocks
+
+Havenlytics Realty WordPress Theme, (C) 2026 Havenlytics
+Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
+*/
+
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# CSS Variables (loaded from separate file)
+# Reset & Base (loaded from separate file)
+# Typography (loaded from separate file)
+# Grid System (loaded from separate file)
+# Components (loaded from separate files)
+# Layouts (loaded from separate files)
+# Pages (loaded from separate files)
+# Utilities (loaded from separate files)
+# Required WordPress Classes
+--------------------------------------------------------------*/
+
+/* Note: Primary theme styles are bundled in assets/css/theme.css (v1.1.0).
+   style.css retains WordPress metadata and supplemental WP-required classes. */
+
+/* Editor Style Support */
+.editor-styles-wrapper {
+    font-family: var(--hvn-font-body, var(--hvn-theme-font-family-base, 'Inter', sans-serif));
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6 {
+    font-family: var(--hvn-font-heading, var(--hvn-theme-font-family-heading, 'Poppins', sans-serif));
+    display: block;
+    line-break: anywhere;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    display: block;
+    line-break: anywhere;
+}
+
+
+
+
+
+/* Required WordPress Classes */
+.wp-caption {
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.wp-caption-text {
+    font-size: 0.875rem;
+    color: var(--hvn-theme-text-muted, #6c757d);
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.sticky {
+    background: var(--hvn-bg, #f8f9fa);
+    padding: 1.5rem;
+    border-radius: var(--hvn-radius, 12px);
+}
+
+.gallery-caption {
+    font-size: 0.875rem;
+    color: var(--hvn-theme-text-muted, #6c757d);
+}
+
+.alignright {
+    float: right;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.alignleft {
+    float: left;
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+
+/* Clearfix for floated elements */
+.alignright::after,
+.alignleft::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* ============================================
+   LINK UNDERLINING FOR CONTENT AREAS
+   Required by WordPress.org theme review
+   ============================================ */
+
+/* Underline links in post content */
+.entry-content a:not(.hvn-theme-btn):not(.wp-block-button__link),
+.entry-content p a,
+.entry-content li a,
+.entry-content blockquote a {
+    /* text-decoration: underline !important;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px; */
+}
+
+/* Underline links in excerpts */
+.entry-summary a,
+.hvn-theme-post-card-excerpt a {
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+/* Underline links in comments */
+.comment-content a {
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+/* Underline links in text widgets */
+.textwidget a,
+.widget_text a {
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+/* Keep button styles without underline */
+.hvn-theme-btn,
+.wp-block-button__link,
+button,
+input[type="submit"],
+.hvn-theme-read-more,
+.comment-reply-link,
+.more-link {
+    text-decoration: none !important;
+}
+
+/* Basic Print Styles */
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .hvn-theme-header,
+    .hvn-theme-site-header,
+    .hvn-theme-sidebar-area,
+    .hvn-theme-footer,
+    .hvn-theme-site-footer,
+    .hvn-theme-menu-toggle,
+    .hvn-theme-breadcrumbs,
+    .hvn-theme-post-navigation,
+    .hvn-theme-comments-area,
+    .hvn-theme-related-posts,
+    .hvn-theme-back-to-top {
+        display: none !important;
+    }
+
+    .hvn-theme-content-area {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript"]:after {
+        content: "";
+    }
+
+    img {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+/* Posts and pages */
+.sticky {
+    display: block;
+}
+
+.post,
+.page {
+    margin: 0;
+}
+
+.updated:not(.published) {
+    display: none;
+}
+
+.page-content,
+.entry-content,
+.entry-summary {
+    margin: 1.5em 0 0;
+}
+
+.page-links {
+    clear: both;
+    margin: 0 0 1.5em;
+}
+
+/* Comments */
+.comment-content a {
+    word-wrap: break-word;
+}
+
+.bypostauthor {
+    display: block;
+}
+
+i, span {
+    display: inline-block;
+}
+
+

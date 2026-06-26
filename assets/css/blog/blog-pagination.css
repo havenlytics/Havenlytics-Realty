@@ -1,0 +1,121 @@
+/**
+ * Blog pagination — scoped to .hvn-layout-blog and .hvn-layout-single.
+ */
+
+.hvn-layout-blog .hvn-blog-pagination,
+.hvn-layout-single .hvn-blog-pagination {
+	margin-top: var(--hvn-blog-section-gap, clamp(2rem, 4vw, 3rem));
+	margin-bottom: 0;
+}
+
+.hvn-layout-blog .hvn-blog-pagination__links,
+.hvn-layout-single .hvn-blog-pagination__links,
+.hvn-layout-blog .hvn-blog-pagination .nav-links,
+.hvn-layout-single .hvn-blog-pagination .nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.hvn-layout-blog .hvn-blog-pagination .page-numbers,
+.hvn-layout-single .hvn-blog-pagination .page-numbers,
+.hvn-layout-blog .hvn-blog-pagination .nav-links a,
+.hvn-layout-single .hvn-blog-pagination .nav-links a,
+.hvn-layout-blog .hvn-blog-pagination .nav-links span,
+.hvn-layout-single .hvn-blog-pagination .nav-links span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0.4rem 0.95rem;
+	border: 1px solid var(--hvn-border, var(--hvn-theme-border-color));
+	border-radius: 999px;
+	background: var(--hvn-theme-color-white, #fff);
+	color: var(--hvn-text, var(--hvn-theme-text-primary));
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-decoration: none;
+	line-height: 1.2;
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		color 0.2s ease,
+		box-shadow 0.2s ease,
+		transform 0.2s ease;
+}
+
+.hvn-layout-blog .hvn-blog-pagination .page-numbers:hover,
+.hvn-layout-single .hvn-blog-pagination .page-numbers:hover,
+.hvn-layout-blog .hvn-blog-pagination .page-numbers:focus-visible,
+.hvn-layout-single .hvn-blog-pagination .page-numbers:focus-visible,
+.hvn-layout-blog .hvn-blog-pagination .nav-links a:hover,
+.hvn-layout-single .hvn-blog-pagination .nav-links a:hover,
+.hvn-layout-blog .hvn-blog-pagination .nav-links a:focus-visible,
+.hvn-layout-single .hvn-blog-pagination .nav-links a:focus-visible {
+	background: color-mix(in srgb, var(--hvn-primary, #6c60fe) 8%, #fff);
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	box-shadow: 0 4px 12px color-mix(in srgb, var(--hvn-primary, #6c60fe) 18%, transparent);
+}
+
+.hvn-layout-blog .hvn-blog-pagination .page-numbers.current,
+.hvn-layout-single .hvn-blog-pagination .page-numbers.current,
+.hvn-layout-blog .hvn-blog-pagination .nav-links .current,
+.hvn-layout-single .hvn-blog-pagination .nav-links .current {
+	background: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	color: var(--hvn-theme-color-white, #fff);
+	box-shadow: 0 6px 16px color-mix(in srgb, var(--hvn-primary, #6c60fe) 35%, transparent);
+}
+
+.hvn-layout-blog .hvn-blog-pagination .page-numbers.dots,
+.hvn-layout-single .hvn-blog-pagination .page-numbers.dots {
+	border-color: transparent;
+	background: transparent;
+	min-width: auto;
+	box-shadow: none;
+}
+
+.hvn-layout-blog .hvn-blog-pagination .page-numbers.prev,
+.hvn-layout-single .hvn-blog-pagination .page-numbers.prev,
+.hvn-layout-blog .hvn-blog-pagination .page-numbers.next,
+.hvn-layout-single .hvn-blog-pagination .page-numbers.next {
+	padding-left: 1.15rem;
+	padding-right: 1.15rem;
+}
+
+.hvn-layout-blog .hvn-blog-pagination .page-numbers .hvn-theme-pagination-number,
+.hvn-layout-single .hvn-blog-pagination .page-numbers .hvn-theme-pagination-number,
+.hvn-layout-blog .hvn-blog-pagination .page-numbers span,
+.hvn-layout-single .hvn-blog-pagination .page-numbers span {
+	display: inline;
+	min-width: 0;
+	min-height: 0;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	border-radius: 0;
+	font: inherit;
+	color: inherit;
+}
+
+@media (max-width: 480px) {
+	.hvn-layout-blog .hvn-blog-pagination .page-numbers:not(.prev):not(.next):not(.current),
+	.hvn-layout-single .hvn-blog-pagination .page-numbers:not(.prev):not(.next):not(.current) {
+		min-width: 38px;
+		min-height: 38px;
+		padding: 0.3rem 0.65rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hvn-layout-blog .hvn-blog-pagination .page-numbers,
+	.hvn-layout-single .hvn-blog-pagination .page-numbers {
+		transition: none;
+	}
+}
