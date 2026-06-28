@@ -742,22 +742,44 @@ if ( ! function_exists( 'hvn_realty_get_home_sections' ) ) {
 	 * @return string[]
 	 */
 	function hvn_realty_get_home_sections() {
-		$sections = function_exists( 'hvn_realty_resolve_home_section_order' )
-			? hvn_realty_resolve_home_section_order()
-			: array(
-				'hero-map',
-				'featured-properties',
-				'department-tabs',
-				'property-taxonomies',
-				'property-types',
-				'featured-agents',
-				'featured-agencies',
-				'latest-posts',
+		if ( function_exists( 'hvn_realty_get_default_home_section_order' ) ) {
+			$default = hvn_realty_get_default_home_section_order();
+		} else {
+			$default = array(
+				'hero',
+				'search',
+				'why',
+				'properties',
+				'types',
+				'locations',
+				'agents',
 				'testimonials',
-				'cta-banner',
+				'blog',
+				'cta',
 			);
+		}
 
-		return apply_filters( 'hvn_realty_home_sections', $sections );
+		$stored = get_theme_mod( 'hvn_realty_home_section_order', '' );
+		if ( is_string( $stored ) && '' !== $stored ) {
+			$decoded = json_decode( $stored, true );
+			if ( is_array( $decoded ) && ! empty( $decoded ) ) {
+				$sections = array();
+				foreach ( $decoded as $slug ) {
+					$slug = sanitize_key( (string) $slug );
+					if ( in_array( $slug, $default, true ) && ! in_array( $slug, $sections, true ) ) {
+						$sections[] = $slug;
+					}
+				}
+				foreach ( $default as $slug ) {
+					if ( ! in_array( $slug, $sections, true ) ) {
+						$sections[] = $slug;
+					}
+				}
+				return apply_filters( 'hvn_realty_home_sections', $sections );
+			}
+		}
+
+		return apply_filters( 'hvn_realty_home_sections', $default );
 	}
 }
 
@@ -793,8 +815,8 @@ if ( ! function_exists( 'hvn_realty_get_design_token' ) ) {
 		);
 
 		$defaults = array(
-			'primary'   => '#6C60FE',
-			'secondary' => '#764ba2',
+			'primary'   => '#C9A36B',
+			'secondary' => '#A9803F',
 			'accent'    => '#FF9AA2',
 		);
 
@@ -827,17 +849,6 @@ if ( ! function_exists( 'hvn_realty_uses_plugin_design_tokens' ) ) {
 	 */
 	function hvn_realty_uses_plugin_design_tokens() {
 		return false;
-	}
-}
-
-if ( ! function_exists( 'hvn_realty_render_home_hero_map' ) ) {
-	/**
-	 * @param int $posts_per_page Posts per page.
-	 * @return string
-	 */
-	function hvn_realty_render_home_hero_map( $posts_per_page = 500 ) {
-		unset( $posts_per_page );
-		return '';
 	}
 }
 

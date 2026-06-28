@@ -15,12 +15,11 @@ if ( ! function_exists( 'hvn_realty_load_theme_file' ) ) {
 
 $integration_files = array(
 	'helpers.php',
-	'hero-map.php',
 	'carousel.php',
 	'homepage-settings.php',
-	'homepage-section-order.php',
 	'homepage-property-types.php',
 	'homepage-testimonials.php',
+	'hero-search.php',
 	'homepage.php',
 	'homepage-assets.php',
 	'breadcrumbs.php',

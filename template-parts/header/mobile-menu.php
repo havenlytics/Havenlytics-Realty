@@ -1,45 +1,51 @@
 <?php
 /**
- * Mobile menu template part.
+ * Global mobile menu (slide-in panel).
+ *
+ * One mobile menu shared across the entire theme — homepage, property pages,
+ * search, blog, archives, 404 and every other page. Loaded by both the homepage
+ * header (header-home.php) and the internal header (header.php) so the markup,
+ * styling and behaviour are identical everywhere. Header action buttons
+ * (Sign In / List a Property) are intentionally excluded from the mobile menu.
  *
  * @package Havenlytics_Realty
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$hvn_mobile_walker = function_exists( 'hvn_realty_get_nav_menu_walker' ) ? hvn_realty_get_nav_menu_walker() : null;
 ?>
-<div class="hvn-theme-mobile-menu" id="hvn-mobile-menu" aria-hidden="true">
-	<div class="hvn-theme-mobile-menu-header">
-		<div class="hvn-theme-mobile-menu-branding">
-			<?php get_template_part( 'template-parts/header/branding' ); ?>
-		</div>
-		<button class="hvn-theme-mobile-menu-close" type="button" aria-label="<?php esc_attr_e( 'Close Menu', 'havenlytics-realty' ); ?>">
-			<span aria-hidden="true">&times;</span>
-			<span class="screen-reader-text"><?php esc_html_e( 'Close Menu', 'havenlytics-realty' ); ?></span>
+<div class="hvn-theme-home-mobile-overlay" id="hvn-theme-home-mobile-overlay" aria-hidden="true" hidden></div>
+<div class="hvn-theme-home-mobile" id="hvn-theme-home-mobile" aria-hidden="true">
+	<div class="hvn-theme-home-mobile__top">
+		<?php if ( has_custom_logo() ) : ?>
+			<div class="hvn-theme-home-logo"><?php the_custom_logo(); ?></div>
+		<?php else : ?>
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hvn-theme-home-logo" rel="home"><?php bloginfo( 'name' ); ?></a>
+		<?php endif; ?>
+		<button class="hvn-theme-home-mobile__close" id="hvn-theme-home-mobile-close" type="button" aria-label="<?php esc_attr_e( 'Close menu', 'havenlytics-realty' ); ?>">
+			<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 2L16 16M16 2L2 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
 		</button>
 	</div>
-	<div class="hvn-theme-mobile-menu-content">
-		<nav aria-label="<?php esc_attr_e( 'Mobile Navigation', 'havenlytics-realty' ); ?>">
+	<nav class="hvn-theme-home-mobile__nav" aria-label="<?php esc_attr_e( 'Mobile', 'havenlytics-realty' ); ?>">
 		<?php
 		if ( has_nav_menu( 'primary' ) ) {
 			wp_nav_menu(
 				array(
 					'theme_location' => 'primary',
-					'menu_class'     => 'hvn-theme-mobile-nav-menu',
 					'container'      => false,
+					'menu_class'     => 'hvn-theme-home-mobile__links hvn-theme-home-mobile-nav-menu',
 					'fallback_cb'    => '__return_false',
 					'depth'          => 3,
+					'walker'         => $hvn_mobile_walker,
 				)
 			);
-		} else {
+		} elseif ( function_exists( 'hvn_realty_mobile_menu_fallback' ) ) {
 			hvn_realty_mobile_menu_fallback();
 		}
 		?>
-		</nav>
-	</div>
-	<?php if ( hvn_realty_show_header_cta() && '' !== hvn_realty_get_header_cta_text() ) : ?>
-		<div class="hvn-theme-mobile-menu-cta">
-			<a class="hvn-theme-btn hvn-theme-btn-block hvn-theme-mobile-header-cta" href="<?php echo esc_url( hvn_realty_get_header_cta_url() ); ?>">
-				<?php echo esc_html( hvn_realty_get_header_cta_text() ); ?>
-			</a>
-		</div>
-	<?php endif; ?>
+	</nav>
+	<?php get_template_part( 'template-parts/footer/social-links', null, array( 'context' => 'mobile' ) ); ?>
 </div>
-<div class="hvn-theme-mobile-overlay" aria-hidden="true"></div>

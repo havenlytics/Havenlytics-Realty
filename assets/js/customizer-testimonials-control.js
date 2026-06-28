@@ -192,6 +192,24 @@
 
 		} );
 
+		$root.on( 'click', '.hvn-realty-testimonials-control__duplicate', function ( event ) {
+
+			event.preventDefault();
+
+			var $item = $( this ).closest( '.hvn-realty-testimonials-control__item' );
+			var $clone = $item.clone();
+			var index = $root.find( '.hvn-realty-testimonials-control__item' ).length;
+
+			$clone.attr( 'data-index', String( index ) );
+			$clone.removeClass( 'is-collapsed' );
+			$item.after( $clone );
+
+			refreshCards( $root );
+
+			syncValue( $root );
+
+		} );
+
 
 
 		$root.on( 'click', '.hvn-realty-testimonials-control__upload', function ( event ) {

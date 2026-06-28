@@ -186,8 +186,8 @@
 	text-decoration: none;
 	line-height: 1.2;
 	color: var(--hvn-primary, var(--hvn-theme-brand-primary));
-	background: color-mix(in srgb, var(--hvn-primary, #6c60fe) 14%, #fff);
-	border: 1px solid color-mix(in srgb, var(--hvn-primary, #6c60fe) 22%, transparent);
+	background: color-mix(in srgb, var(--hvn-primary, #C9A36B) 14%, #fff);
+	border: 1px solid color-mix(in srgb, var(--hvn-primary, #C9A36B) 22%, transparent);
 	transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
@@ -228,8 +228,8 @@
 	text-decoration: none;
 	line-height: 1.2;
 	color: var(--hvn-primary, var(--hvn-theme-brand-primary));
-	background: color-mix(in srgb, var(--hvn-primary, #6c60fe) 8%, transparent);
-	border: 1px solid color-mix(in srgb, var(--hvn-primary, #6c60fe) 25%, transparent);
+	background: color-mix(in srgb, var(--hvn-primary, #C9A36B) 8%, transparent);
+	border: 1px solid color-mix(in srgb, var(--hvn-primary, #C9A36B) 25%, transparent);
 	transition:
 		background-color 0.2s ease,
 		border-color 0.2s ease,
@@ -249,7 +249,7 @@
 	color: var(--hvn-theme-color-white, #fff);
 	background: var(--hvn-primary, var(--hvn-theme-brand-primary));
 	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
-	box-shadow: 0 4px 12px color-mix(in srgb, var(--hvn-primary, #6c60fe) 35%, transparent);
+	box-shadow: 0 4px 12px color-mix(in srgb, var(--hvn-primary, #C9A36B) 35%, transparent);
 }
 
 .hvn-layout-blog .hvn-blog-card__read-more:hover::after,

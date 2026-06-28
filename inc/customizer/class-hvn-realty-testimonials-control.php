@@ -282,6 +282,13 @@ class HVN_Realty_Customize_Testimonials_Control extends WP_Customize_Control {
 					<?php HVN_Realty_Customizer_UI::render_toggle( ! $collapsed ); ?>
 					<button
 						type="button"
+						class="hvn-realty-cx__btn hvn-realty-cx__btn--icon hvn-realty-testimonials-control__duplicate"
+						aria-label="<?php esc_attr_e( 'Duplicate testimonial', 'havenlytics-realty' ); ?>"
+					>
+						<?php HVN_Realty_Customizer_UI::render_icon( 'dashicons-admin-page' ); ?>
+					</button>
+					<button
+						type="button"
 						class="hvn-realty-cx__btn hvn-realty-cx__btn--icon hvn-realty-cx__btn--danger hvn-realty-testimonials-control__remove"
 						aria-label="<?php esc_attr_e( 'Remove testimonial', 'havenlytics-realty' ); ?>"
 					>

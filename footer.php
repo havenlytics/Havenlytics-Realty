@@ -9,7 +9,10 @@
 
 	<footer id="colophon" class="hvn-modern-footer hvn-theme-footer hvn-theme-footer--modern">
 		<div class="hvn-modern-footer__inner hvn-theme-container">
-			<?php get_template_part( 'template-parts/footer/widgets' ); ?>
+			<div class="hvn-theme-footer-grid">
+				<?php get_template_part( 'template-parts/footer/brand' ); ?>
+				<?php get_template_part( 'template-parts/footer/widgets' ); ?>
+			</div>
 			<?php get_template_part( 'template-parts/footer/site-info' ); ?>
 		</div>
 	</footer>

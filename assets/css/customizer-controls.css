@@ -4,7 +4,6 @@
  */
 
 .customize-control-hvn_realty_testimonials .hvn-realty-cx,
-.customize-control-hvn_realty_section_order .hvn-realty-cx,
 .customize-control[class*="customize-control-hvn_realty_"] .hvn-realty-cx {
 	--hvn-cx-radius: 10px;
 	--hvn-cx-radius-sm: 8px;
@@ -28,14 +27,12 @@
 }
 
 .customize-control-hvn_realty_testimonials .customize-control-title,
-.customize-control-hvn_realty_section_order .customize-control-title,
 .customize-control[class*="customize-control-hvn_realty_"] .customize-control-title {
 	margin-bottom: var(--hvn-cx-space-sm);
 	font-weight: 600;
 }
 
 .customize-control-hvn_realty_testimonials .customize-control-description,
-.customize-control-hvn_realty_section_order .customize-control-description,
 .customize-control[class*="customize-control-hvn_realty_"] .customize-control-description {
 	margin-bottom: var(--hvn-cx-space-md);
 	color: var(--hvn-cx-muted);
@@ -331,4 +328,55 @@
 	width: 14px;
 	height: 14px;
 	font-size: 14px;
+}
+
+.customize-control-hvn_realty_section_order .hvn-realty-section-order-control__item .hvn-realty-cx__card-head {
+	align-items: center;
+}
+
+.hvn-realty-section-order-control__toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 12px;
+	color: var(--hvn-cx-muted);
+	white-space: nowrap;
+}
+
+.hvn-realty-section-order-control__toggle input {
+	margin: 0;
+}
+
+.hvn-realty-search-builder-control__toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 12px;
+	color: var(--hvn-cx-muted);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.hvn-realty-search-builder-control__toggle input {
+	margin: 0;
+}
+
+.hvn-realty-search-builder-control__item.is-disabled {
+	opacity: 0.72;
+}
+
+.hvn-realty-search-builder-control__item.is-disabled .hvn-realty-cx__card-title {
+	text-decoration: line-through;
+	color: var(--hvn-cx-muted);
+}
+
+.hvn-realty-search-builder-control__required {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-weight: 500;
+}
+
+.hvn-realty-search-builder-control__required input {
+	margin: 0;
 }

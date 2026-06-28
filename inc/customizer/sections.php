@@ -70,16 +70,9 @@ add_action( 'customize_register', 'hvn_realty_customizer_register_sections', 15 
 function hvn_realty_customizer_register_global_design( $wp_customize ) {
 	$section = 'hvn_realty_global_design';
 
-	if ( function_exists( 'hvn_realty_uses_plugin_design_tokens' ) && hvn_realty_uses_plugin_design_tokens() ) {
-		$global_design_section = $wp_customize->get_section( $section );
-		if ( $global_design_section ) {
-			$global_design_section->description = esc_html__( 'Global colors are managed from: Havenlytics → Settings → Global Colors', 'havenlytics-realty' );
-		}
-	}
-
 	$colors = array(
-		'hvn_realty_primary_color'     => array( '#6C60FE', esc_html__( 'Primary Color', 'havenlytics-realty' ) ),
-		'hvn_realty_secondary_color'   => array( '#764ba2', esc_html__( 'Secondary Color', 'havenlytics-realty' ) ),
+		'hvn_realty_primary_color'     => array( '#C9A36B', esc_html__( 'Primary Color', 'havenlytics-realty' ) ),
+		'hvn_realty_secondary_color'   => array( '#A9803F', esc_html__( 'Secondary Color', 'havenlytics-realty' ) ),
 		'hvn_realty_accent_color'      => array( '#FF9AA2', esc_html__( 'Accent Color', 'havenlytics-realty' ) ),
 		'hvn_realty_text_color'        => array( '#1E1E2F', esc_html__( 'Text Color', 'havenlytics-realty' ) ),
 		'hvn_realty_background_color'  => array( '#F8F8F8', esc_html__( 'Background Color', 'havenlytics-realty' ) ),
@@ -87,8 +80,6 @@ function hvn_realty_customizer_register_global_design( $wp_customize ) {
 	);
 
 	foreach ( $colors as $id => $config ) {
-		$is_legacy_color = function_exists( 'hvn_realty_is_legacy_color_theme_mod' ) && hvn_realty_is_legacy_color_theme_mod( $id );
-
 		$wp_customize->add_setting(
 			$id,
 			array(
@@ -102,12 +93,9 @@ function hvn_realty_customizer_register_global_design( $wp_customize ) {
 				$wp_customize,
 				$id,
 				array(
-					'label'       => $config[1],
-					'section'     => $section,
-					'settings'    => $id,
-					'description' => $is_legacy_color && function_exists( 'hvn_realty_uses_plugin_design_tokens' ) && hvn_realty_uses_plugin_design_tokens()
-						? esc_html__( 'Legacy theme color. The live site uses Havenlytics global colors when the plugin is active.', 'havenlytics-realty' )
-						: '',
+					'label'    => $config[1],
+					'section'  => $section,
+					'settings' => $id,
 				)
 			)
 		);
@@ -165,41 +153,110 @@ function hvn_realty_customizer_register_header( $wp_customize ) {
 	);
 
 	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_sticky_header', $section, esc_html__( 'Enable Sticky Header', 'havenlytics-realty' ), true, 'postMessage' );
-	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_show_header_search', $section, esc_html__( 'Show Search Icon', 'havenlytics-realty' ), true, 'postMessage' );
-	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_show_header_cta', $section, esc_html__( 'Show CTA Button', 'havenlytics-realty' ), false, 'postMessage' );
 
+	/* Global header action buttons (reusable across every page). */
+	hvn_realty_customizer_add_checkbox(
+		$wp_customize,
+		'hvn_realty_show_header_actions',
+		$section,
+		esc_html__( 'Show Header Action Buttons (all pages)', 'havenlytics-realty' ),
+		true,
+		'refresh'
+	);
+
+	$header_action_text_fields = array(
+		'hvn_realty_header_primary_label'   => esc_html__( 'Primary Button Label', 'havenlytics-realty' ),
+		'hvn_realty_header_secondary_label' => esc_html__( 'Secondary Button Label', 'havenlytics-realty' ),
+	);
+	foreach ( $header_action_text_fields as $setting_id => $label ) {
+		$wp_customize->add_setting(
+			$setting_id,
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'         => 'refresh',
+			)
+		);
+		$wp_customize->add_control(
+			$setting_id,
+			array(
+				'label'   => $label,
+				'section' => $section,
+				'type'    => 'text',
+			)
+		);
+	}
+
+	$header_action_url_fields = array(
+		'hvn_realty_header_primary_url'   => esc_html__( 'Primary Button URL', 'havenlytics-realty' ),
+		'hvn_realty_header_secondary_url' => esc_html__( 'Secondary Button URL', 'havenlytics-realty' ),
+	);
+	foreach ( $header_action_url_fields as $setting_id => $label ) {
+		$wp_customize->add_setting(
+			$setting_id,
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'hvn_realty_sanitize_url',
+				'transport'         => 'refresh',
+			)
+		);
+		$wp_customize->add_control(
+			$setting_id,
+			array(
+				'label'       => $label,
+				'description' => esc_html__( 'Leave empty to use the site home URL.', 'havenlytics-realty' ),
+				'section'     => $section,
+				'type'        => 'url',
+			)
+		);
+	}
+
+	hvn_realty_customizer_add_checkbox(
+		$wp_customize,
+		'hvn_realty_header_actions_new_tab',
+		$section,
+		esc_html__( 'Open Header Action Buttons in a New Tab', 'havenlytics-realty' ),
+		false,
+		'refresh'
+	);
+
+	/*
+	 * Default primary header button (formerly under Homepage → Header & Footer).
+	 * Setting IDs are preserved so existing customizations are not lost. These
+	 * feed the global header action buttons fallback in hvn_realty_get_header_action_buttons().
+	 */
 	$wp_customize->add_setting(
-		'hvn_realty_header_cta_text',
+		'hvn_realty_home_header_cta_label',
 		array(
-			'default'           => '',
+			'default'           => __( 'List a Property', 'havenlytics-realty' ),
 			'sanitize_callback' => 'sanitize_text_field',
-			'transport'         => 'postMessage',
+			'transport'         => 'refresh',
 		)
 	);
 	$wp_customize->add_control(
-		'hvn_realty_header_cta_text',
+		'hvn_realty_home_header_cta_label',
 		array(
-			'label'   => esc_html__( 'CTA Button Text', 'havenlytics-realty' ),
-			'section' => $section,
-			'type'    => 'text',
+			'label'       => esc_html__( 'Default Header Button Label', 'havenlytics-realty' ),
+			'description' => esc_html__( 'Used as the primary header button when no custom Primary Button Label is set above.', 'havenlytics-realty' ),
+			'section'     => $section,
+			'type'        => 'text',
 		)
 	);
 
 	$wp_customize->add_setting(
-		'hvn_realty_header_cta_url',
+		'hvn_realty_home_header_cta_url',
 		array(
-			'default'           => '',
-			'sanitize_callback' => 'hvn_realty_sanitize_url',
-			'transport'         => 'postMessage',
+			'default'           => '#hvn-theme-home-search',
+			'sanitize_callback' => 'esc_url_raw',
+			'transport'         => 'refresh',
 		)
 	);
 	$wp_customize->add_control(
-		'hvn_realty_header_cta_url',
+		'hvn_realty_home_header_cta_url',
 		array(
-			'label'       => esc_html__( 'CTA Button Link', 'havenlytics-realty' ),
-			'description' => esc_html__( 'Leave empty to use the site home URL.', 'havenlytics-realty' ),
-			'section'     => $section,
-			'type'        => 'url',
+			'label'   => esc_html__( 'Default Header Button URL', 'havenlytics-realty' ),
+			'section' => $section,
+			'type'    => 'url',
 		)
 	);
 }
@@ -278,6 +335,98 @@ function hvn_realty_customizer_register_footer( $wp_customize ) {
 			'type'        => 'textarea',
 		)
 	);
+
+	/* Footer brand description (logo + this text + social icons). */
+	$wp_customize->add_setting(
+		'hvn_realty_footer_description',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'wp_kses_post',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_footer_description',
+		array(
+			'label'       => esc_html__( 'Footer Brand Description', 'havenlytics-realty' ),
+			'description' => esc_html__( 'Shown under the footer logo. Leave empty to use the site tagline.', 'havenlytics-realty' ),
+			'section'     => $section,
+			'type'        => 'textarea',
+		)
+	);
+
+	/* Footer contact information (also used as defaults by the Contact widget). */
+	$footer_contact_fields = array(
+		'hvn_realty_footer_contact_address' => array( esc_html__( 'Contact Address', 'havenlytics-realty' ), 'textarea', 'wp_kses_post' ),
+		'hvn_realty_footer_contact_phone'   => array( esc_html__( 'Contact Phone', 'havenlytics-realty' ), 'text', 'sanitize_text_field' ),
+		'hvn_realty_footer_contact_email'   => array( esc_html__( 'Contact Email', 'havenlytics-realty' ), 'text', 'sanitize_text_field' ),
+		'hvn_realty_footer_contact_hours'   => array( esc_html__( 'Business Hours', 'havenlytics-realty' ), 'textarea', 'wp_kses_post' ),
+	);
+	foreach ( $footer_contact_fields as $setting_id => $config ) {
+		$wp_customize->add_setting(
+			$setting_id,
+			array(
+				'default'           => '',
+				'sanitize_callback' => $config[2],
+				'transport'         => 'refresh',
+			)
+		);
+		$wp_customize->add_control(
+			$setting_id,
+			array(
+				'label'   => $config[0],
+				'section' => $section,
+				'type'    => $config[1],
+			)
+		);
+	}
+
+	/*
+	 * Footer brand blurb + social links (formerly under Homepage → Header & Footer).
+	 * Setting IDs are preserved so existing customizations are not lost. The
+	 * social URLs are consumed site-wide by hvn_realty_get_social_links().
+	 */
+	$wp_customize->add_setting(
+		'hvn_realty_home_footer_blurb',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_textarea_field',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_footer_blurb',
+		array(
+			'label'       => esc_html__( 'Footer Tagline', 'havenlytics-realty' ),
+			'description' => esc_html__( 'Optional short blurb shown in the footer brand area.', 'havenlytics-realty' ),
+			'section'     => $section,
+			'type'        => 'textarea',
+		)
+	);
+
+	$footer_social_fields = array(
+		'hvn_realty_social_instagram' => esc_html__( 'Instagram URL', 'havenlytics-realty' ),
+		'hvn_realty_social_facebook'  => esc_html__( 'Facebook URL', 'havenlytics-realty' ),
+		'hvn_realty_social_twitter'   => esc_html__( 'X / Twitter URL', 'havenlytics-realty' ),
+	);
+	foreach ( $footer_social_fields as $setting_id => $label ) {
+		$wp_customize->add_setting(
+			$setting_id,
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'esc_url_raw',
+				'transport'         => 'refresh',
+			)
+		);
+		$wp_customize->add_control(
+			$setting_id,
+			array(
+				'label'   => $label,
+				'section' => $section,
+				'type'    => 'url',
+			)
+		);
+	}
 
 	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_show_back_to_top', $section, esc_html__( 'Show Back To Top Button', 'havenlytics-realty' ), false, 'postMessage' );
 }
@@ -412,8 +561,9 @@ function hvn_realty_customizer_register_typography( $wp_customize ) {
 	foreach ( array(
 		'hvn_realty_body_font_family'    => esc_html__( 'Body Font Family', 'havenlytics-realty' ),
 		'hvn_realty_heading_font_family' => esc_html__( 'Heading Font Family', 'havenlytics-realty' ),
+		'hvn_realty_nav_font_family'     => esc_html__( 'Navigation Font Family', 'havenlytics-realty' ),
 	) as $id => $label ) {
-		$default = ( 'hvn_realty_body_font_family' === $id ) ? 'inter' : 'poppins';
+		$default = 'hvn_realty_body_font_family' === $id ? 'inter' : ( 'hvn_realty_nav_font_family' === $id ? 'inter' : 'fraunces' );
 		$wp_customize->add_setting(
 			$id,
 			array(

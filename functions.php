@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'HVN_REALTY_VERSION' ) ) {
-    define( 'HVN_REALTY_VERSION', '1.24.0' );
+	define( 'HVN_REALTY_VERSION', '2.0.2' );
 }
 
 if ( ! defined( 'HVN_REALTY_TEMPLATE_URL' ) ) {
@@ -36,8 +36,9 @@ function hvn_realty_setup() {
 
     register_nav_menus(
         array(
-            'primary' => esc_html__( 'Primary Menu', 'havenlytics-realty' ),
-            'footer'  => esc_html__( 'Footer Menu', 'havenlytics-realty' ),
+            'primary'       => esc_html__( 'Primary Menu', 'havenlytics-realty' ),
+            'footer'        => esc_html__( 'Footer Menu', 'havenlytics-realty' ),
+            'footer-bottom' => esc_html__( 'Footer Bottom Menu (Privacy / Terms / Sitemap)', 'havenlytics-realty' ),
         )
     );
 
@@ -202,6 +203,10 @@ add_action( 'wp_enqueue_scripts', 'hvn_realty_scripts' );
  * Load context-specific layout styles (blog vs page vs single).
  */
 function hvn_realty_enqueue_context_layouts() {
+	if ( function_exists( 'hvn_realty_is_home_design' ) && hvn_realty_is_home_design() ) {
+		return;
+	}
+
 	if ( function_exists( 'hvn_realty_should_show_realty_home' ) && hvn_realty_should_show_realty_home() ) {
 		return;
 	}
@@ -536,7 +541,6 @@ if ( ! hvn_realty_load_theme_file( 'inc/integrations/havenlytics/bootstrap.php',
 
 	$integration_files = array(
 		'helpers.php',
-		'hero-map.php',
 		'carousel.php',
 		'homepage-settings.php',
 		'homepage.php',
@@ -565,6 +569,7 @@ hvn_realty_load_theme_file( 'inc/setup/theme-default-branding.php', false );
 hvn_realty_load_theme_file( 'inc/setup/theme-menus.php', false );
 hvn_realty_load_theme_file( 'inc/setup/theme-footer-widgets.php', false );
 hvn_realty_load_theme_file( 'inc/setup/theme-property-sidebar-widgets.php', false );
+hvn_realty_load_theme_file( 'inc/widgets/footer-widgets.php', false );
 hvn_realty_load_theme_file( 'inc/elementor.php', true );
 hvn_realty_load_theme_file( 'inc/custom-header.php', false );
 hvn_realty_load_theme_file( 'inc/template-tags.php', false );

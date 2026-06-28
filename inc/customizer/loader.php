@@ -20,8 +20,6 @@ if ( ! function_exists( 'hvn_realty_load_theme_file' ) ) {
 	return;
 }
 
-hvn_realty_load_theme_file( 'inc/integrations/havenlytics/homepage-section-order.php', true );
-
 /**
  * Customizer PHP files required for core Customizer operation.
  *
@@ -34,6 +32,7 @@ function hvn_realty_get_required_customizer_files() {
 		'controls.php',
 		'sections.php',
 		'sections-homepage.php',
+		'homepage-style.php',
 		'panel-integration.php',
 		'selective-refresh.php',
 		'css-output.php',
@@ -50,6 +49,8 @@ function hvn_realty_get_optional_customizer_control_files() {
 	return array(
 		'class-hvn-realty-testimonials-control.php',
 		'class-hvn-realty-section-order-control.php',
+		'class-hvn-realty-search-builder-control.php',
+		'class-hvn-realty-why-control.php',
 	);
 }
 

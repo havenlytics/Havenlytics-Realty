@@ -46,7 +46,7 @@
 .hvn-layout-blog .hvn-blog-card--grid:focus-within {
 	transform: translateY(-6px);
 	box-shadow: var(--hvn-blog-card-shadow-hover);
-	border-color: color-mix(in srgb, var(--hvn-primary, #6c60fe) 28%, var(--hvn-blog-card-border));
+	border-color: color-mix(in srgb, var(--hvn-primary, #C9A36B) 28%, var(--hvn-blog-card-border));
 }
 
 .hvn-layout-blog .hvn-blog-card--grid .hvn-blog-card__media {
@@ -58,7 +58,7 @@
 }
 
 .hvn-layout-blog .hvn-blog-card--grid .hvn-blog-card__media--placeholder {
-	background: linear-gradient(135deg, color-mix(in srgb, var(--hvn-primary, #6c60fe) 8%, #f3f4f6), var(--hvn-theme-color-gray-100, #f3f4f6));
+	background: linear-gradient(135deg, color-mix(in srgb, var(--hvn-primary, #C9A36B) 8%, #f3f4f6), var(--hvn-theme-color-gray-100, #f3f4f6));
 }
 
 .hvn-layout-blog .hvn-blog-card--grid .hvn-blog-card__media-link {

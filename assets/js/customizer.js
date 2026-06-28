@@ -200,32 +200,336 @@
 		} );
 	}
 
+	function bindHeroTitlePreview() {
+		var ids = [
+			'hvn_realty_home_hero_title_before',
+			'hvn_realty_home_hero_title_highlight',
+			'hvn_realty_home_hero_title_after',
+		];
+
+		function updateHeroTitle() {
+			var h1 = document.querySelector( '#hvn-theme-home-hero h1' );
+			if ( ! h1 ) {
+				return;
+			}
+
+			var before = wp.customize( 'hvn_realty_home_hero_title_before' ) ? wp.customize( 'hvn_realty_home_hero_title_before' ).get() : '';
+			var highlight = wp.customize( 'hvn_realty_home_hero_title_highlight' ) ? wp.customize( 'hvn_realty_home_hero_title_highlight' ).get() : '';
+			var after = wp.customize( 'hvn_realty_home_hero_title_after' ) ? wp.customize( 'hvn_realty_home_hero_title_after' ).get() : '';
+
+			h1.textContent = '';
+			h1.appendChild( document.createTextNode( before || '' ) );
+			if ( highlight ) {
+				var em = document.createElement( 'em' );
+				em.textContent = highlight;
+				h1.appendChild( em );
+			}
+			h1.appendChild( document.createTextNode( after || '' ) );
+		}
+
+		ids.forEach( function ( settingId ) {
+			if ( ! wp.customize( settingId ) ) {
+				return;
+			}
+			wp.customize( settingId, function ( value ) {
+				value.bind( updateHeroTitle );
+			} );
+		} );
+
+		updateHeroTitle();
+	}
+
+	function bindHeroButtonsPreview() {
+		function refreshHeroButtons() {
+			var primaryLabel = wp.customize( 'hvn_realty_home_hero_primary_label' );
+			var primaryUrl = wp.customize( 'hvn_realty_home_hero_primary_url' );
+			var ghostLabel = wp.customize( 'hvn_realty_home_hero_ghost_label' );
+			var ghostUrl = wp.customize( 'hvn_realty_home_hero_ghost_url' );
+
+			if ( primaryLabel && primaryUrl ) {
+				setLink(
+					'#hvn-theme-home-hero .hvn-theme-home-hero__actions .hvn-theme-home-btn--gold',
+					resolveThemeLink( primaryUrl.get(), '#hvn-theme-home-search' ),
+					primaryLabel.get()
+				);
+			}
+			if ( ghostLabel && ghostUrl ) {
+				setLink(
+					'#hvn-theme-home-hero .hvn-theme-home-hero__actions .hvn-theme-home-btn--ghost',
+					resolveThemeLink( ghostUrl.get(), '#hvn-theme-home-agents' ),
+					ghostLabel.get()
+				);
+			}
+		}
+
+		[
+			'hvn_realty_home_hero_primary_label',
+			'hvn_realty_home_hero_primary_url',
+			'hvn_realty_home_hero_ghost_label',
+			'hvn_realty_home_hero_ghost_url',
+		].forEach( function ( settingId ) {
+			if ( ! wp.customize( settingId ) ) {
+				return;
+			}
+			wp.customize( settingId, function ( value ) {
+				value.bind( refreshHeroButtons );
+			} );
+		} );
+
+		refreshHeroButtons();
+	}
+
+	function bindHeroFloatPreview() {
+		bindTextPreview( 'hvn_realty_home_hero_float_title', '#hvn-theme-home-hero .hvn-theme-home-hero__float strong' );
+		bindTextPreview( 'hvn_realty_home_hero_float_subtitle', '#hvn-theme-home-hero .hvn-theme-home-hero__float span' );
+	}
+
+	function bindHeroStatLabelsPreview() {
+		[ 1, 2, 3 ].forEach( function ( n ) {
+			bindTextPreview(
+				'hvn_realty_home_hero_stat' + n + '_label',
+				'#hvn-theme-home-hero .hvn-theme-home-hero__stat:nth-child(' + n + ') span'
+			);
+			if ( wp.customize( 'hvn_realty_home_hero_stat' + n + '_suffix' ) ) {
+				wp.customize( 'hvn_realty_home_hero_stat' + n + '_suffix', function ( value ) {
+					value.bind( function ( to ) {
+						var strong = document.querySelector( '#hvn-theme-home-hero .hvn-theme-home-hero__stat:nth-child(' + n + ') strong' );
+						if ( strong ) {
+							strong.setAttribute( 'data-hvn-theme-suffix', to || '' );
+						}
+					} );
+				} );
+			}
+		} );
+	}
+
+	function bindCtaButtonsPreview() {
+		function refreshCtaButtons() {
+			var primaryLabel = wp.customize( 'hvn_realty_home_cta_primary_label' );
+			var primaryUrl = wp.customize( 'hvn_realty_home_cta_primary_url' );
+			var secondaryLabel = wp.customize( 'hvn_realty_home_cta_secondary_label' );
+			var secondaryUrl = wp.customize( 'hvn_realty_home_cta_secondary_url' );
+
+			if ( primaryLabel && primaryUrl ) {
+				setLink(
+					'.hvn-theme-home-cta__actions .hvn-theme-home-btn--gold',
+					resolveThemeLink( primaryUrl.get(), '#hvn-theme-home-footer' ),
+					primaryLabel.get()
+				);
+			}
+			if ( secondaryLabel && secondaryUrl ) {
+				setLink(
+					'.hvn-theme-home-cta__actions .hvn-theme-home-btn--ghost',
+					resolveThemeLink( secondaryUrl.get(), '#hvn-theme-home-agents' ),
+					secondaryLabel.get()
+				);
+			}
+		}
+
+		[
+			'hvn_realty_home_cta_primary_label',
+			'hvn_realty_home_cta_primary_url',
+			'hvn_realty_home_cta_secondary_label',
+			'hvn_realty_home_cta_secondary_url',
+		].forEach( function ( settingId ) {
+			if ( ! wp.customize( settingId ) ) {
+				return;
+			}
+			wp.customize( settingId, function ( value ) {
+				value.bind( refreshCtaButtons );
+			} );
+		} );
+
+		refreshCtaButtons();
+	}
+
 	function bindHomeTextFields() {
 		var bindings = {
-			hvn_realty_home_featured_title: '#hvn-realty-featured-title',
-			hvn_realty_home_featured_subtitle: '#hvn-realty-section-featured .hvn-realty-section__subtitle',
-			hvn_realty_home_department_title: '#hvn-realty-departments-title',
-			hvn_realty_home_department_subtitle: '#hvn-realty-section-departments .hvn-realty-section__subtitle',
-			hvn_realty_home_taxonomies_title: '#hvn-realty-taxonomies-title',
-			hvn_realty_home_taxonomies_subtitle: '#hvn-realty-section-taxonomies .hvn-realty-section__subtitle',
-			hvn_realty_home_locations_title: '#hvn-realty-taxonomies-title',
-			hvn_realty_home_locations_subtitle: '#hvn-realty-section-taxonomies .hvn-realty-section__subtitle',
-			hvn_realty_home_agents_title: '#hvn-realty-agents-title',
-			hvn_realty_home_agents_subtitle: '#hvn-realty-section-agents .hvn-realty-section__subtitle',
-			hvn_realty_home_agencies_title: '#hvn-realty-agencies-title',
-			hvn_realty_home_agencies_subtitle: '#hvn-realty-section-agencies .hvn-realty-section__subtitle',
-			hvn_realty_home_blog_title: '#hvn-realty-blog-title',
-			hvn_realty_home_blog_subtitle: '#hvn-realty-section-blog .hvn-realty-section__subtitle',
-			hvn_realty_home_property_types_title: '#hvn-realty-property-types-title',
-			hvn_realty_home_property_types_subtitle: '#hvn-realty-section-property-types .hvn-realty-section__subtitle',
-			hvn_realty_home_testimonials_title: '#hvn-realty-testimonials-title',
-			hvn_realty_home_testimonials_subtitle: '#hvn-realty-section-testimonials .hvn-realty-section__subtitle',
-			hvn_realty_home_footer_cta_text: '#hvn-realty-footer-cta-title',
+			hvn_realty_home_hero_eyebrow: '#hvn-theme-home-hero .hvn-theme-home-eyebrow',
+			hvn_realty_home_hero_subtitle: '#hvn-theme-home-hero .hvn-theme-home-hero__copy > p',
+			hvn_realty_home_featured_title: '#hvn-theme-home-properties-title',
+			hvn_realty_home_featured_subtitle: '#hvn-theme-home-properties .hvn-theme-home-eyebrow',
+			hvn_realty_home_why_eyebrow: '#hvn-theme-home-why .hvn-theme-home-eyebrow',
+			hvn_realty_home_why_title: '#hvn-theme-home-why-title',
+			hvn_realty_home_why_subtitle: '#hvn-theme-home-why .hvn-theme-home-head p',
+			hvn_realty_home_locations_title: '#hvn-theme-home-locations-title',
+			hvn_realty_home_locations_subtitle: '#hvn-theme-home-locations .hvn-theme-home-eyebrow',
+			hvn_realty_home_locations_text: '#hvn-theme-home-locations .hvn-theme-home-head p',
+			hvn_realty_home_agents_title: '#hvn-theme-home-agents-title',
+			hvn_realty_home_agents_subtitle: '#hvn-theme-home-agents .hvn-theme-home-eyebrow',
+			hvn_realty_home_blog_title: '#hvn-theme-home-blog-title',
+			hvn_realty_home_blog_subtitle: '#hvn-theme-home-blog .hvn-theme-home-eyebrow',
+			hvn_realty_home_property_types_title: '#hvn-theme-home-types-title',
+			hvn_realty_home_property_types_subtitle: '#hvn-theme-home-types .hvn-theme-home-eyebrow',
+			hvn_realty_home_testimonials_title: '#hvn-theme-home-testimonials-title',
+			hvn_realty_home_testimonials_subtitle: '#hvn-theme-home-testimonials .hvn-theme-home-eyebrow',
+			hvn_realty_home_cta_title: '#hvn-theme-home-cta-title',
+			hvn_realty_home_cta_subtitle: '#hvn-theme-home-cta .hvn-theme-home-cta__copy p',
 		};
 
 		Object.keys( bindings ).forEach( function ( settingId ) {
-			bindTextPreview( settingId, bindings[ settingId ] );
+			if ( wp.customize( settingId ) ) {
+				bindTextPreview( settingId, bindings[ settingId ] );
+			}
 		} );
+
+		bindHeroTitlePreview();
+		bindHeroButtonsPreview();
+		bindHeroFloatPreview();
+		bindHeroStatLabelsPreview();
+		bindCtaButtonsPreview();
+	}
+
+	function bindHomeSectionStyles() {
+		var slugs = config.homeSectionSlugs || [];
+		slugs.forEach( function ( slug ) {
+			var prefix = 'hvn_realty_home_style_' + slug;
+			var selector = ( config.homeSectionSelectors && config.homeSectionSelectors[ slug ] ) || '';
+
+			if ( ! selector ) {
+				return;
+			}
+
+			// Use the deferred wp.customize( id, cb ) form (no premature existence
+			// guard). registerPreviewBindings() runs at script-parse time, before
+			// customize-preview.js instantiates the settings; the immediate
+			// wp.customize( id ) check would return undefined and the binding would
+			// never be registered, which is why these previews did not update live.
+			[ 'bg', 'text' ].forEach( function ( token ) {
+				var settingId = prefix + '_' + token;
+				wp.customize( settingId, function ( value ) {
+					value.bind( function ( to ) {
+						var cssProp = 'bg' === token ? 'background-color' : 'color';
+						var extra = 'bg' === token ? 'background-image:none;' : '';
+						var rules = 'body.hvn-theme-home ' + selector + '{' + cssProp + ':' + ( to || 'inherit' ) + ';' + extra + '}';
+						setStyle( 'hvn-realty-home-style-' + slug + '-' + token, rules );
+					} );
+				} );
+			} );
+
+			[ 'pad_top', 'pad_bottom' ].forEach( function ( token ) {
+				var settingId = prefix + '_' + token;
+				wp.customize( settingId, function ( value ) {
+					value.bind( function ( to ) {
+						var cssProp = 'pad_top' === token ? 'padding-top' : 'padding-bottom';
+						var px = parseInt( to, 10 );
+						var val = isNaN( px ) || px <= 0 ? '' : px + 'px';
+						var rules = val ? 'body.hvn-theme-home ' + selector + '{' + cssProp + ':' + val + ';}' : '';
+						setStyle( 'hvn-realty-home-style-' + slug + '-' + token, rules );
+					} );
+				} );
+			} );
+
+			wp.customize( prefix + '_animate', function ( value ) {
+				value.bind( function ( to ) {
+					var rules = to ? '' : 'body.hvn-theme-home ' + selector + ' .hvn-theme-home-reveal{opacity:1;transform:none}';
+					setStyle( 'hvn-realty-home-style-' + slug + '-animate', rules );
+				} );
+			} );
+		} );
+	}
+
+	function bindHeroGradient() {
+		var ids = {
+			top: 'hvn_realty_home_style_hero_grad_top',
+			mid: 'hvn_realty_home_style_hero_grad_mid',
+			bottom: 'hvn_realty_home_style_hero_grad_bottom',
+		};
+
+		function valueOf( settingId, fallback ) {
+			var setting = wp.customize( settingId );
+			var current = setting ? setting.get() : '';
+			return current || fallback;
+		}
+
+		function applyGradient() {
+			var top = valueOf( ids.top, '#151a1f' );
+			var mid = valueOf( ids.mid, '#1f3a3a' );
+			var bottom = valueOf( ids.bottom, '#2a4c4a' );
+			var rules = 'body.hvn-theme-home #hvn-theme-home-hero{background:linear-gradient(180deg,' +
+				top + ' 0%,' + mid + ' 64%,' + bottom + ' 100%);}';
+			setStyle( 'hvn-realty-home-hero-gradient', rules );
+		}
+
+		Object.keys( ids ).forEach( function ( key ) {
+			// Deferred form so the binding registers even though the gradient
+			// settings are not yet instantiated when registerPreviewBindings() runs.
+			wp.customize( ids[ key ], function ( value ) {
+				value.bind( applyGradient );
+			} );
+		} );
+	}
+
+	function pluginBridgeComponentCss( primary, secondary ) {
+		if ( ! primary || ! secondary ) {
+			return '';
+		}
+		return '.hvnly-btn-primary,.hvnly-button-primary,.hvnly-submit-btn,button.hvnly-property-single__action-btn--primary{background-color:' + primary + ';border-color:' + primary + '}' +
+			'.hvnly-btn-primary:hover,.hvnly-button-primary:hover,.hvnly-submit-btn:hover,button.hvnly-property-single__action-btn--primary:hover{background-color:' + secondary + ';border-color:' + secondary + '}' +
+			'a,.hvnly-link{color:' + primary + '}' +
+			'a:hover,.hvnly-link:hover{color:' + secondary + '}';
+	}
+
+	function refreshPluginBridgeComponentPreview() {
+		var primarySetting = wp.customize( 'hvn_realty_primary_color' );
+		var secondarySetting = wp.customize( 'hvn_realty_secondary_color' );
+		if ( ! primarySetting || ! secondarySetting ) {
+			return;
+		}
+		var css = pluginBridgeComponentCss( primarySetting.get(), secondarySetting.get() );
+		setStyle( 'hvn-realty-plugin-bridge-components', css );
+	}
+
+	function bindPluginColorBridgePreview() {
+		var bridgeVars = [
+			'--hvnly-brand-primary',
+			'--hvnly-primary-color',
+			'--hvnly-button-bg',
+			'--hvnly-input-focus',
+			'--hvnly-price-color',
+			'--hvnly-pagination-active-bg',
+			'--hvnly-map-marker-bg',
+			'--hvnly-slider-thumb',
+			'--hvnly-link-color',
+			'--hvnly-status-sale',
+		];
+		var bridgeSecondaryVars = [
+			'--hvnly-brand-secondary',
+			'--hvnly-secondary-color',
+			'--hvnly-button-bg-hover',
+			'--hvnly-slider-range',
+			'--hvnly-link-hover-color',
+		];
+
+		if ( wp.customize( 'hvn_realty_primary_color' ) ) {
+			wp.customize( 'hvn_realty_primary_color', function ( value ) {
+				value.bind( function ( to ) {
+					if ( ! to ) {
+						return;
+					}
+					var decl = bridgeVars.map( function ( v ) {
+						return v + ':' + to;
+					} ).join( ';' );
+					setStyle( 'hvn-realty-plugin-bridge-primary', ':root{' + decl + '}' );
+					refreshPluginBridgeComponentPreview();
+				} );
+			} );
+		}
+
+		if ( wp.customize( 'hvn_realty_secondary_color' ) ) {
+			wp.customize( 'hvn_realty_secondary_color', function ( value ) {
+				value.bind( function ( to ) {
+					if ( ! to ) {
+						return;
+					}
+					var decl = bridgeSecondaryVars.map( function ( v ) {
+						return v + ':' + to;
+					} ).join( ';' );
+					setStyle( 'hvn-realty-plugin-bridge-secondary', ':root{' + decl + '}' );
+					refreshPluginBridgeComponentPreview();
+				} );
+			} );
+		}
 	}
 
 	function bindHeroSearchFields() {
@@ -465,6 +769,7 @@
 
 		bindFontFamily( 'hvn_realty_body_font_family', '--hvn-font-body' );
 		bindFontFamily( 'hvn_realty_heading_font_family', '--hvn-font-heading' );
+		bindFontFamily( 'hvn_realty_nav_font_family', '--hvn-font-nav' );
 
 		wp.customize( 'hvn_realty_heading_scale', function ( value ) {
 			value.bind( function ( to ) {
@@ -496,32 +801,6 @@
 			updateCopyright( value.get() );
 		} );
 
-		wp.customize( 'hvn_realty_header_cta_text', function ( value ) {
-			function updateHeaderCtaText( to ) {
-				document.querySelectorAll( '.hvn-theme-header-cta' ).forEach( function ( cta ) {
-					cta.textContent = to;
-				} );
-			}
-
-			value.bind( updateHeaderCtaText );
-			updateHeaderCtaText( value.get() );
-		} );
-
-		wp.customize( 'hvn_realty_header_cta_url', function ( value ) {
-			value.bind( function ( to ) {
-				var href = to;
-				if ( ! href && wp.customize( 'home' ) ) {
-					href = wp.customize( 'home' ).get();
-				}
-				if ( ! href ) {
-					href = '/';
-				}
-				document.querySelectorAll( '.hvn-theme-header-cta, .hvn-theme-mobile-header-cta' ).forEach( function ( cta ) {
-					cta.setAttribute( 'href', href );
-				} );
-			} );
-		} );
-
 		wp.customize( 'hvn_realty_footer_columns', function ( value ) {
 			value.bind( function ( to ) {
 				updateFooterColumns( to );
@@ -549,9 +828,10 @@
 		} );
 
 		bindHomeTextFields();
-		bindHeroSearchFields();
+		bindHomeSectionStyles();
+		bindHeroGradient();
+		bindPluginColorBridgePreview();
 		bindLocalizedTextPreviews();
-		bindHomeDepartmentButton();
 
 		if ( wp.customize( 'hvn_realty_home_show_taxonomy_counts' ) ) {
 			wp.customize( 'hvn_realty_home_show_taxonomy_counts', function ( value ) {
@@ -605,18 +885,6 @@
 		wp.customize( 'hvn_realty_sticky_header', function ( value ) {
 			value.bind( function ( to ) {
 				toggleBodyClass( 'hvn-theme-sticky-header', to );
-			} );
-		} );
-
-		wp.customize( 'hvn_realty_show_header_search', function ( value ) {
-			value.bind( function ( to ) {
-				toggleBodyClass( 'hvn-header-no-search', ! to );
-			} );
-		} );
-
-		wp.customize( 'hvn_realty_show_header_cta', function ( value ) {
-			value.bind( function ( to ) {
-				toggleBodyClass( 'hvn-header-no-cta', ! to );
 			} );
 		} );
 
@@ -792,8 +1060,23 @@
 		// wp.customize.section() is not available in the preview iframe.
 	}
 
+	function reinitHomepageBehaviors( placement ) {
+		var container = ( placement && placement.container && placement.container[0] ) || document;
+		if ( typeof window.hvnRealtyHomeReinit === 'function' ) {
+			window.hvnRealtyHomeReinit( container );
+		}
+	}
+
+	function registerSelectiveRefreshReinit() {
+		if ( ! wp.customize || ! wp.customize.selectiveRefresh ) {
+			return;
+		}
+		wp.customize.selectiveRefresh.bind( 'partial-content-rendered', reinitHomepageBehaviors );
+	}
+
 	// Deferred setting API — registers when the preview messenger syncs each setting.
 	registerPreviewBindings();
 	wp.customize.bind( 'preview-ready', registerHomepageSectionScroll );
+	registerSelectiveRefreshReinit();
 
 }( jQuery ) );

@@ -177,6 +177,7 @@ function hvn_realty_get_optional_customizer_control_paths() {
 	return array(
 		'inc/customizer/class-hvn-realty-testimonials-control.php',
 		'inc/customizer/class-hvn-realty-section-order-control.php',
+		'inc/customizer/class-hvn-realty-why-control.php',
 	);
 }
 
@@ -225,7 +226,7 @@ function hvn_realty_optional_customizer_controls_notice() {
 	}
 
 	echo '<div class="notice notice-warning is-dismissible"><p>';
-	echo esc_html__( 'Optional Customizer controls unavailable. Section order and testimonials drag-and-drop controls are disabled until the complete theme package is installed.', 'havenlytics-realty' );
+	echo esc_html__( 'Optional Customizer controls unavailable. The testimonials drag-and-drop control is disabled until the complete theme package is installed.', 'havenlytics-realty' );
 	echo ' <code>' . esc_html( implode( '</code>, <code>', $missing ) ) . '</code>';
 	echo '</p></div>';
 }

@@ -34,8 +34,9 @@ class HVN_Realty_Theme_Integrity {
 	 */
 	public static function get_optional_customizer_classes() {
 		return array(
+			'HVN_Realty_Customize_Testimonials_Control'   => 'inc/customizer/class-hvn-realty-testimonials-control.php',
 			'HVN_Realty_Customize_Section_Order_Control' => 'inc/customizer/class-hvn-realty-section-order-control.php',
-			'HVN_Realty_Customize_Testimonials_Control'  => 'inc/customizer/class-hvn-realty-testimonials-control.php',
+			'HVN_Realty_Customize_Why_Control'           => 'inc/customizer/class-hvn-realty-why-control.php',
 		);
 	}
 
@@ -52,6 +53,7 @@ class HVN_Realty_Theme_Integrity {
 		return array(
 			'inc/customizer/class-hvn-realty-testimonials-control.php',
 			'inc/customizer/class-hvn-realty-section-order-control.php',
+			'inc/customizer/class-hvn-realty-why-control.php',
 		);
 	}
 

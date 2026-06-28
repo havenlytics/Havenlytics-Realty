@@ -13,16 +13,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'HVN_REALTY_FOOTER_WIDGETS_OPTION', 'hvn_realty_footer_widgets_seeded' );
 
 /**
- * Seed footer widgets when empty (launch or deferred admin check).
+ * Seed footer widgets when empty.
+ *
+ * Runs once on a fresh theme activation (theme-only OR theme + plugin). Existing
+ * widgets are never touched: if any footer area already holds a widget the seed
+ * is skipped and only the one-time flag is recorded. Never deletes, replaces or
+ * resets user widgets.
  *
  * @return void
  */
 function hvn_realty_maybe_seed_footer_widgets() {
 	if ( get_option( HVN_REALTY_FOOTER_WIDGETS_OPTION, false ) ) {
-		return;
-	}
-
-	if ( ! hvn_realty_is_havenlytics_plugin_active() ) {
 		return;
 	}
 
@@ -36,6 +37,7 @@ function hvn_realty_maybe_seed_footer_widgets() {
 	hvn_realty_launch_setup_footer_widgets();
 	update_option( HVN_REALTY_FOOTER_WIDGETS_OPTION, true );
 }
+add_action( 'after_switch_theme', 'hvn_realty_maybe_seed_footer_widgets', 35 );
 
 /**
  * Insert a widget instance and return its sidebar ID token.
@@ -62,7 +64,8 @@ function hvn_realty_launch_insert_widget( $id_base, $instance ) {
 		}
 	}
 
-	$widgets[ $next_id ] = $instance;
+	$widgets[ $next_id ]    = $instance;
+	$widgets['_multiwidget'] = 1;
 	update_option( $option_name, $widgets );
 
 	return $id_base . '-' . $next_id;
@@ -93,26 +96,27 @@ function hvn_realty_launch_assign_sidebar( $sidebar_id, $widget_ids ) {
 function hvn_realty_launch_get_footer_explore_html() {
 	$links = array();
 
-	$home_id = (int) get_option( HVN_REALTY_HOME_PAGE_OPTION, 0 );
-	if ( $home_id > 0 ) {
-		$links[] = sprintf(
-			'<li><a href="%1$s">%2$s</a></li>',
-			esc_url( get_permalink( $home_id ) ),
-			esc_html__( 'Home', 'havenlytics-realty' )
-		);
-	}
+	// Home always resolves, with or without the plugin.
+	$links[] = sprintf(
+		'<li><a href="%1$s">%2$s</a></li>',
+		esc_url( home_url( '/' ) ),
+		esc_html__( 'Home', 'havenlytics-realty' )
+	);
 
-	foreach ( hvn_realty_launch_get_plugin_menu_pages() as $page_key => $label ) {
-		$page_id = hvn_realty_get_plugin_page_id( $page_key );
-		if ( $page_id <= 0 ) {
-			continue;
+	// Properties / Search etc. come from plugin pages when available.
+	if ( function_exists( 'hvn_realty_launch_get_plugin_menu_pages' ) && function_exists( 'hvn_realty_get_plugin_page_id' ) ) {
+		foreach ( hvn_realty_launch_get_plugin_menu_pages() as $page_key => $label ) {
+			$page_id = (int) hvn_realty_get_plugin_page_id( $page_key );
+			if ( $page_id <= 0 ) {
+				continue;
+			}
+
+			$links[] = sprintf(
+				'<li><a href="%1$s">%2$s</a></li>',
+				esc_url( get_permalink( $page_id ) ),
+				esc_html( $label )
+			);
 		}
-
-		$links[] = sprintf(
-			'<li><a href="%1$s">%2$s</a></li>',
-			esc_url( get_permalink( $page_id ) ),
-			esc_html( $label )
-		);
 	}
 
 	$blog_id = absint( get_option( 'page_for_posts', 0 ) );
@@ -124,6 +128,16 @@ function hvn_realty_launch_get_footer_explore_html() {
 		);
 	}
 
+	// Contact page (theme-only friendly): match a page by common slug.
+	$contact_page = get_page_by_path( 'contact' );
+	if ( $contact_page instanceof WP_Post ) {
+		$links[] = sprintf(
+			'<li><a href="%1$s">%2$s</a></li>',
+			esc_url( get_permalink( $contact_page ) ),
+			esc_html__( 'Contact', 'havenlytics-realty' )
+		);
+	}
+
 	if ( empty( $links ) ) {
 		return '';
 	}
@@ -132,64 +146,51 @@ function hvn_realty_launch_get_footer_explore_html() {
 }
 
 /**
- * Populate footer-1 … footer-4 with default widgets.
+ * Populate the footer widget columns with the default 2.0.1 layout.
+ *
+ * Brand (logo + description + social) is rendered at template level, so the
+ * seeded widget columns are: Quick Links, Property Locations (dynamic) and
+ * Contact. Only ever runs once on a fresh install when every footer area is
+ * empty — existing widgets are never touched or overwritten.
  *
  * @return void
  */
 function hvn_realty_launch_setup_footer_widgets() {
-	if ( ! function_exists( 'hvn_realty_launch_create_footer_menus' ) ) {
-		return;
-	}
-
-	$footer_menus = hvn_realty_launch_create_footer_menus();
-	$site_name    = get_bloginfo( 'name', 'display' );
-	$tagline      = get_bloginfo( 'description', 'display' );
-
-	$about_text = $tagline ? $tagline : __( 'Browse properties, connect with agents, and explore listings powered by Havenlytics.', 'havenlytics-realty' );
-
-	$footer_1 = hvn_realty_launch_insert_widget(
-		'text',
-		array(
-			'title'  => $site_name ? $site_name : __( 'About', 'havenlytics-realty' ),
-			'text'   => esc_html( $about_text ),
-			'filter' => true,
-			'visual' => false,
-		)
-	);
-
-	$footer_2 = '';
-	if ( ! empty( $footer_menus['properties'] ) ) {
-		$footer_2 = hvn_realty_launch_insert_widget(
-			'nav_menu',
-			array(
-				'title'    => __( 'Properties', 'havenlytics-realty' ),
-				'nav_menu' => (int) $footer_menus['properties'],
-			)
-		);
-	}
-
-	$footer_3 = '';
-	if ( ! empty( $footer_menus['directory'] ) ) {
-		$footer_3 = hvn_realty_launch_insert_widget(
-			'nav_menu',
-			array(
-				'title'    => __( 'Agents & Agencies', 'havenlytics-realty' ),
-				'nav_menu' => (int) $footer_menus['directory'],
-			)
-		);
-	}
-
 	$explore_html = hvn_realty_launch_get_footer_explore_html();
-	$footer_4     = hvn_realty_launch_insert_widget(
-		'custom_html',
+
+	$footer_1 = '';
+	if ( '' !== $explore_html ) {
+		$footer_1 = hvn_realty_launch_insert_widget(
+			'custom_html',
+			array(
+				'title'   => __( 'Quick Links', 'havenlytics-realty' ),
+				'content' => $explore_html,
+			)
+		);
+	}
+
+	$footer_2 = hvn_realty_launch_insert_widget(
+		'hvn_realty_footer_locations',
 		array(
-			'title'   => __( 'Explore', 'havenlytics-realty' ),
-			'content' => $explore_html,
+			'title' => __( 'Property Locations', 'havenlytics-realty' ),
+			'limit' => 6,
 		)
 	);
 
-	hvn_realty_launch_assign_sidebar( 'footer-1', array( $footer_1 ) );
+	$footer_3 = hvn_realty_launch_insert_widget(
+		'hvn_realty_footer_contact',
+		array(
+			'title'   => __( 'Contact', 'havenlytics-realty' ),
+			'address' => '',
+			'phone'   => '',
+			'email'   => sanitize_email( (string) get_bloginfo( 'admin_email' ) ),
+			'hours'   => '',
+		)
+	);
+
+	if ( '' !== $footer_1 ) {
+		hvn_realty_launch_assign_sidebar( 'footer-1', array( $footer_1 ) );
+	}
 	hvn_realty_launch_assign_sidebar( 'footer-2', array( $footer_2 ) );
 	hvn_realty_launch_assign_sidebar( 'footer-3', array( $footer_3 ) );
-	hvn_realty_launch_assign_sidebar( 'footer-4', array( $footer_4 ) );
 }

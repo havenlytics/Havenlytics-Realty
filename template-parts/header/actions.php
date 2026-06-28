@@ -5,12 +5,10 @@
  * @package Havenlytics_Realty
  */
 
-$cta_text              = hvn_realty_get_header_cta_text();
-$show_cta              = hvn_realty_show_header_cta() && '' !== $cta_text;
 $use_property_search   = function_exists( 'hvn_realty_use_header_property_search_panel' ) && hvn_realty_use_header_property_search_panel();
 ?>
 <div class="hvn-theme-actions">
-	<button class="hvn-theme-menu-toggle" type="button" aria-label="<?php esc_attr_e( 'Menu', 'havenlytics-realty' ); ?>" aria-expanded="false" aria-controls="hvn-mobile-menu">
+	<button class="hvn-theme-menu-toggle" type="button" aria-label="<?php esc_attr_e( 'Menu', 'havenlytics-realty' ); ?>" aria-expanded="false" aria-controls="hvn-theme-home-mobile">
 		<span class="hamburger" aria-hidden="true"></span>
 		<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'havenlytics-realty' ); ?></span>
 	</button>
@@ -42,9 +40,5 @@ $use_property_search   = function_exists( 'hvn_realty_use_header_property_search
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if ( $show_cta ) : ?>
-		<a class="hvn-theme-btn hvn-theme-header-cta" href="<?php echo esc_url( hvn_realty_get_header_cta_url() ); ?>">
-			<?php echo esc_html( $cta_text ); ?>
-		</a>
-	<?php endif; ?>
+	<?php get_template_part( 'template-parts/header/header-actions', null, array( 'context' => 'default' ) ); ?>
 </div>

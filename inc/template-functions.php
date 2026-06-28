@@ -94,6 +94,10 @@ function hvn_realty_body_classes( $classes ) {
 		$classes[] = 'hvn-realty-homepage';
 	}
 
+	if ( function_exists( 'hvn_realty_is_home_design' ) && hvn_realty_is_home_design() ) {
+		$classes[] = 'hvn-theme-home';
+	}
+
 	return apply_filters( 'hvn_realty_body_classes', $classes );
 }
 add_filter( 'body_class', 'hvn_realty_body_classes' );

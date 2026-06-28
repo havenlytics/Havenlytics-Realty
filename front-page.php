@@ -1,47 +1,28 @@
 <?php
 /**
- * Front page — Real Estate Homepage sections.
+ * Front page — Havenlytics Realty Homepage 2.0.0.
+ *
+ * A complete rebuild from the havenlytics-realty.html prototype. Each section
+ * is a dedicated, Customizer-driven template part rendered by
+ * hvn_realty_render_homepage_sections(). Uses the dedicated homepage header
+ * and footer so the prototype's transparent sticky header and dark footer
+ * match exactly, while the rest of the site keeps its existing chrome.
  *
  * @package Havenlytics_Realty
  */
 
-get_header();
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-if ( function_exists( 'hvn_realty_should_show_realty_home' ) && hvn_realty_should_show_realty_home() ) :
-	?>
-	<main id="primary" class="hvn-realty-home" role="main">
-		<?php
-		if ( function_exists( 'hvn_realty_render_homepage_sections' ) ) {
-			hvn_realty_render_homepage_sections();
-		}
-		?>
-	</main>
+get_header( 'home' );
+?>
+<main id="primary" class="hvn-theme-home-main" role="main">
 	<?php
-else :
-	$layout_class = hvn_realty_get_layout_sidebar_classes();
-	$shell_class  = function_exists( 'hvn_realty_get_blog_shell_classes' )
-		? hvn_realty_get_blog_shell_classes()
-		: 'hvn-theme-layout hvn-layout-blog ' . $layout_class;
-	$has_sidebar    = hvn_realty_has_sidebar();
-	$sidebar_layout = function_exists( 'hvn_realty_sidebar_layout_enabled' ) && hvn_realty_sidebar_layout_enabled();
+	if ( function_exists( 'hvn_realty_render_homepage_sections' ) ) {
+		hvn_realty_render_homepage_sections();
+	}
 	?>
-	<main id="primary" class="<?php echo esc_attr( trim( $shell_class ) ); ?>" role="main">
-		<div class="hvn-theme-container">
-			<?php if ( $sidebar_layout ) : ?>
-			<div class="hvn-theme-layout-row">
-			<?php endif; ?>
-				<div class="hvn-theme-content-area">
-					<?php get_template_part( 'template-parts/layout/blog-content' ); ?>
-				</div>
-			<?php if ( $has_sidebar ) : ?>
-				<?php hvn_realty_render_sidebar(); ?>
-			<?php endif; ?>
-			<?php if ( $sidebar_layout ) : ?>
-			</div>
-			<?php endif; ?>
-		</div>
-	</main>
-	<?php
-endif;
-
-get_footer();
+</main>
+<?php
+get_footer( 'home' );

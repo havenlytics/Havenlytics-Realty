@@ -281,7 +281,16 @@
 	font-weight: 600;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 767px) {
+	.hvn-theme-breadcrumbs .hvn-breadcrumb-list,
+	.hvn-theme-breadcrumbs .hvn-breadcrumb-container {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0;
+    	padding: 0;
+	}
+
 	.hvn-theme-pagination .page-numbers:not(.prev):not(.next):not(.current) {
 		min-width: 36px;
 		min-height: 36px;

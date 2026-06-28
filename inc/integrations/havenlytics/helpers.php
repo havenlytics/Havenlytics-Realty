@@ -66,6 +66,27 @@ function hvn_realty_should_show_realty_home() {
 }
 
 /**
+ * Whether the Homepage 2.0.0 design is being rendered.
+ *
+ * True on the realty front page and on any page assigned the
+ * "Real Estate Homepage" template. Used to gate homepage assets and the
+ * homepage body class.
+ *
+ * @return bool
+ */
+function hvn_realty_is_home_design() {
+	if ( function_exists( 'hvn_realty_should_show_realty_home' ) && hvn_realty_should_show_realty_home() ) {
+		return true;
+	}
+
+	if ( function_exists( 'is_page_template' ) && is_page_template( 'templates/template-realty-home.php' ) ) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
  * Render a Havenlytics shortcode when the plugin is active.
  *
  * @param string               $tag  Shortcode tag without brackets.
@@ -279,6 +300,10 @@ function hvn_realty_get_home_cta_headline() {
  */
 function hvn_realty_is_home_section_enabled( $section ) {
 	$defaults = array(
+		'hero'                 => true,
+		'search'               => true,
+		'features'             => true,
+		'newsletter'           => true,
 		'hero-map'             => true,
 		'featured-properties'  => true,
 		'department-tabs'      => true,

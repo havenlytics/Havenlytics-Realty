@@ -225,6 +225,15 @@ function hvn_realty_customize_preview_js() {
 		$localize['homeSectionVisibility'] = hvn_realty_get_customizer_home_section_visibility_map();
 	}
 
+	if ( function_exists( 'hvn_realty_get_home_section_registry' ) ) {
+		$localize['homeSectionSlugs'] = array_keys( hvn_realty_get_home_section_registry() );
+		$selectors = array();
+		foreach ( array_keys( hvn_realty_get_home_section_registry() ) as $slug ) {
+			$selectors[ $slug ] = hvn_realty_get_home_section_css_selector( $slug );
+		}
+		$localize['homeSectionSelectors'] = $selectors;
+	}
+
 	if ( function_exists( 'hvn_realty_get_customizer_text_preview_bindings' ) ) {
 		$localize['textPreviewBindings'] = hvn_realty_get_customizer_text_preview_bindings();
 	}

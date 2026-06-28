@@ -32,6 +32,7 @@ function hvn_realty_get_font_choices() {
 			'dm-sans'           => esc_html__( 'DM Sans', 'havenlytics-realty' ),
 			'outfit'            => esc_html__( 'Outfit', 'havenlytics-realty' ),
 			'manrope'           => esc_html__( 'Manrope', 'havenlytics-realty' ),
+			'fraunces'          => esc_html__( 'Fraunces', 'havenlytics-realty' ),
 			'playfair-display'  => esc_html__( 'Playfair Display', 'havenlytics-realty' ),
 			'merriweather'      => esc_html__( 'Merriweather', 'havenlytics-realty' ),
 			'system'            => esc_html__( 'System Default', 'havenlytics-realty' ),
@@ -82,6 +83,7 @@ function hvn_realty_get_font_stack_map() {
 		'dm-sans'           => "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
 		'outfit'            => "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
 		'manrope'           => "'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+		'fraunces'          => "'Fraunces', Georgia, 'Times New Roman', serif",
 		'playfair-display'  => "'Playfair Display', Georgia, 'Times New Roman', serif",
 		'merriweather'      => "'Merriweather', Georgia, 'Times New Roman', serif",
 		'system'            => "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif",
@@ -109,6 +111,7 @@ function hvn_realty_get_google_fonts_api_map() {
 		'dm-sans'           => 'DM+Sans:wght@400;500;600;700',
 		'outfit'            => 'Outfit:wght@400;500;600;700',
 		'manrope'           => 'Manrope:wght@400;500;600;700',
+		'fraunces'          => 'Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700',
 		'playfair-display'  => 'Playfair+Display:wght@400;600;700',
 		'merriweather'      => 'Merriweather:wght@400;700',
 	);
@@ -121,12 +124,13 @@ function hvn_realty_get_google_fonts_api_map() {
  */
 function hvn_realty_get_google_font_families() {
 	$body    = hvn_realty_sanitize_font_choice( get_theme_mod( 'hvn_realty_body_font_family', 'inter' ) );
-	$heading = hvn_realty_sanitize_font_choice( get_theme_mod( 'hvn_realty_heading_font_family', 'poppins' ) );
+	$heading = hvn_realty_sanitize_font_choice( get_theme_mod( 'hvn_realty_heading_font_family', 'fraunces' ) );
+	$nav     = hvn_realty_sanitize_font_choice( get_theme_mod( 'hvn_realty_nav_font_family', 'inter' ) );
 
 	$map = hvn_realty_get_google_fonts_api_map();
 
 	// Always load theme default pair so typography works even before Customizer saves.
-	$slugs = array_unique( array( 'inter', 'poppins', $body, $heading ) );
+	$slugs = array_unique( array( 'inter', 'fraunces', $body, $heading, $nav ) );
 
 	$families = array();
 	foreach ( $slugs as $slug ) {
@@ -541,6 +545,149 @@ function hvn_realty_get_header_cta_url() {
 }
 
 /**
+ * Resolve the account / sign-in URL (WooCommerce account when present).
+ *
+ * @return string
+ */
+function hvn_realty_get_signin_url() {
+	$url = '';
+
+	if ( function_exists( 'wc_get_page_permalink' ) ) {
+		$url = wc_get_page_permalink( 'myaccount' );
+	}
+
+	if ( empty( $url ) ) {
+		$url = wp_login_url();
+	}
+
+	/**
+	 * Filter the header sign-in URL.
+	 *
+	 * @param string $url Sign-in URL.
+	 */
+	return (string) apply_filters( 'hvn_realty_signin_url', $url );
+}
+
+/**
+ * Resolve configured social profile links (theme-wide).
+ *
+ * Reuses the existing hvn_realty_social_* theme mods (no duplicate settings)
+ * and adds LinkedIn/YouTube. Only networks with a saved URL are returned.
+ *
+ * @return array<string, array{label: string, url: string}>
+ */
+function hvn_realty_get_social_links() {
+	$networks = array(
+		'facebook'  => __( 'Facebook', 'havenlytics-realty' ),
+		'instagram' => __( 'Instagram', 'havenlytics-realty' ),
+		'twitter'   => __( 'X / Twitter', 'havenlytics-realty' ),
+		'linkedin'  => __( 'LinkedIn', 'havenlytics-realty' ),
+		'youtube'   => __( 'YouTube', 'havenlytics-realty' ),
+	);
+
+	$links = array();
+
+	foreach ( $networks as $key => $label ) {
+		$url = (string) get_theme_mod( 'hvn_realty_social_' . $key, '' );
+		if ( '' !== trim( $url ) ) {
+			$links[ $key ] = array(
+				'label' => $label,
+				'url'   => $url,
+			);
+		}
+	}
+
+	/**
+	 * Filter the theme social profile links.
+	 *
+	 * @param array<string, array{label: string, url: string}> $links Social links.
+	 */
+	return apply_filters( 'hvn_realty_social_links', $links );
+}
+
+/**
+ * Whether the reusable header action buttons should render in a context.
+ *
+ * The header actions are shown on every context by default (homepage, internal
+ * pages and the mobile menu) so the Sign In / List a Property buttons are
+ * global. A saved global toggle (hvn_realty_show_header_actions) overrides every
+ * context, so anyone who disabled the buttons keeps them hidden.
+ *
+ * @param string $context Visual context: default|home|mobile.
+ * @return bool
+ */
+function hvn_realty_show_header_actions( $context = 'default' ) {
+	unset( $context );
+
+	return (bool) get_theme_mod( 'hvn_realty_show_header_actions', true );
+}
+
+/**
+ * Whether header action links open in a new browser tab.
+ *
+ * @return bool
+ */
+function hvn_realty_header_actions_open_new_tab() {
+	return (bool) get_theme_mod( 'hvn_realty_header_actions_new_tab', false );
+}
+
+/**
+ * Resolve the reusable header action buttons.
+ *
+ * When the global action settings are empty the function falls back to one
+ * shared default for every context (homepage, internal pages and the mobile
+ * menu): the Sign In secondary button plus the List a Property primary button.
+ * As soon as the user fills the global Customizer fields, those values are used
+ * everywhere instead. Only buttons with a non-empty label are returned,
+ * secondary first so the primary button is emphasised last.
+ *
+ * @param string $context Visual context: default|home|mobile.
+ * @return array<int, array{label: string, url: string, variant: string}>
+ */
+function hvn_realty_get_header_action_buttons( $context = 'default' ) {
+	$primary_label   = (string) get_theme_mod( 'hvn_realty_header_primary_label', '' );
+	$primary_url     = (string) get_theme_mod( 'hvn_realty_header_primary_url', '' );
+	$secondary_label = (string) get_theme_mod( 'hvn_realty_header_secondary_label', '' );
+	$secondary_url   = (string) get_theme_mod( 'hvn_realty_header_secondary_url', '' );
+
+	$configured = ( '' !== trim( $primary_label ) || '' !== trim( $secondary_label ) );
+
+	if ( ! $configured ) {
+		// Shared global default (homepage behavior applied to every context).
+		$secondary_label = __( 'Sign In', 'havenlytics-realty' );
+		$secondary_url   = hvn_realty_get_signin_url();
+		$primary_label   = (string) get_theme_mod( 'hvn_realty_home_header_cta_label', __( 'List a Property', 'havenlytics-realty' ) );
+		$primary_url     = (string) get_theme_mod( 'hvn_realty_home_header_cta_url', '#hvn-theme-home-search' );
+	}
+
+	$buttons = array();
+
+	if ( '' !== trim( $secondary_label ) ) {
+		$buttons[] = array(
+			'label'   => $secondary_label,
+			'url'     => '' !== trim( $secondary_url ) ? $secondary_url : home_url( '/' ),
+			'variant' => 'secondary',
+		);
+	}
+
+	if ( '' !== trim( $primary_label ) ) {
+		$buttons[] = array(
+			'label'   => $primary_label,
+			'url'     => '' !== trim( $primary_url ) ? $primary_url : home_url( '/' ),
+			'variant' => 'primary',
+		);
+	}
+
+	/**
+	 * Filter the reusable header action buttons.
+	 *
+	 * @param array<int, array<string, string>> $buttons Button definitions.
+	 * @param string                            $context Visual context.
+	 */
+	return apply_filters( 'hvn_realty_header_action_buttons', $buttons, $context );
+}
+
+/**
  * Get footer column count.
  *
  * @return int
@@ -586,33 +733,6 @@ function hvn_realty_get_base_font_size() {
 function hvn_realty_get_customizer_text_preview_bindings() {
 	return apply_filters(
 		'hvn_realty_customizer_text_preview_bindings',
-		array(
-			'hvn_realty_hero_search_title'       => array(
-				'selector' => '#hvn-realty-hero-search-title',
-			),
-			'hvn_realty_hero_search_subtitle'    => array(
-				'selector'      => '#hvn-realty-hero-search-subtitle',
-				'toggleHidden'  => true,
-			),
-			'hvn_realty_hero_search_button_text' => array(
-				'selector' => '.hvn-realty-hero-search__submit',
-			),
-			'hvn_realty_hero_search_tabs_label'  => array(
-				'selector'      => '#hvn-realty-hero-search-tabs-label',
-				'toggleHidden'  => true,
-			),
-			'hvn_realty_home_property_types_title'    => array(
-				'selector' => '#hvn-realty-property-types-title',
-			),
-			'hvn_realty_home_property_types_subtitle' => array(
-				'selector' => '#hvn-realty-section-property-types .hvn-realty-section__subtitle',
-			),
-			'hvn_realty_home_testimonials_title'      => array(
-				'selector' => '#hvn-realty-testimonials-title',
-			),
-			'hvn_realty_home_testimonials_subtitle'   => array(
-				'selector' => '#hvn-realty-section-testimonials .hvn-realty-section__subtitle',
-			),
-		)
+		array()
 	);
 }

@@ -55,10 +55,10 @@
 .hvn-layout-single .hvn-blog-pagination .nav-links a:hover,
 .hvn-layout-blog .hvn-blog-pagination .nav-links a:focus-visible,
 .hvn-layout-single .hvn-blog-pagination .nav-links a:focus-visible {
-	background: color-mix(in srgb, var(--hvn-primary, #6c60fe) 8%, #fff);
+	background: color-mix(in srgb, var(--hvn-primary, #C9A36B) 8%, #fff);
 	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
 	color: var(--hvn-primary, var(--hvn-theme-brand-primary));
-	box-shadow: 0 4px 12px color-mix(in srgb, var(--hvn-primary, #6c60fe) 18%, transparent);
+	box-shadow: 0 4px 12px color-mix(in srgb, var(--hvn-primary, #C9A36B) 18%, transparent);
 }
 
 .hvn-layout-blog .hvn-blog-pagination .page-numbers.current,
@@ -68,7 +68,7 @@
 	background: var(--hvn-primary, var(--hvn-theme-brand-primary));
 	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
 	color: var(--hvn-theme-color-white, #fff);
-	box-shadow: 0 6px 16px color-mix(in srgb, var(--hvn-primary, #6c60fe) 35%, transparent);
+	box-shadow: 0 6px 16px color-mix(in srgb, var(--hvn-primary, #C9A36B) 35%, transparent);
 }
 
 .hvn-layout-blog .hvn-blog-pagination .page-numbers.dots,

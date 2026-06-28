@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.24.0
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,52 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.0.2 - June 27, 2026 =
+* Final UI/UX polish: homepage header now uses the same navigation component as internal pages — dropdown child menus work on desktop hover, keyboard, and mobile touch, with arrow indicators and active highlighting
+* Hero search "More Filters" button moved inline to the right of the Buy/Rent/Sell tabs; expanded panel regrouped with consistent field heights and a responsive grid (4 columns desktop, 2 tablet, 1 mobile)
+* Fixed Homepage Section Order drag-and-drop (control now binds on lazy embed and uses the correct sortable engine; reordering saves and refreshes the preview)
+* Why Choose Us converted to an unlimited repeater (icon, title, description, optional link) with drag-and-drop reorder, duplicate and delete; legacy card values are migrated automatically and never deleted
+* Mobile hero rebuilt across 320–768px breakpoints: no overflow, stacked actions, wrapping stats, fitted search panel and scaled images
+* Mobile menu reliability hardened: single toggle handler, overlay click-to-close, Escape, body scroll lock, resize auto-close, accordion submenus, and a higher z-index so the hamburger is always tappable
+* Desktop and mobile headers now share one Site Identity logo — no second logo setting
+* Customizer completion: every homepage section now has independent style controls (background, text color, spacing top/bottom, animation toggle) with live preview
+* New drag-and-drop Homepage Section Order manager — reorder sections and toggle visibility without code edits; order saved in theme_mod
+* Testimonials repeater control fully registered in the Customizer (unlimited items, photo, name, position, rating, content, drag-and-drop reorder, delete)
+* Hero search "More Filters" panel — collapsed by default with smooth expand animation; adds property status, min price, bathrooms, keywords and min area fields
+* Global colors and typography now update the frontend instantly: primary/secondary propagate to plugin brand variables in the Customizer preview; navigation font family control added
+* Homepage inherits global `--hvn-primary` / `--hvn-secondary` tokens for buttons and accents without layout changes
+* Removed misleading plugin-only color notice from Global Design — Theme Customizer remains the branding source of truth
+* Backward compatible: existing theme_mods, widgets and menus are never deleted or overwritten
+
+= 2.0.1 - June 27, 2026 =
+* UI system consolidation so the theme and Havenlytics plugin feel like one product
+* Unified global design tokens: container width, spacing, section gap, radius and shadow are emitted once on `:root` and shared by the theme and plugin
+* Theme is now the single branding source of truth — the plugin brand variables (`--hvnly-brand-*`) inherit the Theme Customizer colors (Theme Customizer → Theme Default → Plugin Default); no duplicate color settings
+* Homepage container width now follows the global Customizer container width
+* New reusable `hvn-theme-header-actions` component used on every header (homepage, internal pages and mobile) with Customizer controls: show/hide, primary & secondary label/URL, open in new tab
+* New reusable social-links component shared by the footer and mobile menu (Facebook, Instagram, X, LinkedIn, YouTube)
+* Mobile menu now includes the header action buttons and social icons; existing animated hamburger, slide-in, overlay, scroll-lock and desktop auto-close retained
+* Redesigned footer: brand block (logo, description, social) + unified responsive widget grid; new dynamic "Property Locations" and "Contact Information" widgets (locations hides gracefully when the plugin is inactive)
+* New dedicated `footer-bottom` menu location (Privacy / Terms / Sitemap) with copyright on the left and the menu on the right
+* New Customizer footer fields: brand description and contact address / phone / email / business hours
+* Fresh-install footer seeding updated to the new layout (Quick Links, Property Locations, Contact) — only seeds when every footer area is empty; never overwrites existing widgets
+* Fresh-install primary menu now adds Commercial / Let / Rent / Sale as children of the Search item (only when a new menu is created)
+* Backward compatible: no settings, menus, widgets or theme mods are deleted; saved values continue to drive the site
+
+= 2.0.0 - June 26, 2026 =
+* Complete homepage rebuild from the ground up to match the new Havenlytics Realty premium design
+* Brand-new homepage presentation layer: dedicated homepage header and footer, hero, integrated search, Why Choose Us, featured properties, property types, locations, agents, testimonials, latest insights, call to action and newsletter
+* Single, self-contained homepage stylesheet (`assets/css/home.css`) — all legacy homepage CSS modules removed; styles scoped to `body.hvn-theme-home`
+* Single vanilla-JavaScript homepage file (`assets/js/home.js`) — sticky header, mobile menu, animated counters, scroll reveal, search tabs, testimonials slider, back-to-top; all legacy homepage scripts removed
+* Consistent `hvn-theme-` prefix across every homepage class, ID, CSS variable and JavaScript function
+* Homepage interactive map removed from the homepage (map/search remain available on dedicated property search pages)
+* Agencies section removed from the homepage (the agency archive remains available elsewhere)
+* Rebuilt premium agent section driven by the existing agent query and helper data
+* Rebuilt Customizer for every visible homepage heading, subtitle, image, statistic, button, toggle and section; obsolete map, department, hero-search and agency homepage controls retired (stored values kept, not rendered)
+* Dynamic content preserved: properties, property search, blog, menus, logo, widgets and site identity
+* Performance: the homepage now loads less CSS and JavaScript than before, with no unused homepage assets
+* Existing user data, theme mods, menus, widgets, media, listings, agents and agencies remain untouched on update
 
 = 1.24.0 - June 23, 2026 =
 * Added automatic default logo assignment on fresh theme activation.

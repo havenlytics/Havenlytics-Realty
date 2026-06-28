@@ -17,6 +17,7 @@ desktop.ini
 
 # Dev / audit tooling (not runtime)
 bin/
+docs/
 node_modules/
 vendor/
 composer.json

@@ -11,12 +11,12 @@
 			"palette": [
 				{
 					"slug": "primary",
-					"color": "var(--hvn-primary, #6C60FE)",
+					"color": "var(--hvn-primary, #C9A36B)",
 					"name": "Primary"
 				},
 				{
 					"slug": "secondary",
-					"color": "var(--hvn-secondary, #764ba2)",
+					"color": "var(--hvn-secondary, #A9803F)",
 					"name": "Secondary"
 				},
 				{

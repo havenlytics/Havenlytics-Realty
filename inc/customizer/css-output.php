@@ -11,9 +11,10 @@
  * @return string
  */
 function hvn_realty_get_design_tokens_css() {
-	$primary     = hvn_realty_get_design_token( 'primary', '#6C60FE' );
-	$secondary   = hvn_realty_get_design_token( 'secondary', '#764ba2' );
-	$accent      = hvn_realty_get_design_token( 'accent', '#FF9AA2' );
+	$defaults    = function_exists( 'hvn_realty_get_brand_color_defaults' ) ? hvn_realty_get_brand_color_defaults() : array( 'primary' => '#C9A36B', 'secondary' => '#A9803F', 'accent' => '#FF9AA2' );
+	$primary     = hvn_realty_get_design_token( 'primary', $defaults['primary'] );
+	$secondary   = hvn_realty_get_design_token( 'secondary', $defaults['secondary'] );
+	$accent      = hvn_realty_get_design_token( 'accent', $defaults['accent'] );
 	$color_bridge = function_exists( 'hvn_realty_get_color_bridge_css' ) ? hvn_realty_get_color_bridge_css() : '';
 	$text        = get_theme_mod( 'hvn_realty_text_color', '#1E1E2F' );
 	$background  = get_theme_mod( 'hvn_realty_background_color', '#F8F8F8' );
@@ -25,7 +26,8 @@ function hvn_realty_get_design_tokens_css() {
 	$scale       = hvn_realty_get_heading_scale_multiplier();
 
 	$body_font    = hvn_realty_sanitize_font_choice( get_theme_mod( 'hvn_realty_body_font_family', 'inter' ) );
-	$heading_font = hvn_realty_sanitize_font_choice( get_theme_mod( 'hvn_realty_heading_font_family', 'poppins' ) );
+	$heading_font = hvn_realty_sanitize_font_choice( get_theme_mod( 'hvn_realty_heading_font_family', 'fraunces' ) );
+	$nav_font     = hvn_realty_sanitize_font_choice( get_theme_mod( 'hvn_realty_nav_font_family', 'inter' ) );
 
 	$footer_bg   = get_theme_mod( 'hvn_realty_footer_bg_color', '#212529' );
 	$footer_text = get_theme_mod( 'hvn_realty_footer_text_color', '#adb5bd' );
@@ -34,11 +36,26 @@ function hvn_realty_get_design_tokens_css() {
 	$primary_dark  = hvn_realty_darken_color( $primary, 10 );
 	$primary_light = hvn_realty_lighten_color( $primary, 20 );
 
+	$success = sanitize_hex_color( get_theme_mod( 'hvn_realty_success_color', '#00B46A' ) );
+	$warning = sanitize_hex_color( get_theme_mod( 'hvn_realty_warning_color', '#FFB507' ) );
+	$danger  = sanitize_hex_color( get_theme_mod( 'hvn_realty_danger_color', '#FF4D4F' ) );
+	$success = $success ? $success : '#00B46A';
+	$warning = $warning ? $warning : '#FFB507';
+	$danger  = $danger ? $danger : '#FF4D4F';
+
 	return ':root {
 	' . $color_bridge . '
+	--hvn-primary-dark: ' . esc_attr( $primary_dark ) . ';
+	--hvn-primary-light: ' . esc_attr( $primary_light ) . ';
+	--hvn-success: ' . esc_attr( $success ) . ';
+	--hvn-warning: ' . esc_attr( $warning ) . ';
+	--hvn-danger: ' . esc_attr( $danger ) . ';
 	--hvn-theme-primary: var(--hvn-primary);
 	--hvn-theme-secondary: var(--hvn-secondary);
 	--hvn-theme-accent: var(--hvn-accent);
+	--hvn-theme-success: var(--hvn-success);
+	--hvn-theme-warning: var(--hvn-warning);
+	--hvn-theme-danger: var(--hvn-danger);
 	--hvn-text: ' . esc_attr( $text ) . ';
 	--hvn-bg: ' . esc_attr( $background ) . ';
 	--hvn-border: ' . esc_attr( $border ) . ';
@@ -49,6 +66,7 @@ function hvn_realty_get_design_tokens_css() {
 	--hvn-heading-scale: ' . esc_attr( $scale ) . ';
 	--hvn-font-body: ' . hvn_realty_get_font_stack_for_css( $body_font ) . ';
 	--hvn-font-heading: ' . hvn_realty_get_font_stack_for_css( $heading_font ) . ';
+	--hvn-font-nav: ' . hvn_realty_get_font_stack_for_css( $nav_font ) . ';
 	--hvn-h1-size: calc(var(--hvn-font-size) * 3 * var(--hvn-heading-scale));
 	--hvn-h2-size: calc(var(--hvn-font-size) * 2.25 * var(--hvn-heading-scale));
 	--hvn-h3-size: calc(var(--hvn-font-size) * 1.875 * var(--hvn-heading-scale));
@@ -66,6 +84,12 @@ function hvn_realty_get_design_tokens_css() {
 	--hvn-theme-border-color: var(--hvn-border);
 	--hvn-theme-border-radius-md: var(--hvn-radius);
 	--hvn-theme-container-max-width: var(--hvn-container);
+	--hvn-theme-container-width: var(--hvn-container);
+	--hvn-theme-radius: var(--hvn-radius);
+	--hvn-theme-spacing: 1.5rem;
+	--hvn-theme-section-gap: clamp(3rem, 6vw, 6rem);
+	--hvn-theme-shadow: 0 18px 40px -12px rgba(16, 24, 40, 0.12);
+	--hvn-theme-shadow-sm: 0 2px 10px rgba(16, 24, 40, 0.06);
 	--hvn-theme-font-size-md: var(--hvn-font-size);
 	--hvn-theme-font-family-base: var(--hvn-font-body);
 	--hvn-theme-font-family-heading: var(--hvn-font-heading);
@@ -74,7 +98,8 @@ function hvn_realty_get_design_tokens_css() {
 	--hvn-theme-footer-bg: var(--hvn-footer-bg);
 	--hvn-theme-footer-color: var(--hvn-footer-text);
 	--hvn-theme-footer-link-color: var(--hvn-footer-link);
-}';
+}
+';
 }
 
 /**

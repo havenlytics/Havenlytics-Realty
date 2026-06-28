@@ -89,7 +89,7 @@ body.hvn-container-full .hvn-layout-single.hvn-has-sidebar .hvn-theme-layout-row
 	font-weight: 700;
 	margin: 0 0 1rem;
 	padding-bottom: 0.75rem;
-	border-bottom: 2px solid color-mix(in srgb, var(--hvn-primary, #6c60fe) 35%, transparent);
+	border-bottom: 2px solid color-mix(in srgb, var(--hvn-primary, #C9A36B) 35%, transparent);
 	color: var(--hvn-text, var(--hvn-theme-text-primary));
 }
 
@@ -143,8 +143,8 @@ body.hvn-container-full .hvn-layout-single.hvn-has-sidebar .hvn-theme-layout-row
 	margin: 0 0.35rem 0.35rem 0;
 	border-radius: 999px;
 	font-size: 0.8125rem !important;
-	background: color-mix(in srgb, var(--hvn-primary, #6c60fe) 8%, transparent);
-	border: 1px solid color-mix(in srgb, var(--hvn-primary, #6c60fe) 18%, transparent);
+	background: color-mix(in srgb, var(--hvn-primary, #C9A36B) 8%, transparent);
+	border: 1px solid color-mix(in srgb, var(--hvn-primary, #C9A36B) 18%, transparent);
 }
 
 .hvn-layout-blog .hvn-theme-sidebar-area .tagcloud a:hover,

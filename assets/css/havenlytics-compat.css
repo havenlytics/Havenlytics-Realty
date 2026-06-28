@@ -21,7 +21,7 @@
 	padding-inline: 0;
 }
 
-.hvn-realty-havenlytics-view .hvnly-content-wrapper
+.hvn-realty-havenlytics-view  .hvn-realty-plugin-shell
 .hvnly-container {
     width: 100%;
     margin: 0 auto;
@@ -29,10 +29,22 @@
     padding-right: 0;
 }
 
+.hvnly-property-search-shortcode
+.hvnly-property-section-title{display: none;}
+
 .hvn-realty-havenlytics-view .hvnly-content-wrapper
 .hvnly-property--archive {
     
     padding: 0
+}
+
+.hvnly-property-archive .hvnly-property-archive__content-wrapper
+.hvnly-container {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: var(--hvnly-space-md);
+    padding-right: var(--hvnly-space-md);
+    transition: max-width 0.3s ease;
 }
 
 .wp-theme-havenlytics-realty
@@ -43,7 +55,7 @@
 }
 
 .hvn-realty-plugin-shell__breadcrumbs {
-	padding-top: var(--hvn-theme-space-lg, 1.5rem);
+	padding-top: 0;
 	padding-bottom: var(--hvn-theme-space-sm, 0.75rem);
 }
 
@@ -82,15 +94,15 @@ body.hvn-realty-homepage .hvnly-property-breadcrumb {
 .hvn-realty-havenlytics-view .hvnly-btn-primary,
 .hvn-realty-havenlytics-view .hvnly-button-primary,
 .hvn-realty-havenlytics-view button.hvnly-property-single__action-btn--primary {
-	background-color: var(--hvn-realty-plugin-primary, var(--hvn-theme-brand-primary, #6c60fe));
-	border-color: var(--hvn-realty-plugin-primary, var(--hvn-theme-brand-primary, #6c60fe));
+	background-color: var(--hvnly-brand-primary, var(--hvn-primary));
+	border-color: var(--hvnly-brand-primary, var(--hvn-primary));
 }
 
 .hvn-realty-havenlytics-view .hvnly-btn-primary:hover,
 .hvn-realty-havenlytics-view .hvnly-button-primary:hover,
 .hvn-realty-havenlytics-view button.hvnly-property-single__action-btn--primary:hover {
-	background-color: var(--hvn-theme-brand-primary-dark, #5548e6);
-	border-color: var(--hvn-theme-brand-primary-dark, #5548e6);
+	background-color: var(--hvnly-brand-secondary, var(--hvn-secondary));
+	border-color: var(--hvnly-brand-secondary, var(--hvn-secondary));
 }
 
 /* .hvn-realty-havenlytics-view a {
@@ -158,7 +170,7 @@ body.wp-theme-havenlytics-realty
 
 .hvn-realty-plugin-property .hvnly-property-archive,
 .hvn-realty-plugin-property .hvnly-property-grid-view {
-	--hvnly-brand-color: var(--hvn-realty-plugin-primary, var(--hvn-theme-brand-primary, #6c60fe));
+	--hvnly-brand-color: var(--hvnly-brand-primary, var(--hvn-primary));
 }
 
 .hvn-realty-plugin-property .hvnly-property-card,
@@ -248,95 +260,6 @@ body.wp-theme-havenlytics-realty
 .hvn-realty-plugin-page .hvn-theme-page-content > .hvn-page-article,
 .hvn-realty-plugin-shortcode-page .hvn-theme-page-content > .hvn-page-article {
 	padding-top: var(--hvn-theme-space-md, 1rem);
-}
-
-/* -------------------------------------------------------------------------
-   Homepage embedded sections (from Phase 1)
-   ------------------------------------------------------------------------- */
-
-.hvn-realty-home .hvnly-content-wrapper {
-	max-width: 100%;
-	padding-inline: 0;
-}
-
-.hvn-realty-home .hvn-realty-home-section__content .hvnly-property-archive,
-.hvn-realty-home .hvn-realty-home-section__content .hvnly-agents-archive,
-.hvn-realty-home .hvn-realty-home-section__content .hvnly-agencies-archive {
-	margin-top: 0;
-}
-
-.hvn-realty-home .hvn-realty-home-plugin-slim .hvnly-with-sidebar__contents__grids {
-	display: block !important;
-	grid-template-columns: 1fr !important;
-}
-
-.hvn-realty-home-map .leaflet-popup-content-wrapper,
-.hvn-realty-home-map .hvnly-map-popup {
-	border-radius: var(--hvn-radius, 8px);
-}
-
-/* Homepage hero map — Customizer vh height (overrides plugin 550px fixed heights). */
-.hvn-realty-section--hero .hvn-realty-hero__map,
-.hvn-realty-section--hero .hvn-realty-home-map,
-.hvn-realty-section--hero .hvn-realty-home-map__canvas,
-.hvn-realty-section--hero #hvnly-map-placeholder,
-.hvn-realty-section--hero .hvnly-map-placeholder,
-.hvn-realty-section--hero .hvnly-map-view,
-.hvn-realty-section--hero .hvnly-map-container,
-.hvn-realty-section--hero .hvnly-properties-map,
-.hvn-realty-section--hero #hvnly-properties-map,
-.hvn-realty-section--hero .leaflet-container {
-	height: var(--hvn-realty-hero-height, 70vh) !important;
-	min-height: var(--hvn-realty-hero-height, 70vh) !important;
-	max-height: none;
-	border-radius: 0;
-}
-
-@media (max-width: 640px) {
-	.hvn-realty-section--hero .hvn-realty-hero__map,
-	.hvn-realty-section--hero .hvn-realty-home-map,
-	.hvn-realty-section--hero .hvn-realty-home-map__canvas,
-	.hvn-realty-section--hero #hvnly-map-placeholder,
-	.hvn-realty-section--hero .hvnly-map-placeholder,
-	.hvn-realty-section--hero .hvnly-map-view,
-	.hvn-realty-section--hero .hvnly-map-container,
-	.hvn-realty-section--hero .hvnly-properties-map,
-	.hvn-realty-section--hero #hvnly-properties-map,
-	.hvn-realty-section--hero .leaflet-container {
-		height: var(--hvn-realty-hero-height-mobile, 50vh) !important;
-		min-height: var(--hvn-realty-hero-height-mobile, 50vh) !important;
-	}
-}
-
-.hvn-realty-home .hvnly-property-card,
-.hvn-realty-home .hvnly-agent-card,
-.hvn-realty-home .hvnly-agency-card {
-	border-radius: var(--hvn-radius, 8px);
-}
-
-/* Agent/agency card overlay badges (plugin CSS scopes __media to archive wrapper only). */
-.hvn-realty-home .hvnly-agent-card__media,
-.hvn-realty-home .hvnly-agency-card__media {
-	position: relative;
-	flex-shrink: 0;
-	overflow: hidden;border-radius: 12px;
-}
-.hvn-realty-home
-.hvn-realty-section
-.hvnly-agency-profile__logo {
-
-    text-align: center;
-}
-
-.hvn-realty-home .hvnly-agent-card__overlay-badge,
-.hvn-realty-home .hvnly-agency-card__overlay-badge {
-	z-index: 2;
-}
-
-.hvn-realty-home .hvnly-btn-primary,
-.hvn-realty-home .hvnly-button-primary {
-	background-color: var(--hvn-primary, var(--hvn-theme-brand-primary, #6c60fe));
-	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary, #6c60fe));
 }
 
 .hvn-havenlytics-active.hvn-property-view .hvn-theme-site-main {
