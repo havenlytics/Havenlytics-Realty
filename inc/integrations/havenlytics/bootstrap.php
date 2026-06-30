@@ -20,6 +20,7 @@ $integration_files = array(
 	'homepage-property-types.php',
 	'homepage-testimonials.php',
 	'hero-search.php',
+	'mobile-search-drawer.php',
 	'homepage.php',
 	'homepage-assets.php',
 	'breadcrumbs.php',

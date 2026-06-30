@@ -68,6 +68,7 @@ function hvn_realty_get_release_manifest() {
 		'inc/customizer/selective-refresh.php'           => 'customizer',
 		'inc/customizer/css-output.php'                  => 'customizer',
 		'inc/customizer/homepage-css-output.php'         => 'customizer',
+		'inc/customizer/mobile-search-drawer.php'      => 'customizer',
 		'inc/customizer.php'                             => 'customizer',
 
 		// Havenlytics integration.
@@ -77,6 +78,7 @@ function hvn_realty_get_release_manifest() {
 		'inc/integrations/havenlytics/homepage-settings.php' => 'integration',
 		'inc/integrations/havenlytics/homepage.php'        => 'integration',
 		'inc/integrations/havenlytics/hero-search.php'     => 'integration',
+		'inc/integrations/havenlytics/mobile-search-drawer.php' => 'integration',
 		'inc/integrations/havenlytics/homepage-property-types.php' => 'integration',
 		'inc/integrations/havenlytics/homepage-testimonials.php' => 'integration',
 		'inc/integrations/havenlytics/homepage-assets.php' => 'integration',
@@ -84,6 +86,7 @@ function hvn_realty_get_release_manifest() {
 		'inc/integrations/havenlytics/body-classes.php'    => 'integration',
 		'inc/integrations/havenlytics/plugin-shell.php'  => 'integration',
 		'inc/integrations/havenlytics/assets.php'          => 'integration',
+		'inc/integrations/elementor-color-bridge.php'    => 'integration',
 
 		// Required theme includes.
 		'inc/setup/theme-launch.php'                     => 'core-inc',
@@ -97,6 +100,7 @@ function hvn_realty_get_release_manifest() {
 		'inc/layout.php'                                 => 'core-inc',
 		'inc/template-functions.php'                     => 'core-inc',
 		'inc/breadcrumbs.php'                            => 'core-inc',
+		'inc/page-heading.php'                           => 'core-inc',
 		'inc/class-hvn-realty-walker-nav-menu.php'       => 'core-inc',
 		'inc/elementor.php'                              => 'optional-inc',
 		'inc/jetpack.php'                                => 'optional-inc',
@@ -121,6 +125,7 @@ function hvn_realty_get_release_manifest() {
 		'template-parts/footer/site-info.php'            => 'partials',
 		'template-parts/footer/back-to-top.php'          => 'partials',
 		'template-parts/layout/blog-content.php'         => 'partials',
+		'template-parts/layout/page-heading.php'         => 'partials',
 		'templates/blog/content-grid.php'                => 'partials',
 		'templates/blog/content-list.php'                => 'partials',
 		'templates/blog/content-single.php'              => 'partials',
@@ -153,6 +158,7 @@ function hvn_realty_get_release_manifest() {
 		'footer-home.php'                                => 'homepage',
 		'template-parts/home/section-hero.php'           => 'homepage',
 		'template-parts/home/section-search.php'         => 'homepage',
+		'template-parts/home/mobile-search-drawer.php'   => 'homepage',
 		'template-parts/home/section-why.php'            => 'homepage',
 		'template-parts/home/section-properties.php'     => 'homepage',
 		'template-parts/home/section-types.php'          => 'homepage',
@@ -165,6 +171,7 @@ function hvn_realty_get_release_manifest() {
 
 		// Core CSS.
 		'assets/css/theme.css'                           => 'assets-css',
+		'assets/css/base/forms.css'                      => 'assets-css',
 		'assets/css/polish.css'                          => 'assets-css',
 		'assets/css/layouts.css'                         => 'assets-css',
 		'assets/css/page.css'                            => 'assets-css',
@@ -185,6 +192,7 @@ function hvn_realty_get_release_manifest() {
 
 		// Homepage 2.0.0 stylesheet.
 		'assets/css/home.css'                            => 'assets-css',
+		'assets/css/home/mobile-search-drawer.css'       => 'assets-css',
 
 		// Core JS.
 		'assets/js/theme.js'                             => 'assets-js',
@@ -196,6 +204,7 @@ function hvn_realty_get_release_manifest() {
 		'assets/js/customizer-search-builder-control.js' => 'assets-js',
 		'assets/js/customizer-why-control.js'            => 'assets-js',
 		'assets/js/home.js'                              => 'assets-js',
+		'assets/js/home/mobile-search-drawer.js'         => 'assets-js',
 		'assets/js/admin-realty-onboarding.js'           => 'assets-js',
 		'search.php'                                     => 'templates',
 		'search' . 'form.php'                            => 'search-form',

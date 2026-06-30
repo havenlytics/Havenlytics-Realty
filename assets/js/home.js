@@ -115,6 +115,23 @@
 	function hvnThemeSearch() {
 		var tabs = document.querySelectorAll( '[data-hvn-theme-tab]' );
 		var departmentInput = document.getElementById( 'hvn-theme-home-search-department' );
+		var countEl = document.querySelector( '[data-hvn-theme-search-count]' );
+
+		function hvnThemeUpdateCount( tab ) {
+			if ( ! countEl ) {
+				return;
+			}
+			var raw = tab.getAttribute( 'data-hvn-theme-count' );
+			if ( null === raw ) {
+				return;
+			}
+			var value = parseInt( raw, 10 );
+			if ( isNaN( value ) ) {
+				return;
+			}
+			countEl.textContent = value.toLocaleString();
+		}
+
 		tabs.forEach( function ( tab ) {
 			tab.addEventListener( 'click', function () {
 				tabs.forEach( function ( t ) {
@@ -126,6 +143,7 @@
 				if ( departmentInput ) {
 					departmentInput.value = tab.getAttribute( 'data-hvn-theme-department' ) || '';
 				}
+				hvnThemeUpdateCount( tab );
 			} );
 		} );
 

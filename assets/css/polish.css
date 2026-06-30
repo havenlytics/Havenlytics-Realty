@@ -573,7 +573,7 @@ body:not(.hvn-header-no-cta) .hvn-theme-header-cta {
 }
 
 .hvn-theme-page-header {
-	margin-bottom: 2rem;
+	margin-bottom: 1.5rem;
 }
 
 .hvn-theme-page-header .hvn-theme-page-title::after {
@@ -1660,6 +1660,17 @@ body.hvn-theme-is-loading {
 	.hvn-realty-section__body {
 		overflow-x: clip;
 	}
+	.hvnly-agent-single__container
+	.hvnly-agent-single__stats {
+		display: block;
+		
+	}
+
+	.hvnly-agent-single__properties-header > div:first-child {
+    flex: 1;
+    min-width: 0;
+}
+
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -1775,7 +1786,7 @@ body.hvn-theme-is-loading {
     font-size: 1rem;
     font-weight: 500;
     color: var(--hvn-theme-ink);
-    text-decoration: none;
+    text-decoration: none;display: block;
 }
 .hvn-theme-home-mobile__links .menu-item-has-children {
 	position: relative;

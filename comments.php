@@ -67,14 +67,17 @@ if (post_password_required()) {
     <?php endif; // Check for have_comments(). ?>
 
     <?php
+    $commenter = wp_get_current_commenter();
+
     comment_form(
         array(
             'class_form'         => 'hvn-theme-comment-form',
             'title_reply'        => esc_html__('Leave a Comment', 'havenlytics-realty'),
             'title_reply_before' => '<h3 id="reply-title" class="hvn-theme-reply-title">',
             'title_reply_after'  => '</h3>',
-            'class_submit'       => 'hvn-theme-btn hvn-theme-form-submit',
-            'submit_button'      => '<button type="submit" class="%1$s" id="%2$s" name="%3$s">%4$s</button>',
+            'class_submit'       => 'submit hvn-theme-btn hvn-theme-btn-primary hvn-theme-form-submit',
+            'submit_button'      => '<button type="submit" name="%1$s" id="%2$s" class="%3$s">%4$s</button>',
+            'submit_field'       => '<p class="form-submit hvn-theme-comment-form__submit">%1$s %2$s</p>',
             'comment_field'      => '<div class="form-group"><label for="comment">' . esc_html__('Comment', 'havenlytics-realty') . '</label><textarea id="comment" name="comment" class="hvn-theme-form-control" rows="6" required></textarea></div>',
             'fields'             => array(
                 'author' => '<div class="form-group"><label for="author">' . esc_html__('Name', 'havenlytics-realty') . ' <span class="required">*</span></label><input id="author" name="author" type="text" class="hvn-theme-form-control" value="' . esc_attr($commenter['comment_author']) . '" required /></div>',

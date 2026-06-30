@@ -16,15 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $hvn_theme_home_walker = function_exists( 'hvn_realty_get_nav_menu_walker' ) ? hvn_realty_get_nav_menu_walker() : null;
-
-$hvn_theme_home_menu_args = array(
-	'theme_location' => 'primary',
-	'container'      => false,
-	'menu_class'     => 'hvn-theme-home-menu hvn-theme-nav-menu',
-	'fallback_cb'    => '__return_false',
-	'depth'          => 3,
-	'walker'         => $hvn_theme_home_walker,
-);
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -61,7 +52,16 @@ $hvn_theme_home_menu_args = array(
 		<nav id="site-navigation" class="hvn-theme-home-nav" aria-label="<?php esc_attr_e( 'Primary', 'havenlytics-realty' ); ?>">
 			<?php
 			if ( has_nav_menu( 'primary' ) ) {
-				wp_nav_menu( $hvn_theme_home_menu_args );
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'container'      => false,
+						'menu_class'     => 'hvn-theme-home-menu hvn-theme-nav-menu',
+						'fallback_cb'    => '__return_false',
+						'depth'          => 3,
+						'walker'         => $hvn_theme_home_walker,
+					)
+				);
 			}
 			?>
 		</nav>

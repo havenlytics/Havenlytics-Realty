@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'HVN_REALTY_VERSION' ) ) {
-	define( 'HVN_REALTY_VERSION', '2.0.2' );
+	define( 'HVN_REALTY_VERSION', '2.0.5' );
 }
 
 if ( ! defined( 'HVN_REALTY_TEMPLATE_URL' ) ) {
@@ -167,12 +167,14 @@ function hvn_realty_scripts() {
 
     if ( function_exists( 'hvn_realty_enqueue_theme_style' ) ) {
         hvn_realty_enqueue_theme_style( 'hvn-realty-theme', 'assets/css/theme.css', $font_deps );
-        hvn_realty_enqueue_theme_style( 'hvn-realty-polish', 'assets/css/polish.css', array( 'hvn-realty-theme' ) );
+        hvn_realty_enqueue_theme_style( 'hvn-realty-forms', 'assets/css/base/forms.css', array( 'hvn-realty-theme' ) );
+        hvn_realty_enqueue_theme_style( 'hvn-realty-polish', 'assets/css/polish.css', array( 'hvn-realty-forms' ) );
         hvn_realty_enqueue_theme_style( 'hvn-realty-layouts', 'assets/css/layouts.css', array( 'hvn-realty-polish' ) );
         hvn_realty_enqueue_theme_style( 'hvn-realty-style', 'style.css', array( 'hvn-realty-layouts' ) );
     } else {
         wp_enqueue_style( 'hvn-realty-theme', HVN_REALTY_TEMPLATE_URL . '/assets/css/theme.css', $font_deps, HVN_REALTY_VERSION );
-        wp_enqueue_style( 'hvn-realty-polish', HVN_REALTY_TEMPLATE_URL . '/assets/css/polish.css', array( 'hvn-realty-theme' ), HVN_REALTY_VERSION );
+        wp_enqueue_style( 'hvn-realty-forms', HVN_REALTY_TEMPLATE_URL . '/assets/css/base/forms.css', array( 'hvn-realty-theme' ), HVN_REALTY_VERSION );
+        wp_enqueue_style( 'hvn-realty-polish', HVN_REALTY_TEMPLATE_URL . '/assets/css/polish.css', array( 'hvn-realty-forms' ), HVN_REALTY_VERSION );
         wp_enqueue_style( 'hvn-realty-layouts', HVN_REALTY_TEMPLATE_URL . '/assets/css/layouts.css', array( 'hvn-realty-polish' ), HVN_REALTY_VERSION );
         wp_enqueue_style( 'hvn-realty-style', get_stylesheet_uri(), array( 'hvn-realty-layouts' ), HVN_REALTY_VERSION );
     }
@@ -571,11 +573,13 @@ hvn_realty_load_theme_file( 'inc/setup/theme-footer-widgets.php', false );
 hvn_realty_load_theme_file( 'inc/setup/theme-property-sidebar-widgets.php', false );
 hvn_realty_load_theme_file( 'inc/widgets/footer-widgets.php', false );
 hvn_realty_load_theme_file( 'inc/elementor.php', true );
+hvn_realty_load_theme_file( 'inc/integrations/elementor-color-bridge.php', true );
 hvn_realty_load_theme_file( 'inc/custom-header.php', false );
 hvn_realty_load_theme_file( 'inc/template-tags.php', false );
 hvn_realty_load_theme_file( 'inc/layout.php', false );
 hvn_realty_load_theme_file( 'inc/blog/bootstrap.php', false );
 hvn_realty_load_theme_file( 'inc/template-functions.php', false );
+hvn_realty_load_theme_file( 'inc/page-heading.php', false );
 hvn_realty_load_theme_file( 'inc/customizer.php', false );
 hvn_realty_load_theme_file( 'inc/breadcrumbs.php', false );
 hvn_realty_load_theme_file( 'inc/admin/realty-admin.php', true );

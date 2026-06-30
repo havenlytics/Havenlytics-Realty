@@ -242,6 +242,14 @@ function hvn_realty_customize_preview_js() {
 		$localize['fontWeightTokens'] = hvn_realty_get_font_weight_preview_map();
 	}
 
+	if ( function_exists( 'hvn_realty_get_mobile_search_drawer_preview_setting_ids' ) ) {
+		$localize['msdPreviewSettings'] = hvn_realty_get_mobile_search_drawer_preview_setting_ids();
+	}
+
+	if ( function_exists( 'hvn_realty_get_mobile_search_drawer_customizer_defaults' ) ) {
+		$localize['msdDefaults'] = hvn_realty_get_mobile_search_drawer_customizer_defaults();
+	}
+
 	wp_localize_script(
 		'hvn-realty-customizer',
 		'hvnRealtyCustomizer',

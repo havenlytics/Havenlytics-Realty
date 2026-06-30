@@ -94,6 +94,40 @@ body.hvn-theme-home :focus-visible {
 	border-radius: 4px;
 }
 
+@media (max-width: 991px) {
+	body.hvn-theme-home .hvn-theme-home-btn,
+	body.hvn-theme-home .hvn-theme-home-burger,
+	body.hvn-theme-home .hvn-theme-home-search__tab,
+	body.hvn-theme-home .hvn-theme-home-search__more,
+	body.hvn-theme-home .hvn-theme-home-msd-pill,
+	body.hvn-theme-home .hvn-theme-home-msd-chip,
+	body.hvn-theme-home .hvn-theme-home-msd-stepper-btn,
+	body.hvn-theme-home .hvn-theme-home-msd-search-submit,
+	body.hvn-theme-home .hvn-theme-home-msd-close-btn,
+	body.hvn-theme-home .hvn-theme-home-msd-drag-handle-wrap,
+	body.hvn-theme-home [data-hvn-msd-action] {
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
+	}
+}
+
+@media (hover: none) and (pointer: coarse) {
+	body.hvn-theme-home .hvn-theme-home-btn,
+	body.hvn-theme-home .hvn-theme-home-burger,
+	body.hvn-theme-home .hvn-theme-home-search__tab,
+	body.hvn-theme-home .hvn-theme-home-search__more,
+	body.hvn-theme-home .hvn-theme-home-msd-pill,
+	body.hvn-theme-home .hvn-theme-home-msd-chip,
+	body.hvn-theme-home .hvn-theme-home-msd-stepper-btn,
+	body.hvn-theme-home .hvn-theme-home-msd-search-submit,
+	body.hvn-theme-home .hvn-theme-home-msd-close-btn,
+	body.hvn-theme-home .hvn-theme-home-msd-drag-handle-wrap,
+	body.hvn-theme-home [data-hvn-msd-action] {
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
+	}
+}
+
 /* Neutralize global theme chrome so the homepage matches the prototype. */
 body.hvn-theme-home .hvn-theme-content {
 	margin: 0;
@@ -421,7 +455,7 @@ body:not(.hvn-theme-sticky-header) .hvn-theme-home-header {
     transition: background 0.4s var(--hvn-theme-ease);
 }
 .hvn-theme-home-header.hvn-theme-home-scrolled .hvn-theme-home-burger span {
-	background: var(--hvn-theme-ink);
+	background: var(--hvn-theme-gold);
 }
 .hvn-theme-home-burger span::before,
 .hvn-theme-home-burger span::after {
@@ -1584,6 +1618,14 @@ body.hvn-theme-home .hvn-theme-home-cta
 	body.hvn-theme-home .hvn-theme-home-footer__grid {
 		grid-template-columns: 1fr 1fr;
 	}
+
+	.hvn-theme-home-header__inner {
+		gap: 1rem;
+	}
+	.hvn-theme-home-container {
+		padding: 0 1rem;
+	}
+
 }
 
 @media (max-width: 991px) {
@@ -1593,6 +1635,28 @@ body.hvn-theme-home .hvn-theme-home-cta
 	}
 	body.hvn-theme-home .hvn-theme-home-burger {
 		display: flex;
+	}
+	/* Hero search: submit follows advanced fields (PHP outputs submit before advanced). */
+	body.hvn-theme-home .hvn-theme-home-search__tabrow {
+		order: 1;
+	}
+	body.hvn-theme-home .hvn-theme-home-search > .hvn-theme-home-search__field {
+		order: 2;
+	}
+	body.hvn-theme-home .hvn-theme-home-search__advanced {
+		order: 3;
+	}
+	body.hvn-theme-home .hvn-theme-home-search__note {
+		order: 4;
+	}
+	body.hvn-theme-home .hvn-theme-home-search__submit {
+		order: 5;
+		grid-column: 1 / -1;
+		width: 100%;
+		margin-top: 0.35rem;
+	}
+	body.hvn-theme-home .hvn-theme-home-search__advanced.is-open {
+		margin-bottom: 0.15rem;
 	}
 }
 
@@ -1674,8 +1738,13 @@ body.hvn-theme-home .hvn-theme-home-cta
 		align-items: flex-start;
 	}
 	body.hvn-theme-home .hvn-theme-home-section {
-		padding: 4rem 0;
+		padding: 2rem 0;
 	}
+	.hvn-theme-home-head {
+	
+		margin-bottom: 25px;
+	}
+
 }
 
 @media (max-width: 540px) {

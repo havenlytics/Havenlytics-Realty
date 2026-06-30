@@ -32,6 +32,13 @@
 .hvnly-property-search-shortcode
 .hvnly-property-section-title{display: none;}
 
+/* Theme page heading (page.php) is the canonical visible H1 on plugin shortcode pages. */
+.hvn-realty-plugin-page .hvnly-property-section-title,
+.hvn-realty-plugin-page .hvnly-property--archive__title,
+.hvn-realty-plugin-page h1.property-archive-title.page-title {
+	display: none;
+}
+
 .hvn-realty-havenlytics-view .hvnly-content-wrapper
 .hvnly-property--archive {
     

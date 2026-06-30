@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.2
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,19 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.0.5 - June 29, 2026 =
+* Mobile Search Drawer department pills now smooth-scroll to center the active department with scroll-snap and edge fade indicators for overflow
+* New Customizer section: Homepage → Mobile Search Drawer — full control over colors, spacing, typography, animation, and advanced drawer behavior with live preview
+
+= 2.0.4 - June 28, 2026 =
+* New mobile-only floating search dock and filter drawer on the homepage — appears after the hero search scrolls out of view, hides when the hero search returns, and reuses the same Havenlytics search parameters and dynamic taxonomies as the desktop hero search (no duplicate query logic)
+* Mobile hero search submit button order improved — Search is always the last action after More Filters on tablet and mobile (desktop layout unchanged)
+
+= 2.0.3 - June 28, 2026 =
+* Homepage hero search department tabs now load dynamically from the Property Department taxonomy — new departments appear automatically with no code changes (previously a fixed Buy/Rent/Sell set)
+* Fixed hero search returning mixed results: a selected Department is now a hard filter that all other criteria (keyword, type, status, location, beds, baths, reception, area, features, badges, price) narrow, instead of being widened by an OR relation
+* Listings note beneath the tabs now shows the real published-property count for the active Department and updates instantly when the active tab changes (previously a single site-wide total)
 
 = 2.0.2 - June 27, 2026 =
 * Final UI/UX polish: homepage header now uses the same navigation component as internal pages — dropdown child menus work on desktop hover, keyboard, and mobile touch, with arrow indicators and active highlighting

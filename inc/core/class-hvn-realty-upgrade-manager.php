@@ -29,6 +29,8 @@ class HVN_Realty_Upgrade_Manager {
 		'1.16.0' => array( 'HVN_Realty_Migrations', 'migrate_1160_locations_to_taxonomies' ),
 		'1.22.0' => array( 'HVN_Realty_Migrations', 'migrate_1220_starter_sites_baseline' ),
 		'1.23.0' => array( 'HVN_Realty_Migrations', 'migrate_1230_active_starter_option' ),
+		'2.0.5'  => array( 'HVN_Realty_Migrations', 'migrate_2050_homepage_sections' ),
+		'2.0.6'  => array( 'HVN_Realty_Migrations', 'migrate_2060_visibility_recovery' ),
 	);
 
 	/**
@@ -38,6 +40,7 @@ class HVN_Realty_Upgrade_Manager {
 	 */
 	public static function boot() {
 		self::maybe_run_upgrades();
+		self::maybe_run_patch_migrations();
 	}
 
 	/**
@@ -131,6 +134,64 @@ class HVN_Realty_Upgrade_Manager {
 
 		self::run_pending_migrations( $installed_version, $current_version );
 		update_option( self::VERSION_OPTION, $current_version, false );
+	}
+
+	/**
+	 * Run one-time migrations that must execute even when the stored version
+	 * already matches the package (patch-level data fixes).
+	 *
+	 * @return void
+	 */
+	private static function maybe_run_patch_migrations() {
+		$patch_migrations = array( '2.0.5', '2.0.6' );
+
+		foreach ( $patch_migrations as $migration_version ) {
+			if ( ! isset( self::$migrations[ $migration_version ] ) ) {
+				continue;
+			}
+
+			if ( self::has_migrated( $migration_version ) ) {
+				continue;
+			}
+
+			$skip_message = self::get_patch_migration_skip_message( $migration_version );
+			if ( null !== $skip_message ) {
+				self::append_migration_log( $migration_version, 'success', $skip_message );
+				continue;
+			}
+
+			self::run_migration( $migration_version );
+		}
+	}
+
+	/**
+	 * Optional skip reason for a patch migration (logged as success, not executed).
+	 *
+	 * @param string $migration_version Migration version key.
+	 * @return string|null Skip message or null to run the migration.
+	 */
+	private static function get_patch_migration_skip_message( $migration_version ) {
+		if ( '2.0.5' === $migration_version ) {
+			if ( is_callable( array( 'HVN_Realty_Migrations', 'should_run_homepage_section_migration' ) )
+				&& ! HVN_Realty_Migrations::should_run_homepage_section_migration()
+			) {
+				return 'Skipped: fresh install or already normalized.';
+			}
+
+			return null;
+		}
+
+		if ( '2.0.6' === $migration_version ) {
+			if ( is_callable( array( 'HVN_Realty_Migrations', 'should_run_visibility_recovery' ) )
+				&& ! HVN_Realty_Migrations::should_run_visibility_recovery()
+			) {
+				return 'Skipped: no miswritten homepage visibility keys.';
+			}
+
+			return null;
+		}
+
+		return null;
 	}
 
 	/**

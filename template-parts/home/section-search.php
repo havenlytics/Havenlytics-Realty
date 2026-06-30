@@ -1,6 +1,6 @@
 <?php
 /**
- * Homepage 2.0.2 — Property search panel (overlaps hero).
+ * Homepage 2.0.3 — Property search panel (overlaps hero).
  *
  * Fields render from the Search Builder configuration (theme_mod).
  *
@@ -46,10 +46,12 @@ $hvn_department_tabs = function_exists( 'hvn_realty_get_home_search_department_t
 	? hvn_realty_get_home_search_department_tabs()
 	: array();
 
-$hvn_default_department = '';
+$hvn_default_department  = '';
+$hvn_default_dept_count  = null;
 foreach ( $hvn_department_tabs as $hvn_tab ) {
 	if ( ! empty( $hvn_tab['is_default'] ) ) {
 		$hvn_default_department = isset( $hvn_tab['department'] ) ? (string) $hvn_tab['department'] : '';
+		$hvn_default_dept_count = isset( $hvn_tab['count'] ) ? (int) $hvn_tab['count'] : null;
 		break;
 	}
 }
@@ -58,10 +60,17 @@ $hvn_has_advanced = function_exists( 'hvn_realty_home_search_has_advanced_fields
 	? hvn_realty_home_search_has_advanced_fields()
 	: false;
 
-$hvn_listing_count = 0;
-if ( post_type_exists( 'hvnly_property' ) ) {
-	$hvn_counts = wp_count_posts( 'hvnly_property' );
-	$hvn_listing_count = isset( $hvn_counts->publish ) ? (int) $hvn_counts->publish : 0;
+// Listing count shown beneath the tabs reflects the active Department. It starts
+// on the default tab's count and is updated client-side as tabs change. When no
+// Department taxonomy is available, fall back to the total published count.
+if ( null !== $hvn_default_dept_count ) {
+	$hvn_listing_count = (int) $hvn_default_dept_count;
+} else {
+	$hvn_listing_count = 0;
+	if ( post_type_exists( 'hvnly_property' ) ) {
+		$hvn_counts        = wp_count_posts( 'hvnly_property' );
+		$hvn_listing_count = isset( $hvn_counts->publish ) ? (int) $hvn_counts->publish : 0;
+	}
 }
 ?>
 <div class="hvn-theme-home-container">
@@ -75,14 +84,16 @@ if ( post_type_exists( 'hvnly_property' ) ) {
 				<div class="hvn-theme-home-search__tabs" role="tablist" aria-label="<?php esc_attr_e( 'Listing type', 'havenlytics-realty' ); ?>">
 					<?php foreach ( $hvn_department_tabs as $hvn_tab_key => $hvn_tab ) : ?>
 						<?php
-						$hvn_is_active = ! empty( $hvn_tab['is_default'] );
-						$hvn_dept_slug = isset( $hvn_tab['department'] ) ? (string) $hvn_tab['department'] : '';
+						$hvn_is_active  = ! empty( $hvn_tab['is_default'] );
+						$hvn_dept_slug  = isset( $hvn_tab['department'] ) ? (string) $hvn_tab['department'] : '';
+						$hvn_dept_count = isset( $hvn_tab['count'] ) ? (int) $hvn_tab['count'] : 0;
 						?>
 						<button
 							type="button"
 							class="hvn-theme-home-search__tab<?php echo $hvn_is_active ? ' hvn-theme-home-active' : ''; ?>"
 							data-hvn-theme-tab="<?php echo esc_attr( $hvn_tab_key ); ?>"
 							data-hvn-theme-department="<?php echo esc_attr( $hvn_dept_slug ); ?>"
+							data-hvn-theme-count="<?php echo esc_attr( (string) $hvn_dept_count ); ?>"
 							role="tab"
 							aria-selected="<?php echo $hvn_is_active ? 'true' : 'false'; ?>"
 						><?php echo esc_html( $hvn_tab['label'] ); ?></button>
@@ -124,13 +135,13 @@ if ( post_type_exists( 'hvnly_property' ) ) {
 				</div>
 			<?php endif; ?>
 
-			<?php if ( $hvn_listing_count > 0 ) : ?>
+			<?php if ( $hvn_listing_count > 0 || ! empty( $hvn_department_tabs ) ) : ?>
 				<p class="hvn-theme-home-search__note">
 					<?php
 					printf(
 						/* translators: %s: number of listings. */
 						esc_html__( 'Searching %s verified listings updated this week.', 'havenlytics-realty' ),
-						'<b>' . esc_html( number_format_i18n( $hvn_listing_count ) ) . '</b>'
+						'<b data-hvn-theme-search-count>' . esc_html( number_format_i18n( $hvn_listing_count ) ) . '</b>'
 					);
 					?>
 				</p>

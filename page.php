@@ -34,6 +34,12 @@ if ( function_exists( 'hvn_realty_is_plugin_shortcode_page' ) && hvn_realty_is_p
 
 		<?php hvn_realty_breadcrumbs(); ?>
 
+		<?php
+		if ( function_exists( 'hvn_realty_render_page_heading' ) ) {
+			hvn_realty_render_page_heading();
+		}
+		?>
+
 
 
 		<?php if ( $has_sidebar ) : ?>

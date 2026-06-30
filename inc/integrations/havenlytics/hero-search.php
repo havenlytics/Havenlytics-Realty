@@ -50,59 +50,89 @@ function hvn_realty_home_search_get_terms( $taxonomy, $limit = 0 ) {
 }
 
 /**
- * Resolve a department slug from preferred candidates against live terms.
+ * Hero search department tabs, loaded dynamically from the Property Department
+ * taxonomy (hvnly_prop_depts).
  *
- * @param string[] $candidates Preferred slugs, highest priority first.
- * @return string Department slug or empty string when none match.
- */
-function hvn_realty_home_search_resolve_department_slug( array $candidates ) {
-	$terms = hvn_realty_home_search_get_terms( 'hvnly_prop_depts' );
-	if ( empty( $terms ) ) {
-		return '';
-	}
-
-	$slugs = wp_list_pluck( $terms, 'slug' );
-
-	foreach ( $candidates as $candidate ) {
-		if ( in_array( $candidate, $slugs, true ) ) {
-			return $candidate;
-		}
-	}
-
-	return '';
-}
-
-/**
- * Buy / Rent / Sell tab configuration mapped to Havenlytics department slugs.
+ * One tab is generated per published Department term, so adding a new
+ * Department in the plugin automatically adds a tab — nothing is hardcoded.
+ * The first term becomes the default (active) tab. Each tab carries the live
+ * published-property count for its Department so the listings note can update
+ * as the active tab changes.
  *
- * @return array<string, array{label:string, department:string, is_default:bool}>
+ * @return array<string, array{label:string, department:string, count:int, is_default:bool}>
  */
 function hvn_realty_get_home_search_department_tabs() {
-	$tabs = array(
-		'buy'  => array(
-			'label'      => __( 'Buy', 'havenlytics-realty' ),
-			'department' => hvn_realty_home_search_resolve_department_slug( array( 'sale', 'buy', 'for-sale' ) ),
-			'is_default' => true,
-		),
-		'rent' => array(
-			'label'      => __( 'Rent', 'havenlytics-realty' ),
-			'department' => hvn_realty_home_search_resolve_department_slug( array( 'rent', 'let' ) ),
-			'is_default' => false,
-		),
-		'sell' => array(
-			'label'      => __( 'Sell', 'havenlytics-realty' ),
-			'department' => hvn_realty_home_search_resolve_department_slug( array( 'commercial', 'sell' ) ),
-			'is_default' => false,
-		),
-	);
+	$terms = hvn_realty_home_search_get_terms( 'hvnly_prop_depts' );
+	$tabs  = array();
+	$first = true;
+
+	foreach ( $terms as $term ) {
+		if ( ! $term instanceof WP_Term ) {
+			continue;
+		}
+
+		$tabs[ $term->slug ] = array(
+			'label'      => $term->name,
+			'department' => $term->slug,
+			'count'      => max( 0, (int) $term->count ),
+			'is_default' => $first,
+		);
+
+		$first = false;
+	}
 
 	/**
-	 * Filter hero search department tab mapping.
+	 * Filter hero search department tabs.
 	 *
-	 * @param array<string, array{label:string, department:string, is_default:bool}> $tabs Tab config.
+	 * Tabs are built dynamically from the Property Department taxonomy; new
+	 * departments appear automatically without code changes.
+	 *
+	 * @param array<string, array{label:string, department:string, count:int, is_default:bool}> $tabs Tab config.
 	 */
 	return apply_filters( 'hvn_realty_home_search_department_tabs', $tabs );
 }
+
+/**
+ * Force selected-Department searches to AND every taxonomy clause together.
+ *
+ * The Havenlytics PropertyQueryArgsBuilder combines distinct taxonomies with an
+ * OR relation by default, which means a Department selection would be widened
+ * by every other taxonomy filter (Type, Location, Status, Features, Badges)
+ * instead of narrowing the results. When the hero search submits a Department
+ * the user expects that Department to be a hard filter that all other criteria
+ * refine, so we switch the tax_query relation to AND for those requests via the
+ * plugin's own query-args filter (no plugin files are modified).
+ *
+ * Requests without a Department (handled elsewhere, e.g. the plugin filter
+ * sidebar) keep the plugin's default behavior untouched.
+ *
+ * @param array<string, mixed> $args WP_Query args built by the plugin.
+ * @param array<string, mixed> $data Filter payload (URL/POST).
+ * @return array<string, mixed>
+ */
+function hvn_realty_home_search_enforce_department_relation( $args, $data ) {
+	if ( empty( $data['department'] ) ) {
+		return $args;
+	}
+
+	if ( empty( $args['tax_query'] ) || ! is_array( $args['tax_query'] ) ) {
+		return $args;
+	}
+
+	$clauses = 0;
+	foreach ( array_keys( $args['tax_query'] ) as $key ) {
+		if ( is_int( $key ) ) {
+			++$clauses;
+		}
+	}
+
+	if ( $clauses > 1 ) {
+		$args['tax_query']['relation'] = 'AND';
+	}
+
+	return $args;
+}
+add_filter( 'hvnly_property_query_args', 'hvn_realty_home_search_enforce_department_relation', 10, 2 );
 
 /**
  * Bedroom / bathroom / reception count options (plugin sidebar helpers when present).

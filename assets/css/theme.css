@@ -2229,7 +2229,7 @@ textarea:focus-visible,
 
 .hvn-theme-page-title {
     font-size: var(--hvn-theme-font-size-4xl);
-    margin-bottom: var(--hvn-theme-space-md);
+    margin-bottom: 0;
     position: relative;
     display: inline-block;
 }
@@ -2254,6 +2254,16 @@ textarea:focus-visible,
 }
 
 /* Breadcrumbs */
+.wp-theme-havenlytics-realty .hvnly-property-single__content-wrapper 
+.hvnly-property-single__header,
+.wp-theme-havenlytics-realty .hvnly-property-single__content-wrapper 
+.hvnly-property-breadcrumb{padding-top: 0;}
+wp-theme-havenlytics-realty .hvnly-property-single__content-wrapper 
+.hvnly-property-breadcrumb {
+    margin-bottom: var(--hvnly-space-md);
+
+}
+
 .hvn-theme-breadcrumbs {
     font-size: var(--hvn-theme-font-size-sm);
     margin-bottom: var(--hvn-theme-space-lg);
@@ -3213,6 +3223,24 @@ textarea:focus-visible,
   color: var(--hvn-theme-brand-error);
 }
 
+.hvn-theme-comment-form .form-submit {
+  margin-bottom: 0;
+}
+
+.hvn-theme-comment-form .hvn-theme-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--hvn-primary, var(--hvn-theme-button-bg));
+  color: var(--hvn-theme-button-color);
+  box-shadow: var(--hvn-theme-shadow-sm);
+}
+
+.hvn-theme-comment-form .hvn-theme-btn:hover,
+.hvn-theme-comment-form .hvn-theme-btn:focus {
+  background: var(--hvn-secondary, var(--hvn-theme-brand-secondary));
+  color: var(--hvn-theme-button-color);
+}
+
 .hvn-theme-form-submit {
   margin-top: var(--hvn-theme-space-sm);
 }
@@ -3496,6 +3524,7 @@ textarea:focus-visible,
 }
 
 /* Responsive Footer */
+
 @media (max-width: 768px) {
     .hvn-theme-site-footer {
         padding: var(--hvn-theme-space-2xl) 0 var(--hvn-theme-space-lg);
@@ -5370,10 +5399,52 @@ margin-top: 1.25rem;
 .hvn-theme-footer-bottom-menu a {
 	text-decoration: none;
 }
+.hvnly-property-single__details-card {
+    margin-bottom: var(--hvnly-space-md);
 
+}
+
+.hvnly-property-single__carousel-container {
+
+    margin: 0 auto;
+}
+
+
+@media (max-width: 991px) {
+    .hvn-theme-footer, .hvn-theme-site-footer {
+
+        padding: 0;
+        padding-bottom: 95px;
+    }
+
+    .hvn-theme-page-header {
+        margin-bottom: 1rem;
+    }
+
+    .hvn-theme-back-to-top.show, .hvn-scroll-top.show {
+        opacity: 0;
+    
+    }
+
+}
 @media (max-width: 575px) {
 	.hvn-theme-footer-bottom {
 		justify-content: center;
 		text-align: center;
+	}
+}
+
+/* Touch devices: remove default tap flash; :focus-visible rules keep keyboard rings. */
+@media (hover: none) and (pointer: coarse), (max-width: 991px) {
+	a,
+	button,
+	input,
+	select,
+	textarea,
+	summary,
+	label[for],
+	[role="button"],
+	[role="tab"] {
+		-webkit-tap-highlight-color: transparent;
 	}
 }

@@ -37,6 +37,7 @@ function hvn_realty_get_required_customizer_files() {
 		'selective-refresh.php',
 		'css-output.php',
 		'homepage-css-output.php',
+		'mobile-search-drawer.php',
 	);
 }
 
