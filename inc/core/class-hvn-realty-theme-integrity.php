@@ -226,6 +226,9 @@ class HVN_Realty_Theme_Integrity {
 			'present_count'    => function_exists( 'hvn_realty_get_release_manifest' )
 				? count( hvn_realty_get_release_manifest() ) - count( $missing_all )
 				: 0,
+			'asset_diagnostics' => class_exists( 'HVN_Realty_Asset_Loader', false )
+				? HVN_Realty_Asset_Loader::get_diagnostics()
+				: array(),
 		);
 	}
 

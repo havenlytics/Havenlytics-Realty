@@ -138,8 +138,10 @@ body[data-blog-cols="4"] .hvn-layout-blog .hvn-blog-grid { --hvn-blog-columns: 4
 }
 
 @media (max-width: 767px) {
+	.hvn-layout-blog.hvn-blog-layout-grid .hvn-blog-grid,
 	.hvn-layout-blog .hvn-blog-grid,
 	body[data-blog-cols] .hvn-layout-blog .hvn-blog-grid {
+		grid-template-columns: minmax(0, 1fr);
 		--hvn-blog-columns: 1;
 	}
 

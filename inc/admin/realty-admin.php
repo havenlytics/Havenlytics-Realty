@@ -248,15 +248,14 @@ add_action( 'admin_init', 'hvn_realty_admin_appearance_legacy_redirect', 2 );
  * @return string Image URL or dashicon slug fallback.
  */
 function hvn_realty_get_admin_menu_icon() {
-	$candidates = array(
-		'assets/admin/img/realty-icon.svg',
-		'assets/admin/img/realty-icon.png',
-	);
+	if ( function_exists( 'hvn_realty_get_theme_asset_uri' ) ) {
+		$icon = hvn_realty_get_theme_asset_uri(
+			'assets/admin/img/realty-icon.svg',
+			array( 'assets/admin/img/realty-icon.png', 'assets/admin/img/havenlytics-realty.png' )
+		);
 
-	foreach ( $candidates as $relative_path ) {
-		$file = get_template_directory() . '/' . $relative_path;
-		if ( file_exists( $file ) ) {
-			return HVN_REALTY_TEMPLATE_URL . '/' . ltrim( $relative_path, '/' );
+		if ( '' !== $icon ) {
+			return $icon;
 		}
 	}
 
@@ -369,7 +368,127 @@ function hvn_realty_prune_realty_admin_submenus() {
 add_action( 'admin_menu', 'hvn_realty_prune_realty_admin_submenus', 999 );
 
 /**
- * Realty admin menu icon styles (global — every admin screen).
+ * Registered Havenlytics Realty theme admin page slugs (admin.php?page=).
+ *
+ * @return string[]
+ */
+function hvn_realty_get_theme_admin_page_slugs() {
+	static $slugs = null;
+
+	if ( null !== $slugs ) {
+		return $slugs;
+	}
+
+	$slugs = array( HVN_REALTY_ADMIN_SLUG );
+
+	if ( defined( 'HVN_REALTY_SYSTEM_STATUS_SLUG' ) ) {
+		$slugs[] = HVN_REALTY_SYSTEM_STATUS_SLUG;
+	}
+
+	/**
+	 * Filter registered Havenlytics Realty theme admin page slugs.
+	 *
+	 * @param string[] $slugs Page slugs passed to admin.php?page=.
+	 */
+	$slugs = apply_filters( 'hvn_realty_theme_admin_page_slugs', $slugs );
+
+	return $slugs;
+}
+
+/**
+ * Hook suffix prefix for submenu pages under the Realty top-level menu.
+ *
+ * @return string e.g. realty_page_
+ */
+function hvn_realty_get_theme_admin_submenu_hook_prefix() {
+	$menu_slug = HVN_REALTY_ADMIN_SLUG;
+	$segment   = $menu_slug;
+
+	if ( false !== strpos( $menu_slug, '-' ) ) {
+		$segment = substr( $menu_slug, strpos( $menu_slug, '-' ) + 1 );
+	}
+
+	return sanitize_key( $segment ) . '_page_';
+}
+
+/**
+ * Whether the current admin screen belongs to Havenlytics Realty theme admin.
+ *
+ * @param string $hook_suffix Optional admin_enqueue_scripts hook suffix.
+ * @return bool
+ */
+function hvn_realty_is_theme_admin_screen( $hook_suffix = '' ) {
+	if ( ! is_admin() ) {
+		return false;
+	}
+
+	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+	if ( '' === $hook_suffix && $screen instanceof WP_Screen ) {
+		$hook_suffix = (string) $screen->id;
+	}
+
+	$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+
+	foreach ( hvn_realty_get_theme_admin_page_slugs() as $slug ) {
+		if ( $page === $slug ) {
+			return true;
+		}
+	}
+
+	if ( '' !== $hook_suffix ) {
+		if ( 'toplevel_page_' . HVN_REALTY_ADMIN_SLUG === $hook_suffix ) {
+			return true;
+		}
+
+		$submenu_prefix = hvn_realty_get_theme_admin_submenu_hook_prefix();
+
+		foreach ( hvn_realty_get_theme_admin_page_slugs() as $slug ) {
+			if ( HVN_REALTY_ADMIN_SLUG === $slug ) {
+				continue;
+			}
+
+			if ( $submenu_prefix . $slug === $hook_suffix ) {
+				return true;
+			}
+		}
+	}
+
+	if ( $screen instanceof WP_Screen && HVN_REALTY_ADMIN_SLUG === $screen->parent_base && $page ) {
+		foreach ( hvn_realty_get_theme_admin_page_slugs() as $slug ) {
+			if ( $page === $slug ) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Whether the current screen is the main Realty dashboard (not a submenu page).
+ *
+ * @param string $hook_suffix Optional admin_enqueue_scripts hook suffix.
+ * @return bool
+ */
+function hvn_realty_is_theme_admin_dashboard_screen( $hook_suffix = '' ) {
+	if ( ! hvn_realty_is_theme_admin_screen( $hook_suffix ) ) {
+		return false;
+	}
+
+	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+	if ( '' === $hook_suffix && $screen instanceof WP_Screen ) {
+		$hook_suffix = (string) $screen->id;
+	}
+
+	$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+
+	return HVN_REALTY_ADMIN_SLUG === $page || 'toplevel_page_' . HVN_REALTY_ADMIN_SLUG === $hook_suffix;
+}
+
+/**
+ * Realty admin menu icon styles (menu image only — all admin screens).
  *
  * @return void
  */
@@ -378,19 +497,13 @@ function hvn_realty_admin_menu_icon_assets() {
 		return;
 	}
 
-	if ( function_exists( 'hvn_realty_enqueue_theme_style' ) ) {
-		hvn_realty_enqueue_theme_style( 'hvn-realty-admin-menu-icon', 'assets/css/admin-realty.css' );
-		return;
-	}
+	$inline = '#adminmenu #toplevel_page_hvn-realty .wp-menu-image img{width:20px;height:20px;object-fit:contain;padding:6px 0 0;display:inline-block;opacity:.9}'
+		. '#adminmenu #toplevel_page_hvn-realty a.menu-top:hover .wp-menu-image img,#adminmenu #toplevel_page_hvn-realty a.menu-top:focus .wp-menu-image img{opacity:1}'
+		. '#adminmenu #toplevel_page_hvn-realty.wp-has-current-submenu .wp-menu-image img,#adminmenu #toplevel_page_hvn-realty.current .wp-menu-image img{border:1px solid #a8a1f9;border-radius:4px;padding-top:0;margin-top:7px;opacity:1}';
 
-	if ( file_exists( get_template_directory() . '/assets/css/admin-realty.css' ) ) {
-		wp_enqueue_style(
-			'hvn-realty-admin-menu-icon',
-			HVN_REALTY_TEMPLATE_URL . '/assets/css/admin-realty.css',
-			array(),
-			HVN_REALTY_VERSION
-		);
-	}
+	wp_register_style( 'hvn-realty-admin-menu-icon', false, array(), HVN_REALTY_VERSION );
+	wp_enqueue_style( 'hvn-realty-admin-menu-icon' );
+	wp_add_inline_style( 'hvn-realty-admin-menu-icon', $inline );
 }
 add_action( 'admin_enqueue_scripts', 'hvn_realty_admin_menu_icon_assets' );
 
@@ -418,13 +531,7 @@ add_filter( 'theme_action_links_' . get_template(), 'hvn_realty_theme_action_lin
  * @return void
  */
 function hvn_realty_admin_assets( $hook_suffix ) {
-	$allowed_hooks = array( 'toplevel_page_' . HVN_REALTY_ADMIN_SLUG );
-
-	if ( defined( 'HVN_REALTY_SYSTEM_STATUS_SLUG' ) ) {
-		$allowed_hooks[] = 'realty_page_' . HVN_REALTY_SYSTEM_STATUS_SLUG;
-	}
-
-	if ( ! in_array( $hook_suffix, $allowed_hooks, true ) ) {
+	if ( ! hvn_realty_is_theme_admin_screen( $hook_suffix ) ) {
 		return;
 	}
 

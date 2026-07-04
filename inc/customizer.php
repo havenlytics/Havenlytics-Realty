@@ -178,17 +178,16 @@ function hvn_realty_customize_partial_logo() {
  * Customizer preview scripts.
  */
 function hvn_realty_customize_preview_js() {
-	if ( ! file_exists( get_template_directory() . '/assets/js/customizer.js' ) ) {
+	if ( ! hvn_realty_enqueue_script_safe(
+		'hvn-realty-customizer',
+		'assets/js/customizer.js',
+		array( 'customize-preview', 'jquery' ),
+		false,
+		true,
+		true
+	) ) {
 		return;
 	}
-
-	wp_enqueue_script(
-		'hvn-realty-customizer',
-		get_template_directory_uri() . '/assets/js/customizer.js',
-		array( 'customize-preview', 'jquery' ),
-		HVN_REALTY_VERSION,
-		true
-	);
 
 	$blog_url = home_url( '/' );
 	$page_for_posts = (int) get_option( 'page_for_posts' );

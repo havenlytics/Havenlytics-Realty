@@ -162,3 +162,68 @@ body.hvn-container-full .hvn-layout-single.hvn-has-sidebar .hvn-theme-layout-row
 		transition: none;
 	}
 }
+
+/* Widget-specific spacing (blog sidebar only) */
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_search .search-form,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_search .search-form,
+.hvn-layout-blog .hvn-theme-sidebar-area .wp-block-search,
+.hvn-layout-single .hvn-theme-sidebar-area .wp-block-search {
+	width: 100%;
+	max-width: 100%;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_calendar table,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_calendar table,
+.hvn-layout-blog .hvn-theme-sidebar-area .wp-block-calendar table,
+.hvn-layout-single .hvn-theme-sidebar-area .wp-block-calendar table {
+	width: 100%;
+	max-width: 100%;
+	font-size: 0.8125rem;
+	border-collapse: collapse;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_calendar th,
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_calendar td,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_calendar th,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_calendar td,
+.hvn-layout-blog .hvn-theme-sidebar-area .wp-block-calendar th,
+.hvn-layout-blog .hvn-theme-sidebar-area .wp-block-calendar td,
+.hvn-layout-single .hvn-theme-sidebar-area .wp-block-calendar th,
+.hvn-layout-single .hvn-theme-sidebar-area .wp-block-calendar td {
+	padding: 0.35rem;
+	text-align: center;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_meta ul,
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_pages ul,
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_archive ul,
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_categories ul,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_meta ul,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_pages ul,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_archive ul,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_categories ul {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_rss .rssSummary,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_rss .rssSummary {
+	margin-top: 0.35rem;
+	font-size: 0.875rem;
+	line-height: 1.55;
+	color: var(--hvn-theme-text-secondary, #555);
+}
+
+.hvn-layout-blog .hvn-theme-sidebar-area .widget_recent_comments .recentcomments,
+.hvn-layout-single .hvn-theme-sidebar-area .widget_recent_comments .recentcomments {
+	font-size: 0.875rem;
+	line-height: 1.55;
+}
+
+@media (max-width: 767px) {
+	.hvn-layout-blog .hvn-theme-sidebar-area .hvn-theme-widget,
+	.hvn-layout-single .hvn-theme-sidebar-area .hvn-theme-widget {
+		padding: 1.15rem;
+	}
+}

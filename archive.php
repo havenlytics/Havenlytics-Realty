@@ -35,9 +35,11 @@ $sidebar_layout = function_exists( 'hvn_realty_sidebar_layout_enabled' ) && hvn_
 
 		<?php hvn_realty_breadcrumbs(); ?>
 
-		<header class="hvn-theme-blog-header">
+		<header class="hvn-theme-blog-header<?php echo is_author() ? ' hvn-theme-blog-header--author' : ''; ?><?php echo ( is_category() || is_tag() ) ? ' hvn-theme-blog-header--taxonomy' : ''; ?>">
 			<?php
-			if ( is_archive() ) {
+			if ( is_author() ) {
+				get_template_part( 'templates/blog/archive', 'author' );
+			} elseif ( is_archive() ) {
 				the_archive_title( '<h1 class="hvn-theme-blog-title">', '</h1>' );
 				the_archive_description( '<div class="hvn-theme-archive-description">', '</div>' );
 			} elseif ( is_home() && ! is_front_page() ) {

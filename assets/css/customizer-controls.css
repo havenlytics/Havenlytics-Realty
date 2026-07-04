@@ -1,26 +1,26 @@
 /**
- * Havenlytics Customizer UI framework.
- * Scoped to Havenlytics control types only — does not style WordPress core controls.
+ * Havenlytics Customizer UI — custom controls + premium panel polish.
+ * Presentation only. Scoped to Havenlytics panels/sections.
  */
-
 .customize-control-hvn_realty_testimonials .hvn-realty-cx,
 .customize-control[class*="customize-control-hvn_realty_"] .hvn-realty-cx {
-	--hvn-cx-radius: 10px;
-	--hvn-cx-radius-sm: 8px;
-	--hvn-cx-border: #d8dee6;
-	--hvn-cx-border-soft: #e8edf3;
-	--hvn-cx-bg: #f3f5f7;
-	--hvn-cx-card-bg: #ffffff;
-	--hvn-cx-text: #1d2327;
-	--hvn-cx-muted: #646970;
-	--hvn-cx-primary: #3858e9;
-	--hvn-cx-primary-soft: #edf1ff;
-	--hvn-cx-danger: #d63638;
-	--hvn-cx-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 8px 20px rgba(16, 24, 40, 0.05);
+	--hvn-cx-radius: var(--hvn-radius, var(--hvn-theme-border-radius-md, 10px));
+	--hvn-cx-radius-sm: var(--hvn-theme-border-radius-sm, 8px);
+	--hvn-cx-border: var(--hvn-border, var(--hvn-theme-border-color, #d8dee6));
+	--hvn-cx-border-soft: var(--hvn-theme-border-color-light, #e8edf3);
+	--hvn-cx-bg: var(--hvn-bg, var(--hvn-theme-color-gray-100, #f3f5f7));
+	--hvn-cx-card-bg: var(--hvn-theme-color-white, #ffffff);
+	--hvn-cx-text: var(--hvn-text, var(--hvn-theme-text-primary, #1d2327));
+	--hvn-cx-muted: var(--hvn-theme-text-muted, #646970);
+	--hvn-cx-primary: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	--hvn-cx-primary-soft: var(--hvn-primary-light, rgba(201, 163, 107, 0.12));
+	--hvn-cx-danger: var(--hvn-danger, var(--hvn-theme-brand-error, #d63638));
+	--hvn-cx-shadow: var(--hvn-theme-shadow-sm, 0 1px 2px rgba(16, 24, 40, 0.06), 0 8px 20px rgba(16, 24, 40, 0.05));
 	--hvn-cx-space-xs: 0.375rem;
 	--hvn-cx-space-sm: 0.625rem;
 	--hvn-cx-space-md: 0.875rem;
 	--hvn-cx-space-lg: 1.125rem;
+	--hvn-cx-transition: 150ms ease;
 	color: var(--hvn-cx-text);
 	font-size: 13px;
 	line-height: 1.45;
@@ -76,7 +76,7 @@
 	min-height: 44px;
 	padding: var(--hvn-cx-space-sm) var(--hvn-cx-space-md);
 	border-bottom: 1px solid var(--hvn-cx-border-soft);
-	background: linear-gradient(180deg, #fff 0%, #fafbfc 100%);
+	background: var(--hvn-cx-card-bg);
 }
 
 .hvn-realty-cx__card-head-main {
@@ -150,7 +150,7 @@
 	background: transparent;
 	color: var(--hvn-cx-muted);
 	cursor: pointer;
-	transition: background-color 0.15s ease, color 0.15s ease;
+	transition: background-color var(--hvn-cx-transition, 150ms ease), color var(--hvn-cx-transition, 150ms ease);
 }
 
 .hvn-realty-cx__handle:hover,
@@ -198,7 +198,7 @@
 	border: 1px solid var(--hvn-cx-border);
 	border-radius: var(--hvn-cx-radius-sm);
 	padding: 8px 10px;
-	background: #fff;
+	background: var(--hvn-cx-card-bg);
 	box-shadow: none;
 }
 
@@ -206,7 +206,7 @@
 .hvn-realty-cx__field-control textarea:focus,
 .hvn-realty-cx__field-control select:focus {
 	border-color: var(--hvn-cx-primary);
-	box-shadow: 0 0 0 1px var(--hvn-cx-primary);
+	box-shadow: 0 0 0 1px var(--hvn-cx-primary), 0 0 0 3px color-mix(in srgb, var(--hvn-cx-primary) 35%, transparent);
 	outline: none;
 }
 
@@ -257,25 +257,29 @@
 	font-weight: 600;
 	line-height: 1;
 	cursor: pointer;
-	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+	transition:
+		background-color var(--hvn-cx-transition),
+		border-color var(--hvn-cx-transition),
+		color var(--hvn-cx-transition),
+		box-shadow var(--hvn-cx-transition);
 }
 
 .hvn-realty-cx__btn--primary {
 	border-color: var(--hvn-cx-primary);
 	background: var(--hvn-cx-primary);
-	color: #fff;
-	box-shadow: 0 1px 2px rgba(56, 88, 233, 0.28);
+	color: var(--hvn-theme-color-white, #fff);
+	box-shadow: 0 1px 2px color-mix(in srgb, var(--hvn-cx-primary) 35%, transparent);
 }
 
 .hvn-realty-cx__btn--primary:hover {
-	background: #2f4ad4;
-	border-color: #2f4ad4;
+	background: var(--hvn-secondary, var(--hvn-primary-dark, #a9803f));
+	border-color: var(--hvn-secondary, var(--hvn-primary-dark, #a9803f));
 	color: #fff;
 }
 
 .hvn-realty-cx__btn--ghost {
 	border-color: var(--hvn-cx-border);
-	background: #fff;
+	background: var(--hvn-cx-card-bg);
 }
 
 .hvn-realty-cx__btn--danger {
@@ -379,4 +383,360 @@
 
 .hvn-realty-search-builder-control__required input {
 	margin: 0;
+}
+
+/* ==========================================================================
+   Havenlytics Customizer — premium UI (accordion-safe)
+   Targets control <li> elements only — never .customize-pane-child containers.
+   ========================================================================== */
+
+#customize-theme-controls {
+	--hvn-cx-ui-ease: cubic-bezier(0.4, 0, 0.2, 1);
+	--hvn-cx-ui-transition: 0.2s var(--hvn-cx-ui-ease);
+	--hvn-cx-ui-transition-slow: 0.28s var(--hvn-cx-ui-ease);
+	--hvn-cx-ui-focus-shadow: 0 0 0 1px var(--hvn-theme-color-white, #fff), 0 0 0 3px color-mix(in srgb, var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b)) 40%, transparent);
+	--hvn-cx-ui-surface-raised: var(--hvn-theme-color-white, #fff);
+	--hvn-cx-ui-divider: var(--hvn-border, var(--hvn-theme-border-color-light, #e8edf3));
+}
+
+/* Panel hierarchy (section list headings — not sliding panes) */
+#customize-theme-controls #accordion-panel-hvn_realty_theme_settings .panel-title,
+#customize-theme-controls #accordion-panel-hvn_realty_homepage_panel .panel-title {
+	font-weight: 600;
+	letter-spacing: -0.015em;
+}
+
+#customize-theme-controls #accordion-panel-hvn_realty_theme_settings .customize-panel-description,
+#customize-theme-controls #accordion-panel-hvn_realty_homepage_panel .customize-panel-description {
+	margin-top: 0.4rem;
+	color: var(--hvn-theme-text-muted, #646970);
+	font-size: 12px;
+	line-height: 1.55;
+}
+
+#customize-theme-controls #accordion-panel-hvn_realty_theme_settings .accordion-section-title,
+#customize-theme-controls #accordion-panel-hvn_realty_homepage_panel .accordion-section-title {
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	transition: color var(--hvn-cx-ui-transition);
+}
+
+#customize-theme-controls #accordion-panel-hvn_realty_theme_settings .accordion-section-title:hover,
+#customize-theme-controls #accordion-panel-hvn_realty_homepage_panel .accordion-section-title:hover,
+#customize-theme-controls #accordion-panel-hvn_realty_theme_settings .accordion-section-title:focus,
+#customize-theme-controls #accordion-panel-hvn_realty_homepage_panel .accordion-section-title:focus,
+#customize-theme-controls #accordion-panel-hvn_realty_theme_settings .control-section.open .accordion-section-title,
+#customize-theme-controls #accordion-panel-hvn_realty_homepage_panel .control-section.open .accordion-section-title {
+	color: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+}
+
+/* Expanded section header — accent on meta row only (not the sliding pane <ul>) */
+#customize-theme-controls ul[id^="sub-accordion-section-hvn_realty_"] > li.customize-section-description-container .customize-section-title,
+#customize-theme-controls ul#sub-accordion-section-title_tagline > li.customize-section-description-container .customize-section-title {
+	border-bottom: 1px solid var(--hvn-cx-ui-divider);
+	padding-bottom: 12px;
+	margin-bottom: 4px;
+}
+
+#customize-theme-controls ul[id^="sub-accordion-section-hvn_realty_"] > li.customize-section-description-container .customize-section-title::before,
+#customize-theme-controls ul#sub-accordion-section-title_tagline > li.customize-section-description-container .customize-section-title::before {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 3px;
+	margin-bottom: 12px;
+	border-radius: 2px;
+	background: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+}
+
+#customize-theme-controls ul[id^="sub-accordion-section-hvn_realty_"] > li.customize-section-description-container .description.customize-section-description,
+#customize-theme-controls ul#sub-accordion-section-title_tagline > li.customize-section-description-container .description.customize-section-description {
+	color: var(--hvn-theme-text-muted, #646970);
+	font-size: 12px;
+	line-height: 1.55;
+}
+
+/* Havenlytics controls — individual <li.customize-control> only */
+#customize-theme-controls li.customize-control[class*="hvn_realty_"],
+#customize-theme-controls li.customize-control.title_tagline,
+#customize-theme-controls li.customize-control[class*="customize-control-hvn_realty_"] {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin-bottom: 0;
+	box-sizing: border-box;
+}
+
+#customize-theme-controls ul[id^="sub-accordion-section-hvn_realty_"] > li.customize-control:not(:last-child),
+#customize-theme-controls ul#sub-accordion-section-title_tagline > li.customize-control:not(:last-child) {
+	border-bottom: 1px solid var(--hvn-cx-ui-divider);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .customize-control-title,
+#customize-theme-controls li.customize-control.title_tagline .customize-control-title,
+#customize-theme-controls li.customize-control[class*="customize-control-hvn_realty_"] .customize-control-title {
+	margin-bottom: 0.45rem;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.35;
+	color: var(--hvn-text, var(--hvn-theme-text-primary, #1d2327));
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .customize-control-description,
+#customize-theme-controls li.customize-control.title_tagline .customize-control-description,
+#customize-theme-controls li.customize-control[class*="customize-control-hvn_realty_"] .customize-control-description {
+	margin-top: 0.3rem;
+	margin-bottom: 0;
+	color: var(--hvn-theme-text-muted, #646970);
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+/* Visual grouping — color fields */
+#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-color,
+#customize-theme-controls li.customize-control.title_tagline.customize-control-color {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: var(--hvn-radius, var(--hvn-theme-border-radius-sm, 6px));
+	background: color-mix(in srgb, var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b)) 6%, var(--hvn-cx-ui-surface-raised));
+}
+
+/* Inputs */
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] :is(input[type="text"], input[type="url"], input[type="number"], input[type="email"], input[type="search"], textarea, select),
+#customize-theme-controls li.customize-control.title_tagline :is(input[type="text"], input[type="url"], input[type="number"], input[type="email"], input[type="search"], textarea, select) {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	border: 1px solid var(--hvn-border, var(--hvn-theme-border-color, #d8dee6));
+	border-radius: var(--hvn-radius, var(--hvn-theme-border-radius-sm, 6px));
+	padding: 8px 10px;
+	background: var(--hvn-cx-ui-surface-raised);
+	color: var(--hvn-text, var(--hvn-theme-text-primary, #1d2327));
+	box-shadow: none;
+	transition:
+		border-color var(--hvn-cx-ui-transition),
+		box-shadow var(--hvn-cx-ui-transition),
+		background-color var(--hvn-cx-ui-transition);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] :is(input[type="text"], input[type="url"], input[type="number"], textarea, select):hover,
+#customize-theme-controls li.customize-control.title_tagline :is(input[type="text"], input[type="url"], input[type="number"], textarea, select):hover {
+	border-color: var(--hvn-theme-border-color-dark, #c3c4c7);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] :is(input[type="text"], input[type="url"], input[type="number"], input[type="email"], input[type="search"], textarea, select):focus,
+#customize-theme-controls li.customize-control.title_tagline :is(input[type="text"], input[type="url"], input[type="number"], input[type="email"], input[type="search"], textarea, select):focus {
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	box-shadow: var(--hvn-cx-ui-focus-shadow);
+	outline: none;
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] input[type="number"],
+#customize-theme-controls li.customize-control.title_tagline input[type="number"] {
+	max-width: min(120px, 100%);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] select,
+#customize-theme-controls li.customize-control.title_tagline select {
+	min-height: 36px;
+	padding-right: 28px;
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] textarea,
+#customize-theme-controls li.customize-control.title_tagline textarea {
+	min-height: 72px;
+	resize: vertical;
+}
+
+/* Range sliders */
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] input[type="range"],
+#customize-theme-controls li.customize-control.title_tagline input[type="range"] {
+	width: 100%;
+	height: 6px;
+	margin-block: 10px;
+	border-radius: 999px;
+	background: var(--hvn-theme-border-color-light, #e8edf3);
+	accent-color: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	cursor: pointer;
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] input[type="range"]:focus-visible,
+#customize-theme-controls li.customize-control.title_tagline input[type="range"]:focus-visible {
+	outline: 2px solid var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	outline-offset: 3px;
+}
+
+/* Toggle switches */
+#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox .customize-inside-control-row,
+#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox .customize-inside-control-row {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	min-height: 32px;
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox input[type="checkbox"],
+#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	position: relative;
+	flex: 0 0 auto;
+	width: 46px;
+	height: 26px;
+	margin: 0;
+	border: 1px solid var(--hvn-border, var(--hvn-theme-border-color, #c3c4c7));
+	border-radius: 999px;
+	background: var(--hvn-theme-border-color-light, #dcdcde);
+	cursor: pointer;
+	transition:
+		background-color var(--hvn-cx-ui-transition-slow),
+		border-color var(--hvn-cx-ui-transition),
+		box-shadow var(--hvn-cx-ui-transition);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox input[type="checkbox"]::before,
+#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox input[type="checkbox"]::before {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: var(--hvn-theme-color-white, #fff);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.12), 0 2px 6px rgba(16, 24, 40, 0.08);
+	transition: transform var(--hvn-cx-ui-transition-slow);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox input[type="checkbox"]:checked,
+#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox input[type="checkbox"]:checked {
+	background: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	box-shadow: inset 0 1px 0 color-mix(in srgb, var(--hvn-theme-color-white, #fff) 18%, transparent);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox input[type="checkbox"]:checked::before,
+#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox input[type="checkbox"]:checked::before {
+	transform: translateX(20px);
+	box-shadow: 0 1px 3px rgba(16, 24, 40, 0.14), 0 3px 8px rgba(16, 24, 40, 0.1);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox input[type="checkbox"]:focus-visible,
+#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox input[type="checkbox"]:focus-visible {
+	outline: 2px solid var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	outline-offset: 2px;
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox .customize-inside-control-row label,
+#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox .customize-inside-control-row label {
+	font-weight: 500;
+	color: var(--hvn-text, var(--hvn-theme-text-primary, #1d2327));
+	cursor: pointer;
+}
+
+/* Color picker */
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .wp-picker-container,
+#customize-theme-controls li.customize-control.title_tagline .wp-picker-container {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.55rem;
+	width: 100%;
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .wp-color-result,
+#customize-theme-controls li.customize-control.title_tagline .wp-color-result {
+	min-height: 32px;
+	border-radius: var(--hvn-radius, var(--hvn-theme-border-radius-sm, 6px));
+	border-color: var(--hvn-border, var(--hvn-theme-border-color, #d8dee6));
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hvn-theme-color-black, #000) 4%, transparent);
+	transition:
+		border-color var(--hvn-cx-ui-transition),
+		box-shadow var(--hvn-cx-ui-transition);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .wp-color-result:hover,
+#customize-theme-controls li.customize-control.title_tagline .wp-color-result:hover {
+	border-color: var(--hvn-theme-border-color-dark, #c3c4c7);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .wp-color-result:focus,
+#customize-theme-controls li.customize-control.title_tagline .wp-color-result:focus {
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	box-shadow: var(--hvn-cx-ui-focus-shadow);
+	outline: none;
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .wp-picker-holder,
+#customize-theme-controls li.customize-control.title_tagline .wp-picker-holder {
+	margin-top: 0.55rem;
+	border: 1px solid var(--hvn-cx-ui-divider);
+	border-radius: var(--hvn-radius, var(--hvn-theme-border-radius-sm, 6px));
+	overflow: hidden;
+	box-shadow: var(--hvn-theme-shadow-md, 0 4px 12px rgba(16, 24, 40, 0.1));
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .wp-picker-input-wrap,
+#customize-theme-controls li.customize-control.title_tagline .wp-picker-input-wrap {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin-top: 0.45rem;
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .wp-picker-input-wrap input[type="text"],
+#customize-theme-controls li.customize-control.title_tagline .wp-picker-input-wrap input[type="text"] {
+	flex: 1 1 120px;
+	min-width: 0;
+}
+
+/* Buttons & media */
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] :is(.attachment-media-view .button, .button),
+#customize-theme-controls li.customize-control.title_tagline :is(.attachment-media-view .button, .button) {
+	border-radius: var(--hvn-radius, var(--hvn-theme-border-radius-sm, 6px));
+	transition:
+		border-color var(--hvn-cx-ui-transition),
+		color var(--hvn-cx-ui-transition),
+		background-color var(--hvn-cx-ui-transition),
+		box-shadow var(--hvn-cx-ui-transition);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .button-primary,
+#customize-theme-controls li.customize-control.title_tagline .button-primary {
+	background: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+	border-color: var(--hvn-primary, var(--hvn-theme-brand-primary, #c9a36b));
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .button-primary:hover,
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .button-primary:focus,
+#customize-theme-controls li.customize-control.title_tagline .button-primary:hover,
+#customize-theme-controls li.customize-control.title_tagline .button-primary:focus {
+	background: var(--hvn-secondary, var(--hvn-primary-dark, #a9803f));
+	border-color: var(--hvn-secondary, var(--hvn-primary-dark, #a9803f));
+	color: var(--hvn-theme-color-white, #fff);
+}
+
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .attachment-media-view .thumbnail,
+#customize-theme-controls li.customize-control.title_tagline .attachment-media-view .thumbnail {
+	border-radius: var(--hvn-radius, var(--hvn-theme-border-radius-sm, 6px));
+	border-color: var(--hvn-cx-ui-divider);
+}
+
+/* Description → control spacing */
+#customize-theme-controls li.customize-control[class*="hvn_realty_"] .customize-control-description + :is(.customize-control-content, input, select),
+#customize-theme-controls li.customize-control.title_tagline .customize-control-description + :is(.customize-control-content, input, select) {
+	margin-top: 0.4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#customize-theme-controls li.customize-control[class*="hvn_realty_"] :is(input, select, textarea, .wp-color-result, .button),
+	#customize-theme-controls li.customize-control.title_tagline :is(input, select, textarea, .wp-color-result, .button),
+	#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox input[type="checkbox"],
+	#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox input[type="checkbox"],
+	#customize-theme-controls li.customize-control[class*="hvn_realty_"].customize-control-checkbox input[type="checkbox"]::before,
+	#customize-theme-controls li.customize-control.title_tagline.customize-control-checkbox input[type="checkbox"]::before {
+		transition: none;
+	}
 }

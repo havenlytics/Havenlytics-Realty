@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.5
+Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,21 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.0.7 - July 3, 2026 =
+* Added universal runtime asset loader with graceful CSS/JS fallback recovery.
+* Added asset diagnostics to System Status for missing-file troubleshooting.
+* Added translation template (languages/havenlytics-realty.pot) and release upgrade notice.
+* Improved theme integrity reporting without blocking theme bootstrap.
+* Minor stability and packaging improvements.
+
+= 2.0.6 - June 30, 2026 =
+* Improved default WordPress blog templates.
+* Fixed mobile blog grid responsive layout.
+* Improved blog archive, search, author, category and tag templates.
+* Improved comments accessibility and Theme Check compatibility.
+* Improved responsive blog experience across all devices.
+* Minor UI/UX improvements and overall stability.
 
 = 2.0.5 - June 29, 2026 =
 * Mobile Search Drawer department pills now smooth-scroll to center the active department with scroll-snap and edge fade indicators for overflow
@@ -435,6 +450,12 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.0.7 =
+Recommended update with runtime asset fallback recovery, improved theme integrity diagnostics, translation readiness, and stability improvements.
+
+= 2.0.6 =
+Recommended update containing stability improvements, homepage migration fixes, blog enhancements, responsive improvements, admin optimizations, and compatibility updates.
 
 = 1.22.0 =
 Introduces the Starter Sites platform with complete Modern Realty and Modern Minimal Realty website designs (header, footer, homepage, menus, widgets, and Customizer defaults). Import replaces demo-owned layout settings only; properties, agents, listings, and blog content are never removed. Existing sites without a starter import keep legacy homepage styling until you import from Realty → Starter Sites.

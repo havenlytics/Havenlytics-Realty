@@ -286,7 +286,9 @@ function hvn_realty_output_blog_grid_inline_css() {
 
 	$css = '
 
-.hvn-layout-blog .hvn-blog-grid {
+.hvn-layout-blog .hvn-blog-grid,
+
+body[data-blog-cols="' . (int) $cols . '"] .hvn-layout-blog .hvn-blog-grid {
 
 	--hvn-blog-columns: ' . (int) $cols . ';
 
@@ -294,9 +296,27 @@ function hvn_realty_output_blog_grid_inline_css() {
 
 @media (max-width: 991px) {
 
-	.hvn-layout-blog .hvn-blog-grid {
+	.hvn-layout-blog .hvn-blog-grid,
+
+	.hvn-layout-blog .hvn-blog-grid.hvn-cols-' . (int) $cols . ',
+
+	body[data-blog-cols="' . (int) $cols . '"] .hvn-layout-blog .hvn-blog-grid {
 
 		--hvn-blog-columns: ' . (int) $tablet . ';
+
+	}
+
+}
+
+@media (max-width: 767px) {
+
+	.hvn-layout-blog .hvn-blog-grid,
+
+	.hvn-layout-blog .hvn-blog-grid.hvn-cols-' . (int) $cols . ',
+
+	body[data-blog-cols] .hvn-layout-blog .hvn-blog-grid {
+
+		--hvn-blog-columns: 1;
 
 	}
 
@@ -323,5 +343,43 @@ function hvn_realty_output_blog_grid_inline_css() {
 
 
 add_action( 'wp_enqueue_scripts', 'hvn_realty_output_blog_grid_inline_css', 25 );
+
+
+
+/**
+
+ * Enqueue 404 polish stylesheet (blog module scope).
+
+ *
+
+ * @return void
+
+ */
+
+function hvn_realty_enqueue_blog_404_assets() {
+
+	if ( ! is_404() ) {
+
+		return;
+
+	}
+
+
+
+	if ( function_exists( 'hvn_realty_enqueue_theme_style' ) ) {
+
+		hvn_realty_enqueue_theme_style( 'hvn-realty-blog-404', 'assets/css/blog/blog-404.css', array( 'hvn-realty-layouts' ) );
+
+	} else {
+
+		wp_enqueue_style( 'hvn-realty-blog-404', HVN_REALTY_TEMPLATE_URL . '/assets/css/blog/blog-404.css', array( 'hvn-realty-layouts' ), HVN_REALTY_VERSION );
+
+	}
+
+}
+
+
+
+add_action( 'wp_enqueue_scripts', 'hvn_realty_enqueue_blog_404_assets', 20 );
 
 

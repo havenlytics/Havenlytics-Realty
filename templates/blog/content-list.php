@@ -6,6 +6,9 @@
  */
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'hvn-blog-card hvn-blog-card--list' ); ?>>
+	<?php if ( is_sticky() ) : ?>
+		<span class="hvn-blog-card__sticky-badge"><?php esc_html_e( 'Featured', 'havenlytics-realty' ); ?></span>
+	<?php endif; ?>
 	<div class="hvn-blog-card__row">
 		<?php if ( has_post_thumbnail() ) : ?>
 			<a class="hvn-blog-card__thumb" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">

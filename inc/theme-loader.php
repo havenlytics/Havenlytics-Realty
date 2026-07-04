@@ -93,6 +93,10 @@ function hvn_realty_safe_get_template_part( $slug, $name = null, $args = array()
 	$templates[] = "{$slug}.php";
 
 	if ( ! locate_template( $templates, false, false ) ) {
+		if ( class_exists( 'HVN_Realty_Asset_Loader', false ) ) {
+			HVN_Realty_Asset_Loader::log_missing_template_part( $slug, $name );
+		}
+
 		return false;
 	}
 
@@ -110,7 +114,11 @@ function hvn_realty_safe_get_template_part( $slug, $name = null, $args = array()
  * @param string|false $version      Version string.
  * @return bool
  */
-function hvn_realty_enqueue_theme_style( $handle, $relative_path, $deps = array(), $version = false ) {
+function hvn_realty_enqueue_theme_style( $handle, $relative_path, $deps = array(), $version = false, $media = 'all', $required = false ) {
+	if ( function_exists( 'hvn_realty_enqueue_style_safe' ) ) {
+		return hvn_realty_enqueue_style_safe( $handle, $relative_path, $deps, $version, $media, $required );
+	}
+
 	$file = get_template_directory() . '/' . ltrim( $relative_path, '/' );
 
 	if ( ! file_exists( $file ) ) {
@@ -121,7 +129,8 @@ function hvn_realty_enqueue_theme_style( $handle, $relative_path, $deps = array(
 		$handle,
 		get_template_directory_uri() . '/' . ltrim( $relative_path, '/' ),
 		$deps,
-		$version ? $version : ( defined( 'HVN_REALTY_VERSION' ) ? HVN_REALTY_VERSION : false )
+		$version ? $version : ( defined( 'HVN_REALTY_VERSION' ) ? HVN_REALTY_VERSION : false ),
+		$media
 	);
 
 	return true;
@@ -137,7 +146,11 @@ function hvn_realty_enqueue_theme_style( $handle, $relative_path, $deps = array(
  * @param bool         $in_footer    Load in footer.
  * @return bool
  */
-function hvn_realty_enqueue_theme_script( $handle, $relative_path, $deps = array(), $version = false, $in_footer = true ) {
+function hvn_realty_enqueue_theme_script( $handle, $relative_path, $deps = array(), $version = false, $in_footer = true, $required = false ) {
+	if ( function_exists( 'hvn_realty_enqueue_script_safe' ) ) {
+		return hvn_realty_enqueue_script_safe( $handle, $relative_path, $deps, $version, $in_footer, $required );
+	}
+
 	$file = get_template_directory() . '/' . ltrim( $relative_path, '/' );
 
 	if ( ! file_exists( $file ) ) {

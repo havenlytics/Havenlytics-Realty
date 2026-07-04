@@ -19,6 +19,7 @@
 	--hvn-blog-excerpt-size: 0.9375rem;
 	padding-top: var(--hvn-blog-shell-pad-top);
 	padding-bottom: var(--hvn-blog-shell-pad-bottom);
+	overflow-x: clip;
 }
 
 .hvn-layout-blog .hvn-theme-content-area {
@@ -69,6 +70,95 @@
 	font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
 }
 
+.hvn-theme-blog-header--taxonomy .hvn-theme-blog-title {
+	font-size: clamp(1.75rem, 4vw, 2.35rem);
+}
+
+.hvn-theme-blog-header--taxonomy .hvn-theme-archive-description {
+	margin-top: 0.75rem;
+	padding-top: 0.75rem;
+	border-top: 1px solid color-mix(in srgb, var(--hvn-blog-card-border) 65%, transparent);
+}
+
+/* Author archive header */
+.hvn-blog-archive-author {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: clamp(1rem, 3vw, 1.75rem);
+}
+
+.hvn-blog-archive-author__avatar-image {
+	display: block;
+	width: 96px;
+	height: 96px;
+	border-radius: 50%;
+	border: 3px solid color-mix(in srgb, var(--hvn-primary, #C9A36B) 25%, #fff);
+	box-shadow: 0 4px 14px rgba(16, 24, 40, 0.1);
+}
+
+.hvn-blog-archive-author__body {
+	flex: 1;
+	min-width: min(100%, 16rem);
+}
+
+.hvn-blog-archive-author__name {
+	margin-bottom: 0.35rem;
+}
+
+.hvn-blog-archive-author__count {
+	margin: 0 0 0.75rem;
+	font-size: var(--hvn-blog-meta-size);
+	font-weight: 600;
+	color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+}
+
+.hvn-blog-archive-author__bio {
+	color: var(--hvn-theme-text-secondary, #555);
+	font-size: 0.9375rem;
+	line-height: 1.65;
+	max-width: 62ch;
+}
+
+.hvn-blog-archive-author__bio p:last-child {
+	margin-bottom: 0;
+}
+
+.hvn-theme-blog-header--author {
+	border-bottom-width: 0;
+	padding-bottom: 0;
+}
+
+.hvn-theme-blog-header--author::after {
+	display: none;
+}
+
+/* Sticky posts in blog loop */
+.hvn-layout-blog .hvn-blog-card.hvn-theme-sticky {
+	position: relative;
+}
+
+.hvn-layout-blog .hvn-blog-card__sticky-badge {
+	position: absolute;
+	top: 0.85rem;
+	right: 0.85rem;
+	z-index: 3;
+	padding: 0.25rem 0.65rem;
+	border-radius: 999px;
+	font-size: 0.625rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--hvn-theme-color-white, #fff);
+	background: var(--hvn-primary, var(--hvn-theme-brand-primary));
+	box-shadow: 0 2px 8px rgba(16, 24, 40, 0.15);
+}
+
+.hvn-layout-blog .hvn-blog-card--list .hvn-blog-card__sticky-badge {
+	top: 1rem;
+	right: 1rem;
+}
+
 /* --------------------------------------------------------------------------
    Search results header
    -------------------------------------------------------------------------- */
@@ -99,6 +189,16 @@
 	font-size: var(--hvn-blog-meta-size);
 	color: var(--hvn-theme-text-muted, #6c757d);
 	margin-bottom: 1.15rem;
+	font-weight: 500;
+}
+
+.hvn-layout-blog .hvn-theme-search-inline {
+	margin-top: 0.25rem;
+	max-width: 36rem;
+}
+
+.hvn-layout-blog .hvn-theme-search-inline .search-form {
+	width: 100%;
 }
 
 .hvn-layout-blog .hvn-theme-no-results-modern {

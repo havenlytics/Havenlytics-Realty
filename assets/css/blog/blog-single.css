@@ -152,3 +152,144 @@
 		align-items: flex-start;
 	}
 }
+
+/* --------------------------------------------------------------------------
+   Gutenberg / block content (single blog only)
+   -------------------------------------------------------------------------- */
+
+.hvn-layout-single .hvn-blog-single__content img,
+.hvn-layout-single .hvn-blog-single__content figure {
+	max-width: 100%;
+	height: auto;
+}
+
+.hvn-layout-single .hvn-blog-single__content figure.wp-block-image {
+	margin: 1.5rem 0;
+}
+
+.hvn-layout-single .hvn-blog-single__content figcaption {
+	margin-top: 0.5rem;
+	font-size: 0.875rem;
+	color: var(--hvn-theme-text-muted, #6c757d);
+	text-align: center;
+}
+
+.hvn-layout-single .hvn-blog-single__content ul,
+.hvn-layout-single .hvn-blog-single__content ol {
+	margin: 0 0 1.25rem;
+	padding-left: 1.35rem;
+}
+
+.hvn-layout-single .hvn-blog-single__content li {
+	margin-bottom: 0.35rem;
+}
+
+.hvn-layout-single .hvn-blog-single__content blockquote,
+.hvn-layout-single .hvn-blog-single__content .wp-block-quote {
+	margin: 1.75rem 0;
+	padding: 1rem 1.25rem;
+	border-left: 4px solid var(--hvn-primary, var(--hvn-theme-brand-primary));
+	background: color-mix(in srgb, var(--hvn-primary, #C9A36B) 6%, #fff);
+	border-radius: 0 var(--hvn-radius, 8px) var(--hvn-radius, 8px) 0;
+	font-style: italic;
+}
+
+.hvn-layout-single .hvn-blog-single__content .wp-block-pullquote {
+	margin: 2rem 0;
+	padding: 1.5rem;
+	border-top: 3px solid var(--hvn-primary, var(--hvn-theme-brand-primary));
+	border-bottom: 3px solid var(--hvn-primary, var(--hvn-theme-brand-primary));
+	text-align: center;
+}
+
+.hvn-layout-single .hvn-blog-single__content pre,
+.hvn-layout-single .hvn-blog-single__content code {
+	font-family: var(--hvn-theme-font-family-mono, monospace);
+	font-size: 0.9em;
+}
+
+.hvn-layout-single .hvn-blog-single__content pre {
+	margin: 1.5rem 0;
+	padding: 1rem 1.15rem;
+	background: var(--hvn-theme-color-gray-100, #f8f9fa);
+	border: 1px solid var(--hvn-blog-card-border, var(--hvn-border));
+	border-radius: var(--hvn-radius, 8px);
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.hvn-layout-single .hvn-blog-single__content :not(pre) > code {
+	padding: 0.15rem 0.4rem;
+	background: var(--hvn-theme-color-gray-100, #f8f9fa);
+	border-radius: 4px;
+}
+
+.hvn-layout-single .hvn-blog-single__content table {
+	width: 100%;
+	margin: 1.5rem 0;
+	border-collapse: collapse;
+	font-size: 0.9375rem;
+}
+
+.hvn-layout-single .hvn-blog-single__content th,
+.hvn-layout-single .hvn-blog-single__content td {
+	padding: 0.65rem 0.85rem;
+	border: 1px solid var(--hvn-blog-card-border, var(--hvn-border));
+	text-align: left;
+}
+
+.hvn-layout-single .hvn-blog-single__content th {
+	background: color-mix(in srgb, var(--hvn-primary, #C9A36B) 8%, #fff);
+	font-weight: 600;
+}
+
+.hvn-layout-single .hvn-blog-single__content .wp-block-gallery {
+	margin: 1.5rem 0;
+}
+
+.hvn-layout-single .hvn-blog-single__content .wp-block-button {
+	margin: 1rem 0;
+}
+
+.hvn-layout-single .hvn-blog-single__content .wp-block-button__link {
+	border-radius: var(--hvn-radius, 8px);
+}
+
+/* --------------------------------------------------------------------------
+   Blog comments (single layout only)
+   -------------------------------------------------------------------------- */
+
+.hvn-layout-single .hvn-theme-comments-area {
+	padding: clamp(1.25rem, 3vw, 2rem);
+	background: var(--hvn-theme-color-white, #fff);
+	border: 1px solid var(--hvn-border, var(--hvn-theme-border-color));
+	border-radius: var(--hvn-radius, 12px);
+	box-shadow: 0 1px 3px rgba(16, 24, 40, 0.06);
+}
+
+.hvn-layout-single .hvn-theme-comments-title,
+.hvn-layout-single .hvn-theme-reply-title {
+	font-family: var(--hvn-font-heading, var(--hvn-theme-font-family-heading, 'Poppins', sans-serif));
+}
+
+.hvn-layout-single .hvn-theme-comment-list .comment {
+	padding-bottom: 1.25rem;
+	margin-bottom: 1.25rem;
+	border-bottom: 1px solid var(--hvn-blog-card-border, var(--hvn-border));
+}
+
+.hvn-layout-single .hvn-theme-comment-respond {
+	margin-top: 1.5rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--hvn-blog-card-border, var(--hvn-border));
+}
+
+.hvn-layout-single .hvn-theme-comment-form .form-group {
+	margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+	.hvn-layout-single .hvn-theme-comments-area {
+		padding: 1.15rem;
+	}
+}

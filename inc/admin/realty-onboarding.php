@@ -19,7 +19,7 @@ define( 'HVN_REALTY_SETUP_COMPLETE_OPTION', 'hvn_realty_setup_complete' );
 define( 'HVN_REALTY_ONBOARDING_AUTOSHOW_TRANSIENT', 'hvn_realty_onboarding_autoshow' );
 
 /** YouTube video ID for the setup tutorial. */
-define( 'HVN_REALTY_ONBOARDING_VIDEO_ID', 'cEVQ0uhwiHc' );
+define( 'HVN_REALTY_ONBOARDING_VIDEO_ID', 'AiYDMJPgsTY' );
 
 /**
  * Flag onboarding auto-show after theme activation.
@@ -119,24 +119,15 @@ add_action( 'wp_ajax_hvn_realty_mark_onboarding_video_seen', 'hvn_realty_ajax_ma
  * @return void
  */
 function hvn_realty_onboarding_admin_assets( $hook_suffix ) {
-	if ( 'toplevel_page_' . HVN_REALTY_ADMIN_SLUG !== $hook_suffix ) {
+	if ( ! hvn_realty_is_theme_admin_dashboard_screen( $hook_suffix ) ) {
 		return;
 	}
 
 	hvn_realty_maybe_persist_setup_complete_flag();
 
-	$script_path = get_template_directory() . '/assets/js/admin-realty-onboarding.js';
-	if ( ! file_exists( $script_path ) ) {
+	if ( ! hvn_realty_enqueue_theme_script( 'hvn-realty-onboarding', 'assets/js/admin-realty-onboarding.js', array( 'jquery' ) ) ) {
 		return;
 	}
-
-	wp_enqueue_script(
-		'hvn-realty-onboarding',
-		HVN_REALTY_TEMPLATE_URL . '/assets/js/admin-realty-onboarding.js',
-		array( 'jquery' ),
-		HVN_REALTY_VERSION,
-		true
-	);
 
 	wp_localize_script(
 		'hvn-realty-onboarding',

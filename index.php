@@ -43,7 +43,7 @@ $sidebar_layout = function_exists( 'hvn_realty_sidebar_layout_enabled' ) && hvn_
 
 		<?php if ( is_home() && ! is_front_page() ) : ?>
 
-			<header class="hvn-theme-blog-header">
+			<header class="hvn-theme-blog-header hvn-theme-blog-header--posts">
 
 				<h1 class="hvn-theme-blog-title"><?php single_post_title(); ?></h1>
 

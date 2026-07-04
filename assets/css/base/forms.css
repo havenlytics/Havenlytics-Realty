@@ -1,0 +1,727 @@
+/**
+
+ * Havenlytics Realty — Global native form foundation
+
+ *
+
+ * Styles unstyled WordPress / native HTML forms only.
+
+ * Component UI (.hvn-theme-*, .hvnly-*, .elementor-*, Hero Search, MSD) is excluded.
+
+ * Low-specificity :where() selectors so theme components override naturally.
+
+ */
+
+
+
+/* -------------------------------------------------------------------------
+
+   Scope helpers (attribute gates — no rules, documentation only)
+
+   ------------------------------------------------------------------------- */
+
+
+
+/* -------------------------------------------------------------------------
+
+   Native form roots
+
+   ------------------------------------------------------------------------- */
+
+
+
+:where(
+
+	form.search-form,
+
+	form.post-password-form,
+
+	form.comment-form,
+
+	form.wp-block-search__form,
+
+	.entry-content form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))
+
+) {
+
+	width: 100%;
+
+	max-width: 100%;
+
+}
+
+
+
+:where(form.search-form, form.wp-block-search__form) {
+
+	display: flex;
+
+	flex-wrap: wrap;
+
+	align-items: stretch;
+
+	gap: var(--hvn-theme-space-sm, 0.5rem);
+
+}
+
+
+
+:where(form.search-form) label,
+
+:where(form.wp-block-search__form) .wp-block-search__inside-wrapper {
+
+	flex: 1 1 12rem;
+
+	min-width: 0;
+
+	margin: 0;
+
+}
+
+
+
+:where(form.post-password-form) p {
+
+	margin: 0 0 var(--hvn-theme-space-md, 1rem);
+
+}
+
+
+
+:where(
+
+	form.search-form,
+
+	form.post-password-form,
+
+	form.comment-form,
+
+	form.wp-block-search__form,
+
+	.entry-content form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))
+
+) label {
+
+	display: block;
+
+	margin-bottom: var(--hvn-theme-space-xs, 0.25rem);
+
+	font-weight: var(--hvn-theme-font-weight-medium, 500);
+
+	color: var(--hvn-theme-text-primary, var(--hvn-text));
+
+	font-size: var(--hvn-theme-font-size-sm, 0.875rem);
+
+}
+
+
+
+/* -------------------------------------------------------------------------
+
+   Shared native field selector
+
+   ------------------------------------------------------------------------- */
+
+
+
+:where(
+
+	:where(form.search-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.search-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.search-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.wp-block-search__form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.wp-block-search__form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.wp-block-search__form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))
+
+) {
+
+	box-sizing: border-box;
+
+	width: 100%;
+
+	max-width: 100%;
+
+	min-height: var(--hvn-theme-input-height, 2.5rem);
+
+	padding: var(--hvn-theme-input-padding, 0.5rem 0.75rem);
+
+	font-family: var(--hvn-theme-font-family-base, var(--hvn-font-body));
+
+	font-size: var(--hvn-theme-font-size-md, var(--hvn-font-size, 1rem));
+
+	line-height: var(--hvn-theme-line-height-normal, 1.5);
+
+	color: var(--hvn-theme-text-primary, var(--hvn-text));
+
+	background-color: var(--hvn-theme-input-bg, var(--hvn-theme-color-white, #fff));
+
+	border: 1px solid var(--hvn-theme-input-border, var(--hvn-border));
+
+	border-radius: var(--hvn-theme-input-radius, var(--hvn-radius));
+
+	transition:
+
+		border-color var(--hvn-theme-transition-base, 300ms ease),
+
+		box-shadow var(--hvn-theme-transition-base, 300ms ease),
+
+		background-color var(--hvn-theme-transition-base, 300ms ease);
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))
+
+) {
+
+	min-height: 7.5rem;
+
+	resize: vertical;
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))
+
+) {
+
+	appearance: none;
+
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+	background-repeat: no-repeat;
+
+	background-position: right 0.75rem center;
+
+	background-size: 1rem;
+
+	padding-right: 2.5rem;
+
+	cursor: pointer;
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input[type="checkbox"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.search-form) input[type="radio"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) input[type="checkbox"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) input[type="radio"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) input[type="checkbox"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) input[type="radio"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="checkbox"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="radio"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))
+
+) {
+
+	width: 1.125rem;
+
+	height: 1.125rem;
+
+	min-height: 0;
+
+	padding: 0;
+
+	margin: 0;
+
+	vertical-align: middle;
+
+	accent-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+
+	cursor: pointer;
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input[type="file"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) input[type="file"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) input[type="file"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="file"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))
+
+) {
+
+	width: 100%;
+
+	min-height: auto;
+
+	padding: 0.5rem;
+
+	background-color: var(--hvn-theme-color-gray-100, #f8f9fa);
+
+	cursor: pointer;
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))::placeholder,
+
+	:where(form.search-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))::placeholder,
+
+	:where(form.post-password-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))::placeholder,
+
+	:where(form.post-password-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))::placeholder,
+
+	:where(form.comment-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))::placeholder,
+
+	:where(form.comment-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))::placeholder,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))::placeholder,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))::placeholder
+
+) {
+
+	color: var(--hvn-theme-text-muted, var(--hvn-theme-color-gray-500));
+
+	opacity: 1;
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.search-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.search-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.post-password-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.post-password-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.post-password-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.comment-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.comment-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.comment-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.wp-block-search__form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible
+
+) {
+
+	border-color: var(--hvn-theme-input-border-focus, var(--hvn-primary));
+
+	outline: 2px solid var(--hvn-primary, var(--hvn-theme-brand-primary));
+
+	outline-offset: 2px;
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.search-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.search-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.post-password-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.post-password-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.post-password-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.comment-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.comment-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.comment-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled
+
+) {
+
+	opacity: 0.65;
+
+	cursor: not-allowed;
+
+	background-color: var(--hvn-theme-color-gray-100, #f8f9fa);
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):read-only,
+
+	:where(form.search-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):read-only,
+
+	:where(form.post-password-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):read-only,
+
+	:where(form.post-password-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):read-only,
+
+	:where(form.comment-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):read-only,
+
+	:where(form.comment-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):read-only,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):read-only,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):read-only
+
+) {
+
+	background-color: var(--hvn-theme-color-gray-100, #f8f9fa);
+
+	cursor: default;
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-invalid,
+
+	:where(form.search-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-invalid,
+
+	:where(form.search-form) select:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-invalid,
+
+	:where(form.post-password-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-invalid,
+
+	:where(form.comment-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-invalid,
+
+	:where(form.comment-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-invalid,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-invalid,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-invalid
+
+) {
+
+	border-color: var(--hvn-theme-brand-error, #ff4d4f);
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-valid,
+
+	:where(form.search-form) textarea:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-valid,
+
+	:where(form.post-password-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-valid,
+
+	:where(form.comment-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-valid,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):user-valid
+
+) {
+
+	border-color: var(--hvn-theme-brand-success, #00b46a);
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):-webkit-autofill,
+
+	:where(form.post-password-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):-webkit-autofill,
+
+	:where(form.comment-form) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):-webkit-autofill,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):-webkit-autofill
+
+) {
+
+	-webkit-text-fill-color: var(--hvn-theme-text-primary, var(--hvn-text));
+
+	-webkit-box-shadow: 0 0 0 1000px var(--hvn-theme-input-bg, #fff) inset;
+
+	transition: background-color 9999s ease-out 0s;
+
+}
+
+
+
+/* -------------------------------------------------------------------------
+
+   Native primary buttons (submit, button, reset)
+
+   ------------------------------------------------------------------------- */
+
+
+
+:where(
+
+	:where(form.search-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.search-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.search-form) input[type="button"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.search-form) input[type="reset"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.post-password-form) input[type="button"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.comment-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.wp-block-search__form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	:where(form.wp-block-search__form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="button"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])),
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="reset"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))
+
+) {
+
+	display: inline-flex;
+
+	align-items: center;
+
+	justify-content: center;
+
+	gap: var(--hvn-theme-space-sm, 0.5rem);
+
+	min-height: var(--hvn-theme-input-height, 2.5rem);
+
+	padding: var(--hvn-theme-button-padding, 0.625rem 1.25rem);
+
+	font-family: var(--hvn-theme-font-family-base, var(--hvn-font-body));
+
+	font-size: var(--hvn-theme-font-size-sm, 0.875rem);
+
+	font-weight: var(--hvn-theme-font-weight-medium, 500);
+
+	line-height: 1.5;
+
+	color: var(--hvn-theme-white, var(--hvn-theme-color-white, #fff));
+
+	text-decoration: none;
+
+	background-color: var(--hvn-primary, var(--hvn-theme-brand-primary));
+
+	border: 1px solid transparent;
+
+	border-radius: var(--hvn-theme-button-radius, var(--hvn-radius));
+
+	box-shadow: var(--hvn-theme-shadow-sm);
+
+	cursor: pointer;
+
+	transition:
+
+		background-color var(--hvn-theme-transition-base, 300ms ease),
+
+		box-shadow var(--hvn-theme-transition-base, 300ms ease),
+
+		transform var(--hvn-theme-transition-base, 300ms ease);
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	:where(form.search-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	:where(form.post-password-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	:where(form.post-password-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	:where(form.comment-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	:where(form.comment-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	:where(form.wp-block-search__form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	:where(form.wp-block-search__form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):hover
+
+) {
+
+	background-color: var(--hvn-secondary, var(--hvn-theme-brand-secondary));
+
+	box-shadow: var(--hvn-theme-shadow-md);
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.search-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.post-password-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.post-password-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.comment-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.comment-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	:where(form.wp-block-search__form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):focus-visible
+
+) {
+
+	outline: 2px solid var(--hvn-primary, var(--hvn-theme-brand-primary));
+
+	outline-offset: 2px;
+
+}
+
+
+
+:where(
+
+	:where(form.search-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.search-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.post-password-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.post-password-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.comment-form) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	:where(form.comment-form) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) button:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled,
+
+	.entry-content :where(form:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"]))) input[type="submit"]:where(:not([class*="hvn-theme-"]):not([class*="hvnly-"]):not([class*="elementor-"])):disabled
+
+) {
+
+	opacity: 0.65;
+
+	cursor: not-allowed;
+
+	box-shadow: none;
+
+	transform: none;
+
+}
+
+
+
+:where(form.search-form) .search-submit,
+
+:where(form.wp-block-search__form) .wp-block-search__button {
+
+	flex-shrink: 0;
+
+}
+
+
+
+@media (max-width: 575px) {
+
+	:where(form.search-form, form.wp-block-search__form) {
+
+		flex-direction: column;
+
+	}
+
+
+
+	:where(form.search-form) .search-submit,
+
+	:where(form.wp-block-search__form) .wp-block-search__button {
+
+		width: 100%;
+
+	}
+
+}
+
+

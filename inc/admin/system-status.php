@@ -503,6 +503,85 @@ function hvn_realty_render_system_integrity_panel() {
 }
 
 /**
+ * Render runtime asset fallback diagnostics (debugging only).
+ *
+ * @return void
+ */
+function hvn_realty_render_asset_diagnostics_panel() {
+	if ( ! class_exists( 'HVN_Realty_Asset_Loader', false ) ) {
+		return;
+	}
+
+	$events = HVN_Realty_Asset_Loader::get_diagnostics();
+	$events = array_values(
+		array_filter(
+			$events,
+			static function ( $event ) {
+				$status = isset( $event['status'] ) ? (string) $event['status'] : '';
+				return in_array( $status, array( 'recovered', 'skipped' ), true );
+			}
+		)
+	);
+
+	if ( empty( $events ) ) {
+		return;
+	}
+	?>
+	<section class="hvn-realty-admin__status-panel hvn-realty-admin__status-panel--asset-diagnostics" aria-label="<?php esc_attr_e( 'Asset diagnostics', 'havenlytics-realty' ); ?>">
+		<h2><?php esc_html_e( 'Asset diagnostics', 'havenlytics-realty' ); ?></h2>
+		<p class="hvn-realty-admin__status-detail">
+			<?php esc_html_e( 'Runtime fallback events from this request cycle. Packaging issues remain visible in Theme integrity above.', 'havenlytics-realty' ); ?>
+		</p>
+		<div class="hvn-realty-admin__table-wrap">
+			<table class="widefat striped hvn-realty-admin__asset-diagnostics-table">
+				<thead>
+					<tr>
+						<th scope="col"><?php esc_html_e( 'Type', 'havenlytics-realty' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'Missing asset', 'havenlytics-realty' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'Fallback used', 'havenlytics-realty' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'Status', 'havenlytics-realty' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'Reason', 'havenlytics-realty' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'Time', 'havenlytics-realty' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ( $events as $event ) : ?>
+						<tr>
+							<td><code><?php echo esc_html( isset( $event['type'] ) ? (string) $event['type'] : '' ); ?></code></td>
+							<td><code><?php echo esc_html( isset( $event['requested_path'] ) ? (string) $event['requested_path'] : '' ); ?></code></td>
+							<td>
+								<?php
+								$fallback = '';
+								if ( ! empty( $event['fallback_path'] ) ) {
+									$fallback = (string) $event['fallback_path'];
+								} elseif ( ! empty( $event['resolved_path'] ) && ! empty( $event['requested_path'] ) && $event['resolved_path'] !== $event['requested_path'] ) {
+									$fallback = (string) $event['resolved_path'];
+								}
+								if ( '' !== $fallback ) {
+									echo '<code>' . esc_html( $fallback ) . '</code>';
+								} else {
+									echo '<span class="hvn-realty-admin__status-detail">—</span>';
+								}
+								?>
+							</td>
+							<td><?php echo esc_html( isset( $event['status'] ) ? (string) $event['status'] : '' ); ?></td>
+							<td><?php echo esc_html( isset( $event['reason'] ) ? (string) $event['reason'] : '' ); ?></td>
+							<td>
+								<?php
+								$timestamp = isset( $event['timestamp'] ) ? (int) $event['timestamp'] : 0;
+								echo $timestamp ? esc_html( wp_date( 'Y-m-d H:i:s', $timestamp ) ) : '—';
+								?>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
+	</section>
+	<?php
+}
+
+/**
  * Render the System Status admin page.
  *
  * @return void
@@ -562,6 +641,7 @@ function hvn_realty_render_system_status_page() {
 		</div>
 
 		<?php hvn_realty_render_system_integrity_panel(); ?>
+		<?php hvn_realty_render_asset_diagnostics_panel(); ?>
 
 		<footer class="hvn-realty-admin__footer hvn-realty-admin__footer--actions">
 			<p>

@@ -1,0 +1,53 @@
+/**
+ * 404 page — spacing and typography (blog module enqueue on is_404).
+ */
+
+.hvn-layout-page .hvn-theme-error-404-modern {
+	padding: clamp(2rem, 5vw, 3.5rem) 0;
+}
+
+.hvn-layout-page .hvn-theme-error-content {
+	max-width: 36rem;
+	margin-inline: auto;
+	text-align: center;
+}
+
+.hvn-layout-page .hvn-theme-error-code {
+	font-family: var(--hvn-font-heading, var(--hvn-theme-font-family-heading, 'Poppins', sans-serif));
+	font-size: clamp(4rem, 12vw, 6rem);
+	font-weight: 700;
+	line-height: 1;
+	color: color-mix(in srgb, var(--hvn-primary, #C9A36B) 55%, var(--hvn-text, #1e1e2f));
+	margin-bottom: 0.5rem;
+}
+
+.hvn-layout-page .hvn-theme-error-title {
+	font-family: var(--hvn-font-heading, var(--hvn-theme-font-family-heading, 'Poppins', sans-serif));
+	font-size: clamp(1.5rem, 4vw, 2rem);
+	margin: 0 0 0.75rem;
+	line-height: 1.2;
+}
+
+.hvn-layout-page .hvn-theme-error-message {
+	margin: 0 0 1.5rem;
+	font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+	line-height: 1.65;
+	color: var(--hvn-theme-text-secondary, #555);
+}
+
+.hvn-layout-page .hvn-theme-error-search {
+	margin-bottom: 1.5rem;
+}
+
+.hvn-layout-page .hvn-theme-error-actions {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+@media (max-width: 767px) {
+	.hvn-layout-page .hvn-theme-error-404-modern {
+		padding: 1.75rem 0 2.5rem;
+	}
+}

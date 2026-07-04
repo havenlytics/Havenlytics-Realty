@@ -27,16 +27,8 @@ function hvn_realty_enqueue_homepage_scripts() {
 		return;
 	}
 
-	if ( ! file_exists( get_template_directory() . '/assets/js/home.js' ) ) {
+	if ( ! hvn_realty_enqueue_theme_script( 'hvn-realty-home', 'assets/js/home.js' ) ) {
 		return;
 	}
-
-	wp_enqueue_script(
-		'hvn-realty-home',
-		HVN_REALTY_TEMPLATE_URL . '/assets/js/home.js',
-		array(),
-		HVN_REALTY_VERSION,
-		true
-	);
 }
 add_action( 'wp_enqueue_scripts', 'hvn_realty_enqueue_homepage_scripts', 35 );

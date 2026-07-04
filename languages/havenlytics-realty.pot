@@ -1,0 +1,2587 @@
+# Copyright (C) 2026 Havenlytics
+# This file is distributed under the same license as the Havenlytics Realty package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Havenlytics Realty 2.0.7\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/havenlytics-realty\n"
+"POT-Creation-Date: 2026-07-02 20:38:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Havenlytics Realty release tooling\n"
+"X-Domain: havenlytics-realty\n"
+
+#: inc/admin/realty-admin.php:729
+msgid "%1$d of %2$d steps complete"
+msgstr ""
+
+#: templates/blog/content-grid.php:51
+msgid "% Comments"
+msgstr ""
+
+msgctxt "plural: %d issues"
+#: inc/core/class-hvn-realty-theme-integrity.php:269
+msgid "%d issue"
+msgstr ""
+
+msgctxt "plural: %d items need attention."
+#: inc/admin/system-status.php:328
+msgid "%d item needs attention."
+msgstr ""
+
+msgctxt "plural: %d optional items could be improved."
+#: inc/admin/system-status.php:342
+msgid "%d optional item could be improved."
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:432
+msgid "%d out of 5 stars"
+msgstr ""
+
+msgctxt "plural: %d results found"
+#: search.php:70
+msgid "%d result found"
+msgstr ""
+
+msgctxt "post date"
+#: inc/template-tags.php:30
+msgid "%s"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:150
+msgid "%s+"
+msgstr ""
+
+msgctxt "plural: %s active listings"
+#: template-parts/home/section-locations.php:54
+msgid "%s active listing"
+msgstr ""
+
+msgctxt "plural: %s Baths"
+#: template-parts/home/section-properties.php:115
+msgid "%s Bath"
+msgstr ""
+
+msgctxt "plural: %s Beds"
+#: template-parts/home/section-properties.php:112
+msgid "%s Bed"
+msgstr ""
+
+msgctxt "plural: %s listings"
+#: template-parts/home/section-types.php:51
+msgid "%s listing"
+msgstr ""
+
+#: template-parts/home/section-agents.php:73
+msgid "%s on LinkedIn"
+msgstr ""
+
+#: inc/page-heading.php:81
+msgid "%s Properties"
+msgstr ""
+
+msgctxt "plural: %s published posts"
+#: templates/blog/archive-author.php:31
+msgid "%s published post"
+msgstr ""
+
+#: template-parts/home/section-properties.php:118
+msgid "%s sqft"
+msgstr ""
+
+#: functions.php:353
+msgid "&copy; %1$s %2$s. All rights reserved."
+msgstr ""
+
+#: inc/template-tags.php:61
+msgid ", "
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:258
+msgid ", not just your attention."
+msgstr ""
+
+#: templates/blog/content-grid.php:51
+msgid "0 Comments"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:193
+msgid "1 column"
+msgstr ""
+
+#: inc/customizer/sections.php:287
+msgid "1 Column"
+msgstr ""
+
+#: templates/blog/content-grid.php:51
+msgid "1 Comment"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:194
+msgid "2 columns"
+msgstr ""
+
+#: inc/customizer/sections.php:288
+msgid "2 Columns"
+msgstr ""
+
+#: inc/customizer/sections.php:289
+msgid "3 Columns"
+msgstr ""
+
+#: inc/customizer/sections.php:290
+msgid "4 Columns"
+msgstr ""
+
+#: inc/breadcrumbs.php:280
+msgid "404 - Page Not Found"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:176
+msgid "<a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">View homepage</a>"
+msgstr ""
+
+#: templates/blog/content-single.php:85
+msgid "About the author"
+msgstr ""
+
+#: inc/customizer/sections.php:76
+msgid "Accent Color"
+msgstr ""
+
+#: functions.php:287
+msgid "A clean, modern blog theme designed specifically for real estate professionals."
+msgstr ""
+
+#: inc/admin/realty-admin.php:131
+msgid "Activate the free plugin to unlock listings, search, agents, and agencies."
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:44
+msgid "Active"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:296
+msgid "Active department color"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:297
+msgid "Active department text color"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-why-control.php:62
+msgid "Add item"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:186
+msgid "Address, keyword, feature…"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:235
+msgid "Address:"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:123
+msgid "Add testimonial"
+msgstr ""
+
+#: functions.php:100
+msgid "Add widgets here."
+msgstr ""
+
+#: functions.php:115
+msgid "Add widgets here for footer column %d."
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:62
+msgid "Agencies"
+msgstr ""
+
+#: inc/setup/theme-property-sidebar-widgets.php:166
+msgid "Agent Listings"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:55
+msgid "Agents"
+msgstr ""
+
+#: functions.php:304
+msgid "A hero section for the HVN Realty theme."
+msgstr ""
+
+#: inc/admin/system-status.php:352
+msgid "All checks passed"
+msgstr ""
+
+#: inc/core/class-hvn-realty-theme-integrity.php:247
+msgid "All files found"
+msgstr ""
+
+#: inc/admin/system-status.php:441
+msgid "All required theme files and classes are present."
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:287
+msgid "Animation duration (ms)"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:144
+msgid "Any"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:285
+msgid "Any Badge"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:275
+msgid "Any Feature"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:214
+msgid "Any location"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:204
+msgid "Any Status"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:195
+msgid "Any Type"
+msgstr ""
+
+#: template-parts/header/property-search-form.php:56
+msgid "Any type"
+msgstr ""
+
+#: inc/admin/system-status.php:530
+msgid "Asset diagnostics"
+msgstr ""
+
+#: inc/breadcrumbs.php:221
+msgid "Author: "
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:408
+msgid "Autoplay slider"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:409
+msgid "Autoplay speed (ms)"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:371
+msgid "Avatar image"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:193
+msgid "Background Color"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:161
+msgid "Background gradient — bottom colour"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:157
+msgid "Background gradient — middle colour"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:153
+msgid "Background gradient — top colour"
+msgstr ""
+
+#: inc/admin/system-status.php:649
+msgid "Back to Dashboard"
+msgstr ""
+
+#: 404.php:59
+msgid "Back to Homepage"
+msgstr ""
+
+#: template-parts/footer/back-to-top.php:12
+msgid "Back to top"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:74
+msgid "Badges"
+msgstr ""
+
+#: inc/customizer/sections.php:590
+msgid "Base Font Size (px)"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:231
+msgid "Bathrooms"
+msgstr ""
+
+#: inc/integrations/havenlytics/carousel.php:178
+msgid "Baths"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:222
+msgid "Bedrooms"
+msgstr ""
+
+#: inc/integrations/havenlytics/carousel.php:171
+msgid "Beds"
+msgstr ""
+
+#: inc/admin/realty-admin.php:622
+msgid "Be Part of Our Ecosystem"
+msgstr ""
+
+#: inc/setup/theme-footer-widgets.php:127
+msgid "Blog"
+msgstr ""
+
+#: inc/customizer/sections.php:453
+msgid "Blog Layout"
+msgstr ""
+
+#: inc/admin/system-status.php:140
+msgid "Blog posts"
+msgstr ""
+
+#: inc/customizer/sections.php:562
+msgid "Body Font Family"
+msgstr ""
+
+#: inc/customizer/helpers.php:380
+msgid "Bold"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:298
+msgid "Border color"
+msgstr ""
+
+#: inc/customizer/sections.php:79
+msgid "Border Color"
+msgstr ""
+
+#: inc/customizer/sections.php:118
+msgid "Border Radius (px)"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:288
+msgid "Bottom spacing (px)"
+msgstr ""
+
+#: inc/customizer/sections.php:500
+msgid "Boxed"
+msgstr ""
+
+#: inc/breadcrumbs.php:42
+msgid "Breadcrumb"
+msgstr ""
+
+#: template-parts/home/section-properties.php:132
+msgid "Browse All Properties"
+msgstr ""
+
+#: inc/layout.php:229
+msgid "Browse by Department"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:358
+msgid "Browse by Type"
+msgstr ""
+
+#: inc/integrations/havenlytics/helpers.php:261
+msgid "Browse Listings"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:398
+msgid "Browse listings or connect with an agent today."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:260
+msgid "Browse Properties"
+msgstr ""
+
+#: inc/customizer/sections.php:363
+msgid "Business Hours"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:247
+msgid "Business Hours:"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:332
+msgid "Button border radius (px)"
+msgstr ""
+
+#: inc/blog/template-tags.php:65
+msgid "By %s"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:28
+msgid "Call to Action"
+msgstr ""
+
+#: inc/breadcrumbs.php:207
+msgid "Category: "
+msgstr ""
+
+#: inc/customizer/sections.php:149
+msgid "Center Logo"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:390
+msgid "Chart / Data"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:395
+msgid "Check"
+msgstr ""
+
+#: template-parts/header/property-search-form.php:48
+msgid "City, neighborhood, or address"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:213
+msgid "City, neighborhood, ZIP"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:50
+msgid "Clear listings, accurate details, and responsive agents. Exactly what I needed to close my latest investment."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:270
+msgid "Client Satisfaction"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:378
+msgid "Client Stories"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:398
+msgid "Clock"
+msgstr ""
+
+#: inc/admin/realty-onboarding.php:142
+msgid "Close"
+msgstr ""
+
+#: template-parts/header/mobile-menu.php:28
+msgid "Close menu"
+msgstr ""
+
+#: template-parts/header/property-search-panel.php:20
+msgid "Close search"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:149
+msgid "Close search drawer"
+msgstr ""
+
+#: comments.php:81
+msgid "Comment"
+msgstr ""
+
+#: comments.php:64
+msgid "Comments are closed."
+msgstr ""
+
+#: inc/setup/theme-menus.php:112
+msgid "Commercial"
+msgstr ""
+
+#: inc/page-heading.php:70
+msgid "Commercial Properties"
+msgstr ""
+
+#: inc/admin/system-status.php:75
+msgid "Complete"
+msgstr ""
+
+#: inc/admin/realty-admin.php:133
+msgid "Completed"
+msgstr ""
+
+#: inc/admin/realty-admin.php:152
+msgid "Configure homepage"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:275
+msgid "Configure the floating mobile search dock and drawer. Desktop Hero Search is not affected."
+msgstr ""
+
+#: inc/setup/theme-footer-widgets.php:137
+msgid "Contact"
+msgstr ""
+
+#: inc/customizer/sections.php:360
+msgid "Contact Address"
+msgstr ""
+
+#: inc/setup/theme-property-sidebar-widgets.php:120
+msgid "Contact Agent"
+msgstr ""
+
+#: inc/customizer/sections.php:362
+msgid "Contact Email"
+msgstr ""
+
+#: inc/customizer/sections.php:361
+msgid "Contact Phone"
+msgstr ""
+
+#: inc/customizer/sections.php:108
+msgid "Container Width (px)"
+msgstr ""
+
+#: inc/customizer/sections.php:496
+msgid "Container Width Mode"
+msgstr ""
+
+#: templates/blog/content-list.php:43
+msgid "Continue Reading"
+msgstr ""
+
+#: templates/blog/content-single.php:53
+msgid "Continue reading %s"
+msgstr ""
+
+#: inc/customizer/sections.php:332
+msgid "Copyright Text"
+msgstr ""
+
+#: inc/admin/realty-admin.php:153
+msgid "Creates your Home page, primary menu, and static front page after demo import."
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:129
+msgid "Customize"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:194
+msgid "Customize theme"
+msgstr ""
+
+#: inc/admin/theme-welcome-notice.php:124
+msgid "Customize Theme"
+msgstr ""
+
+#: inc/admin/realty-admin.php:283
+msgid "Dashboard"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:267
+msgid "Data-backed every listing"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:255
+msgid "Data-Backed Real Estate"
+msgstr ""
+
+#: inc/integrations/havenlytics/mobile-search-drawer.php:232
+msgid "Decrease %s"
+msgstr ""
+
+#: inc/customizer/sections.php:239
+msgid "Default Header Button Label"
+msgstr ""
+
+#: inc/customizer/sections.php:257
+msgid "Default Header Button URL"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:174
+msgid "Default value"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:327
+msgid "Department font size (px)"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:336
+msgid "Department spacing (px)"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-why-control.php:176
+msgid "Description"
+msgstr ""
+
+#: inc/admin/theme-welcome-notice.php:127
+msgid "Dismiss"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:139
+msgid "Displays address, phone, email and business hours. Falls back to Customizer footer contact values when fields are empty."
+msgstr ""
+
+#: inc/customizer/helpers.php:32
+msgid "DM Sans"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:292
+msgid "Dock background"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:322
+msgid "Dock background opacity (%)"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:330
+msgid "Dock border radius (px)"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:334
+msgid "Dock padding (px)"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:137
+msgid "Documentation"
+msgstr ""
+
+#: inc/admin/realty-admin.php:759
+msgid "Done"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:303
+msgid "Drag fields to reorder. Enable or disable fields without removing them. Assign fields to the main row or More Filters panel."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:221
+msgid "Drag sections to reorder the homepage. Use Show/Hide to toggle visibility without opening each section panel."
+msgstr ""
+
+#: inc/customizer/customizer-ui.php:110
+msgid "Drag to reorder"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:340
+msgid "Drag to reorder. Add unlimited items with an icon, title, description, and optional link."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:399
+msgid "Drag to reorder. Add unlimited testimonials with photo, rating, and review text."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:244
+msgid "Drag to reorder. Changes apply after the preview refreshes."
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:293
+msgid "Drawer background"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:323
+msgid "Drawer background opacity (%)"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:331
+msgid "Drawer border radius (px)"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:335
+msgid "Drawer padding (px)"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-why-control.php:142
+msgid "Duplicate item"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:286
+msgid "Duplicate testimonial"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:250
+msgid "e.g. 200"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:258
+msgid "e.g. 250000"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:266
+msgid "e.g. 750000"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:294
+msgid "e.g. PR-2026-00000001"
+msgstr ""
+
+#: template-parts/content-search.php:35
+msgid "Edit"
+msgstr ""
+
+#: inc/template-tags.php:98
+msgid "Edit <span class=\"screen-reader-text\">%s</span>"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:172
+msgid "Edit every section of the homepage: hero, search, why-choose, featured properties, property types, locations, agents, testimonials, blog and call to action."
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:199
+msgid "Edit menus"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:55
+msgid "Elena Rodriguez"
+msgstr ""
+
+#: comments.php:84
+msgid "Email"
+msgstr ""
+
+#: template-parts/home/section-agents.php:78
+msgid "Email %s"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:243
+msgid "Email:"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:151
+msgid "Enable"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:342
+msgid "Enable backdrop blur"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:341
+msgid "Enable drag-to-close"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:338
+msgid "Enable edge fade"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:282
+msgid "Enable Mobile Search Drawer"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:266
+msgid "Enable scroll animation"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:339
+msgid "Enable smooth auto-centering"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:343
+msgid "Enable spring animation"
+msgstr ""
+
+#: inc/customizer/sections.php:155
+msgid "Enable Sticky Header"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:340
+msgid "Enable swipe gestures"
+msgstr ""
+
+#: inc/admin/system-status.php:620
+msgid "Environment"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:366
+msgid "Every market we serve gets walked, photographed, and tracked by a local agent — not just listed."
+msgstr ""
+
+#: inc/integration-fallbacks.php:606
+msgid "Explore listings by city and region."
+msgstr ""
+
+#: inc/customizer/helpers.php:381
+msgid "Extra Bold"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:255
+msgid "Eyebrow"
+msgstr ""
+
+#: inc/customizer/helpers.php:581
+msgid "Facebook"
+msgstr ""
+
+#: inc/customizer/sections.php:409
+msgid "Facebook URL"
+msgstr ""
+
+#: inc/admin/system-status.php:541
+msgid "Fallback used"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-why-control.php:114
+msgid "Feature %d"
+msgstr ""
+
+#: inc/integrations/havenlytics/carousel.php:153
+msgid "Featured"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:364
+msgid "Featured Locations"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:22
+msgid "Featured Properties"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:339
+msgid "Feature items"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:60
+msgid "Features"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:256
+msgid "Find a home that"
+msgstr ""
+
+#: inc/layout.php:194
+msgid "Find your next property"
+msgstr ""
+
+#: inc/integration-fallbacks.php:384
+msgid "Find Your Perfect Property"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:56
+msgid "First-time Renter, Miami FL"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:267
+msgid "Floating badge subtitle"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:266
+msgid "Floating badge title"
+msgstr ""
+
+#: functions.php:112
+msgid "Footer %d"
+msgstr ""
+
+#: inc/customizer/sections.php:296
+msgid "Footer Background Color"
+msgstr ""
+
+#: template-parts/footer/site-info.php:24
+msgid "Footer bottom"
+msgstr ""
+
+#: functions.php:41
+msgid "Footer Bottom Menu (Privacy / Terms / Sitemap)"
+msgstr ""
+
+#: inc/customizer/sections.php:351
+msgid "Footer Brand Description"
+msgstr ""
+
+#: inc/customizer/sections.php:283
+msgid "Footer Columns"
+msgstr ""
+
+#: inc/customizer/sections.php:298
+msgid "Footer Link Color"
+msgstr ""
+
+#: functions.php:40
+msgid "Footer Menu"
+msgstr ""
+
+#: inc/customizer/sections.php:41
+msgid "Footer Settings"
+msgstr ""
+
+#: inc/customizer/sections.php:400
+msgid "Footer Tagline"
+msgstr ""
+
+#: inc/customizer/sections.php:297
+msgid "Footer Text Color"
+msgstr ""
+
+#: inc/setup/theme-menus.php:477
+msgid "Footer — Directory"
+msgstr ""
+
+#: inc/setup/theme-menus.php:476
+msgid "Footer — Properties"
+msgstr ""
+
+#: template-parts/home/section-properties.php:79
+msgid "For Sale"
+msgstr ""
+
+#: inc/customizer/helpers.php:35
+msgid "Fraunces"
+msgstr ""
+
+#: inc/admin/system-status.php:139
+msgid "Front page"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:195
+msgid "Full width"
+msgstr ""
+
+#: inc/customizer/sections.php:501
+msgid "Full Width"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:249
+msgid "Garages (min sq ft)"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:422
+msgid "Get a free, data-backed valuation from a local Havenlytics agent within 24 hours."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:423
+msgid "Get a Free Valuation"
+msgstr ""
+
+#: functions.php:293
+msgid "Get Started"
+msgstr ""
+
+#: templates/blog/content-none.php:33
+msgid "Get started here"
+msgstr ""
+
+#: inc/customizer/sections.php:18
+msgid "Global design, header, footer, layout, typography, and real estate homepage."
+msgstr ""
+
+#: inc/customizer/sections.php:25
+msgid "Global Design System"
+msgstr ""
+
+#: inc/customizer/sections.php:457
+msgid "Grid"
+msgstr ""
+
+#: inc/customizer/sections.php:638
+msgid "H1 Weight"
+msgstr ""
+
+#: inc/customizer/sections.php:639
+msgid "H2 Weight"
+msgstr ""
+
+#: inc/customizer/sections.php:640
+msgid "H3 Weight"
+msgstr ""
+
+#: inc/customizer/sections.php:641
+msgid "H4 Weight"
+msgstr ""
+
+#: inc/customizer/sections.php:642
+msgid "H5 Weight"
+msgstr ""
+
+#: inc/customizer/sections.php:643
+msgid "H6 Weight"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:352
+msgid "Handpicked homes worth a closer look"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:137
+msgid "Havenlytics: Contact Information"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:28
+msgid "Havenlytics: Property Locations"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:259
+msgid "Havenlytics pairs licensed local agents with transparent market data, so every offer you make is grounded in evidence — not guesswork."
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:160
+msgid "Havenlytics Realty"
+msgstr ""
+
+#: inc/theme-loader.php:280
+msgid "Havenlytics Realty integration files are missing (inc/integrations/havenlytics/). The theme will run in blog mode; real estate homepage features are disabled until the complete theme is installed."
+msgstr ""
+
+#: inc/core/class-hvn-realty-theme-integrity.php:318
+msgid "Havenlytics Realty is missing required theme files. Reinstall the complete theme package."
+msgstr ""
+
+#: inc/theme-loader.php:264
+msgid "Havenlytics Realty is missing required theme files. Some features may not work until you reinstall the complete theme package:"
+msgstr ""
+
+#: inc/admin/realty-onboarding.php:204
+msgid "Havenlytics Realty setup tutorial"
+msgstr ""
+
+#: inc/customizer/sections.php:17
+msgid "Havenlytics Theme Settings"
+msgstr ""
+
+#: inc/customizer/sections.php:144
+msgid "Header Layout"
+msgstr ""
+
+#: inc/customizer/sections.php:29
+msgid "Header Settings"
+msgstr ""
+
+#: inc/customizer/sections.php:563
+msgid "Heading Font Family"
+msgstr ""
+
+#: inc/customizer/sections.php:625
+msgid "Heading Scale (H1–H6)"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:19
+msgid "Hero"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:265
+msgid "Hero image (inset)"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:264
+msgid "Hero image (large)"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:286
+msgid "Hero trigger offset (px)"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:257
+msgid "holds its value"
+msgstr ""
+
+#: functions.php:443
+msgid "Home"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:42
+msgid "Home Buyer, Austin TX"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:69
+msgid "Home Page"
+msgstr ""
+
+#: inc/admin/system-status.php:98
+msgid "Home page"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:184
+msgid "Homepage"
+msgstr ""
+
+#: inc/setup/theme-launch.php:308
+msgid "Homepage, menu, footer widgets, and demo listings are live."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:243
+msgid "Homepage Sections"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:193
+msgid "Homepage settings"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:269
+msgid "Homes Sold"
+msgstr ""
+
+#: template-parts/footer/site-info.php:43
+msgid "https://havenlytics.com/"
+msgstr ""
+
+#: functions.php:265
+msgid "HVN Realty Button"
+msgstr ""
+
+#: functions.php:303
+msgid "HVN Realty Hero Section"
+msgstr ""
+
+#: functions.php:256
+msgid "HVN Realty Quote"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-why-control.php:158
+msgid "Icon"
+msgstr ""
+
+#: inc/customizer/sections.php:548
+msgid "Ignore Sticky Posts"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:57
+msgid "I loved how easy it was to filter by location and property type. The whole experience felt modern and trustworthy."
+msgstr ""
+
+#: inc/admin/realty-admin.php:141
+msgid "Import demo properties"
+msgstr ""
+
+#: inc/admin/system-status.php:73
+msgid "Imported"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:44
+msgid "Inactive"
+msgstr ""
+
+#: inc/integrations/havenlytics/mobile-search-drawer.php:234
+msgid "Increase %s"
+msgstr ""
+
+#: inc/customizer/helpers.php:582
+msgid "Instagram"
+msgstr ""
+
+#: inc/customizer/sections.php:408
+msgid "Instagram URL"
+msgstr ""
+
+#: template-parts/home/plugin-inactive.php:23
+msgid "Install and activate the Havenlytics plugin to unlock the full real estate homepage with property search, listings, agents, and more."
+msgstr ""
+
+#: inc/admin/realty-admin.php:130
+msgid "Install Havenlytics"
+msgstr ""
+
+#: inc/admin/realty-admin.php:718
+msgid "Install Havenlytics, import demo content, and configure your homepage in a few guided steps."
+msgstr ""
+
+#: inc/admin/realty-admin.php:781
+msgid "Install Havenlytics plugin"
+msgstr ""
+
+#: inc/admin/theme-welcome-notice.php:106
+msgid "Install Havenlytics Plugin"
+msgstr ""
+
+#: inc/admin/realty-admin.php:133
+msgid "Install plugin"
+msgstr ""
+
+#: inc/customizer/helpers.php:21
+msgid "Inter"
+msgstr ""
+
+#: template-parts/home/section-hero.php:66
+msgid "Introduction"
+msgstr ""
+
+#: inc/admin/system-status.php:325
+msgid "Issues detected"
+msgstr ""
+
+#: templates/blog/content-none.php:40
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:48
+msgid "James Carter"
+msgstr ""
+
+#: inc/admin/realty-admin.php:626
+msgid "Join Havenlytics Facebook Community"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:394
+msgid "Key"
+msgstr ""
+
+#: template-parts/header/property-search-form.php:41
+msgid "Keyword or address"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:185
+msgid "Keyword Search"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:159
+msgid "Label"
+msgstr ""
+
+#: inc/customizer/sections.php:631
+msgid "Large"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:27
+msgid "Latest Blog"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:414
+msgid "Latest Insights"
+msgstr ""
+
+#: inc/customizer/helpers.php:27
+msgid "Lato"
+msgstr ""
+
+#: inc/admin/system-status.php:265
+msgid "Launch complete"
+msgstr ""
+
+#: inc/admin/realty-admin.php:716
+msgid "Launch your real estate site"
+msgstr ""
+
+#: inc/customizer/sections.php:37
+msgid "Layout Settings"
+msgstr ""
+
+#: comments.php:75
+msgid "Leave a Comment"
+msgstr ""
+
+#: inc/template-tags.php:81
+msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:250
+msgid "Leave a field empty to use the Customizer footer contact value."
+msgstr ""
+
+#: inc/customizer/sections.php:333
+msgid "Leave empty for the default copyright line."
+msgstr ""
+
+#: inc/customizer/sections.php:207
+msgid "Leave empty to use the site home URL."
+msgstr ""
+
+#: inc/customizer/sections.php:541
+msgid "Leave empty to use WordPress Reading settings."
+msgstr ""
+
+#: inc/customizer/sections.php:479
+msgid "Left"
+msgstr ""
+
+#: inc/setup/theme-menus.php:113
+msgid "Let"
+msgstr ""
+
+#: inc/customizer/helpers.php:376
+msgid "Light"
+msgstr ""
+
+#: inc/customizer/sections.php:607
+msgid "Line Height"
+msgstr ""
+
+#: inc/customizer/helpers.php:584
+msgid "LinkedIn"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-why-control.php:183
+msgid "Link URL (optional)"
+msgstr ""
+
+#: inc/customizer/sections.php:458
+msgid "List"
+msgstr ""
+
+#: inc/customizer/helpers.php:659
+msgid "List a Property"
+msgstr ""
+
+#: inc/integrations/havenlytics/breadcrumbs.php:63
+msgid "Listings"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:152
+msgid "Listing type"
+msgstr ""
+
+#: inc/setup/theme-menus.php:24
+msgid "Lists"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:30
+msgid "Lists popular property locations. Hidden automatically when the Havenlytics plugin is inactive."
+msgstr ""
+
+#: inc/customizer/homepage-style.php:443
+msgid "Live Market Data"
+msgstr ""
+
+#: template-parts/header/preloader.php:19
+msgid "Loading"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:372
+msgid "Local experts, vetted and ranked on results"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:212
+msgid "Location"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:24
+msgid "Locations"
+msgstr ""
+
+#: inc/customizer/sections.php:148
+msgid "Logo Left / Menu Center / Actions Right"
+msgstr ""
+
+#: inc/customizer/sections.php:150
+msgid "Logo Left / Menu Right / CTA Right"
+msgstr ""
+
+#: template-parts/header/navigation.php:8
+msgid "Main Navigation"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:184
+msgid "Main row"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:197
+msgid "Manage agents"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:196
+msgid "Manage properties"
+msgstr ""
+
+#: inc/customizer/helpers.php:34
+msgid "Manrope"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:397
+msgid "Map Pin"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:415
+msgid "Market notes from our research desk"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:289
+msgid "Maximum drawer height (vh)"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:265
+msgid "Max Price"
+msgstr ""
+
+#: template-parts/header/property-search-form.php:110
+msgid "Max price"
+msgstr ""
+
+#: inc/customizer/helpers.php:378
+msgid "Medium"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:262
+msgid "Meet an Agent"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:371
+msgid "Meet Our Agents"
+msgstr ""
+
+#: template-parts/header/actions.php:11
+msgid "Menu"
+msgstr ""
+
+#: inc/customizer/helpers.php:37
+msgid "Merriweather"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:257
+msgid "Min Price"
+msgstr ""
+
+#: template-parts/header/property-search-form.php:96
+msgid "Min price"
+msgstr ""
+
+#: inc/admin/system-status.php:112
+msgid "Missing (ID %d)"
+msgstr ""
+
+#: inc/admin/system-status.php:540
+msgid "Missing asset"
+msgstr ""
+
+#: inc/admin/system-status.php:470
+msgid "Missing classes"
+msgstr ""
+
+#: inc/admin/system-status.php:461
+msgid "Missing files"
+msgstr ""
+
+#: inc/admin/system-status.php:186
+msgid "Missing menu"
+msgstr ""
+
+#: template-parts/header/mobile-menu.php:32
+msgid "Mobile"
+msgstr ""
+
+#: template-parts/home/mobile-search-drawer.php:103
+msgid "Mobile property search"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:272
+msgid "Mobile Search Drawer"
+msgstr ""
+
+#: inc/customizer/helpers.php:26
+msgid "Montserrat"
+msgstr ""
+
+#: inc/integrations/havenlytics/carousel.php:145
+msgid "more"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:185
+msgid "More Filters"
+msgstr ""
+
+#: inc/admin/system-status.php:339
+msgid "Mostly healthy"
+msgstr ""
+
+#: comments.php:83
+msgid "Name"
+msgstr ""
+
+#: inc/customizer/sections.php:564
+msgid "Navigation Font Family"
+msgstr ""
+
+#: inc/admin/realty-admin.php:598
+msgid "Need Help?"
+msgstr ""
+
+#: inc/admin/realty-admin.php:636
+msgid "Need Help? Contact Support"
+msgstr ""
+
+#: inc/admin/realty-admin.php:600
+msgid "Need help setting up Havenlytics Realty or Havenlytics?"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:365
+msgid "Neighborhoods our agents know by heart"
+msgstr ""
+
+#: inc/blog/pagination.php:55
+msgid "Next"
+msgstr ""
+
+#: single.php:62
+msgid "Next Post"
+msgstr ""
+
+#: inc/admin/system-status.php:259
+msgid "No"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:456
+msgid "No hidden commissions. Every cost is itemized before you sign anything."
+msgstr ""
+
+#: template-parts/header/property-search-form.php:119
+msgid "No max"
+msgstr ""
+
+#: template-parts/header/property-search-form.php:105
+msgid "No min"
+msgstr ""
+
+#: inc/customizer/sections.php:480
+msgid "None"
+msgstr ""
+
+#: inc/integrations/havenlytics/carousel.php:236
+msgid "No Properties"
+msgstr ""
+
+#: inc/integration-fallbacks.php:864
+msgid "No properties found at the moment."
+msgstr ""
+
+#: inc/admin/system-status.php:175
+msgid "Not assigned"
+msgstr ""
+
+#: templates/blog/content-none.php:23
+msgid "Nothing Found"
+msgstr ""
+
+#: inc/admin/system-status.php:80
+msgid "Not imported"
+msgstr ""
+
+#: inc/admin/system-status.php:99
+msgid "Not set"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:373
+msgid "Number of agents"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:104
+msgid "Number of locations:"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:416
+msgid "Number of posts"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:353
+msgid "Number of properties"
+msgstr ""
+
+#: inc/customizer/helpers.php:28
+msgid "Nunito"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:222
+msgid "Official companion theme for the free <a href=\"%1$s\">Havenlytics plugin</a>. <a href=\"%2$s\">View on WordPress.org</a>."
+msgstr ""
+
+#: comments.php:32
+msgid "One thought on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#: 404.php:45
+msgid "Oops! The page you are looking for does not exist."
+msgstr ""
+
+#: inc/customizer/sections.php:218
+msgid "Open Header Action Buttons in a New Tab"
+msgstr ""
+
+#: header-home.php:71
+msgid "Open menu"
+msgstr ""
+
+#: template-parts/header/actions.php:21
+msgid "Open property search"
+msgstr ""
+
+#: inc/admin/theme-welcome-notice.php:121
+msgid "Open Realty"
+msgstr ""
+
+#: inc/customizer/helpers.php:25
+msgid "Open Sans"
+msgstr ""
+
+#: inc/core/class-hvn-realty-theme-integrity.php:258
+msgid "Optional controls missing"
+msgstr ""
+
+#: inc/admin/system-status.php:451
+msgid "Optional Customizer control files are missing from this install. Drag-and-drop section order and testimonials controls are unavailable."
+msgstr ""
+
+#: inc/admin/system-status.php:482
+msgid "Optional Customizer controls"
+msgstr ""
+
+#: inc/theme-loader.php:242
+msgid "Optional Customizer controls unavailable. The testimonials drag-and-drop control is disabled until the complete theme package is installed."
+msgstr ""
+
+#: inc/admin/system-status.php:494
+msgid "Optional files"
+msgstr ""
+
+#: inc/customizer/sections.php:401
+msgid "Optional short blurb shown in the footer brand area."
+msgstr ""
+
+#: inc/page-heading.php:107
+msgid "Our Agencies"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:450
+msgid "Our agent network is screened on closing rates, client reviews, and local specialization."
+msgstr ""
+
+#: inc/page-heading.php:106
+msgid "Our Agents"
+msgstr ""
+
+#: inc/customizer/helpers.php:33
+msgid "Outfit"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:325
+msgid "Overlay opacity (%)"
+msgstr ""
+
+#: template-parts/content-page.php:40
+msgid "Page links"
+msgstr ""
+
+#: 404.php:39
+msgid "Page Not Found"
+msgstr ""
+
+#: template-parts/content-page.php:40
+msgid "Pages:"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:181
+msgid "Panel"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:391
+msgid "People / Agents"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:239
+msgid "Phone:"
+msgstr ""
+
+#: inc/admin/system-status.php:254
+msgid "PHP 7.4+ recommended"
+msgstr ""
+
+#: inc/admin/system-status.php:251
+msgid "PHP version"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:166
+msgid "Placeholder"
+msgstr ""
+
+#: inc/customizer/helpers.php:36
+msgid "Playfair Display"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:177
+msgid "Plugin, demo import, and homepage configuration are complete."
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:163
+msgid "Plugin, homepage, and content at a glance. Manage your real estate site from one place."
+msgstr ""
+
+#: inc/admin/system-status.php:258
+msgid "Plugin active"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:41
+msgid "Plugin Version"
+msgstr ""
+
+#: inc/admin/system-status.php:237
+msgid "Plugin version"
+msgstr ""
+
+#: inc/customizer/helpers.php:23
+msgid "Plus Jakarta Sans"
+msgstr ""
+
+#: inc/customizer/helpers.php:22
+msgid "Poppins"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:321
+msgid "Position / location"
+msgstr ""
+
+#: inc/template-tags.php:64
+msgid "Posted in %1$s"
+msgstr ""
+
+#: single.php:64
+msgid "Post navigation"
+msgstr ""
+
+#: inc/blog/pagination.php:57
+msgid "Posts navigation"
+msgstr ""
+
+#: inc/customizer/sections.php:540
+msgid "Posts Per Page"
+msgstr ""
+
+#: inc/customizer/sections.php:517
+msgid "Posts Per Row"
+msgstr ""
+
+#: template-parts/footer/site-info.php:42
+msgid "Powered by %s"
+msgstr ""
+
+#: inc/blog/pagination.php:54
+msgid "Prev"
+msgstr ""
+
+#: inc/admin/realty-admin.php:167
+msgid "Preview your live real estate homepage with search, listings, and navigation."
+msgstr ""
+
+#: inc/template-tags.php:158
+msgid "Previous"
+msgstr ""
+
+#: single.php:60
+msgid "Previous Post"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:444
+msgid "Price trends, days-on-market, and comparable sales refresh daily across every neighborhood."
+msgstr ""
+
+#: header-home.php:52
+msgid "Primary"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:294
+msgid "Primary button color"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:295
+msgid "Primary button gradient end"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:260
+msgid "Primary button label"
+msgstr ""
+
+#: inc/customizer/sections.php:168
+msgid "Primary Button Label"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:261
+msgid "Primary button URL"
+msgstr ""
+
+#: inc/customizer/sections.php:191
+msgid "Primary Button URL"
+msgstr ""
+
+#: inc/customizer/sections.php:74
+msgid "Primary Color"
+msgstr ""
+
+#: functions.php:39
+msgid "Primary Menu"
+msgstr ""
+
+#: inc/admin/system-status.php:174
+msgid "Primary menu"
+msgstr ""
+
+#: inc/setup/theme-menus.php:413
+msgid "Primary — Havenlytics"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:48
+msgid "Properties"
+msgstr ""
+
+#: inc/page-heading.php:68
+msgid "Properties for Sale"
+msgstr ""
+
+#: inc/page-heading.php:71
+msgid "Properties to Let"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:283
+msgid "Property Badges"
+msgstr ""
+
+#: inc/integrations/havenlytics/carousel.php:247
+msgid "Property carousel navigation"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:273
+msgid "Property Features"
+msgstr ""
+
+#: inc/page-heading.php:104
+msgid "Property Grid"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:293
+msgid "Property ID"
+msgstr ""
+
+#: inc/admin/system-status.php:272
+msgid "Property import"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:49
+msgid "Property Investor, Denver CO"
+msgstr ""
+
+#: inc/page-heading.php:105
+msgid "Property Listings"
+msgstr ""
+
+#: inc/integration-fallbacks.php:593
+msgid "Property Locations"
+msgstr ""
+
+#: inc/page-heading.php:103
+msgid "Property Search"
+msgstr ""
+
+#: template-parts/header/property-search-panel.php:25
+msgid "Property search"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:202
+msgid "Property Status"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:193
+msgid "Property Type"
+msgstr ""
+
+#: template-parts/header/property-search-form.php:54
+msgid "Property type"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:23
+msgid "Property Types"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:126
+msgid "Quick actions"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:191
+msgid "Quick links"
+msgstr ""
+
+#: inc/setup/theme-footer-widgets.php:166
+msgid "Quick Links"
+msgstr ""
+
+#: inc/customizer/helpers.php:31
+msgid "Raleway"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:349
+msgid "Rating"
+msgstr ""
+
+#: inc/admin/system-status.php:606
+msgid "Read-only environment and setup diagnostics. No settings are changed on this page."
+msgstr ""
+
+#: template-parts/home/section-blog.php:63
+msgid "Read article"
+msgstr ""
+
+#: templates/blog/content-grid.php:47
+msgid "Read More"
+msgstr ""
+
+#: inc/integration-fallbacks.php:415
+msgid "Ready to find your dream home?"
+msgstr ""
+
+#: inc/integrations/havenlytics/helpers.php:289
+msgid "Ready to find your next property?"
+msgstr ""
+
+#: templates/blog/content-none.php:32
+msgid "Ready to publish your first post? %s."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:421
+msgid "Ready to see what your home is really worth?"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:315
+msgid "Real estate, grounded in evidence"
+msgstr ""
+
+#: inc/admin/realty-admin.php:273
+msgid "Realty"
+msgstr ""
+
+#: inc/admin/system-status.php:543
+msgid "Reason"
+msgstr ""
+
+#: inc/integrations/havenlytics/hero-search.php:240
+msgid "Reception Rooms"
+msgstr ""
+
+#: inc/customizer/helpers.php:377
+msgid "Regular"
+msgstr ""
+
+#: inc/setup/theme-property-sidebar-widgets.php:139
+msgid "Related Properties"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:401
+msgid "Remove"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-why-control.php:149
+msgid "Remove item"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:293
+msgid "Remove testimonial"
+msgstr ""
+
+#: inc/setup/theme-menus.php:114
+msgid "Rent"
+msgstr ""
+
+#: inc/page-heading.php:67
+msgid "Rent Properties"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:202
+msgid "Required"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:335
+msgid "Review text"
+msgstr ""
+
+#: inc/customizer/sections.php:478
+msgid "Right"
+msgstr ""
+
+#: inc/customizer/helpers.php:24
+msgid "Roboto"
+msgstr ""
+
+#: inc/admin/realty-admin.php:144
+msgid "Run Setup Wizard"
+msgstr ""
+
+#: inc/admin/realty-admin.php:157
+msgid "Run theme setup"
+msgstr ""
+
+#: inc/admin/theme-welcome-notice.php:102
+msgid "Run the Setup Wizard"
+msgstr ""
+
+#: inc/admin/realty-admin.php:142
+msgid "Run the Setup Wizard to import sample listings, agents, and plugin pages."
+msgstr ""
+
+#: inc/admin/system-status.php:533
+msgid "Runtime fallback events from this request cycle. Packaging issues remain visible in Theme integrity above."
+msgstr ""
+
+#: inc/setup/theme-menus.php:115
+msgid "Sale"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:41
+msgid "Sarah Mitchell"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:392
+msgid "Scale / Transparency"
+msgstr ""
+
+#: inc/admin/system-status.php:222
+msgid "Scanner unavailable"
+msgstr ""
+
+#: template-parts/home/section-hero.php:122
+msgid "Scroll"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:148
+msgid "Search"
+msgstr ""
+
+msgctxt "placeholder"
+#: searchform.php:14
+msgid "Search &hellip;"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:302
+msgid "Search Builder"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:328
+msgid "Search button font size (px)"
+msgstr ""
+
+msgctxt "label"
+#: searchform.php:10
+msgid "Search for:"
+msgstr ""
+
+#: template-parts/home/section-search.php:143
+msgid "Searching %s verified listings updated this week."
+msgstr ""
+
+#: inc/customizer/homepage-style.php:20
+msgid "Search Panel"
+msgstr ""
+
+#: inc/layout.php:217
+msgid "Search properties"
+msgstr ""
+
+#: inc/breadcrumbs.php:228
+msgid "Search Results for: %s"
+msgstr ""
+
+#: inc/integration-fallbacks.php:396
+msgid "Search thousands of listings, connect with agents, and discover your next home."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:262
+msgid "Secondary button label"
+msgstr ""
+
+#: inc/customizer/sections.php:169
+msgid "Secondary Button Label"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:263
+msgid "Secondary button URL"
+msgstr ""
+
+#: inc/customizer/sections.php:192
+msgid "Secondary Button URL"
+msgstr ""
+
+#: inc/customizer/sections.php:75
+msgid "Secondary Color"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:220
+msgid "Section Order"
+msgstr ""
+
+#: inc/core/class-hvn-realty-theme-integrity.php:260
+msgid "See Theme Integrity panel below"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:393
+msgid "Select image"
+msgstr ""
+
+#: inc/customizer/helpers.php:379
+msgid "Semibold"
+msgstr ""
+
+#: inc/admin/realty-admin.php:752
+msgid "Setup steps"
+msgstr ""
+
+#: inc/admin/realty-onboarding.php:157
+msgid "Setup Tutorial"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:324
+msgid "Shadow opacity (%)"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:389
+msgid "Shield / Verified"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-section-order-control.php:71
+msgid "Show"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:370
+msgid "Show Agents"
+msgstr ""
+
+#: inc/customizer/sections.php:431
+msgid "Show Back To Top Button"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:420
+msgid "Show Call to Action"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:350
+msgid "Show Featured Properties"
+msgstr ""
+
+#: inc/customizer/sections.php:162
+msgid "Show Header Action Buttons (all pages)"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:254
+msgid "Show Hero"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:413
+msgid "Show Latest Blog"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:363
+msgid "Show Locations"
+msgstr ""
+
+#: inc/customizer/sections.php:352
+msgid "Shown under the footer logo. Leave empty to use the site tagline."
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:283
+msgid "Show only on Homepage"
+msgstr ""
+
+#: inc/customizer/mobile-search-drawer.php:284
+msgid "Show on Search Result Page"
+msgstr ""
+
+#: inc/customizer/sections.php:549
+msgid "Show page preloader"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:357
+msgid "Show Property Types"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:281
+msgid "Show Search Panel"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:407
+msgid "Show star ratings"
+msgstr ""
+
+#: template-parts/home/section-testimonials.php:75
+msgid "Show testimonial %d"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:377
+msgid "Show Testimonials"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:313
+msgid "Show Why-Choose Section"
+msgstr ""
+
+#: functions.php:98
+msgid "Sidebar"
+msgstr ""
+
+#: inc/customizer/sections.php:474
+msgid "Sidebar Position"
+msgstr ""
+
+#: inc/customizer/helpers.php:657
+msgid "Sign In"
+msgstr ""
+
+#: inc/customizer/panel-integration.php:40
+msgid "Site Identity"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:181
+msgid "Site overview"
+msgstr ""
+
+#: inc/admin/system-status.php:631
+msgid "Site setup"
+msgstr ""
+
+#: inc/admin/realty-admin.php:789
+msgid "Site snapshot"
+msgstr ""
+
+#: header-home.php:34
+msgid "Skip to content"
+msgstr ""
+
+#: inc/customizer/sections.php:629
+msgid "Small"
+msgstr ""
+
+#: inc/admin/system-status.php:456
+msgid "Some optional theme files are missing. Core theme features should still work."
+msgstr ""
+
+#: inc/admin/system-status.php:446
+msgid "Some theme files or classes are missing. Reinstall the complete theme package from WordPress.org or your release ZIP."
+msgstr ""
+
+#: templates/blog/content-none.php:38
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr ""
+
+#: inc/customizer/helpers.php:29
+msgid "Source Sans Pro"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:212
+msgid "Spacing Bottom (px)"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:206
+msgid "Spacing Top (px)"
+msgstr ""
+
+#: inc/integrations/havenlytics/carousel.php:185
+msgid "SqFt"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:396
+msgid "Star"
+msgstr ""
+
+#: inc/integrations/havenlytics/helpers.php:275
+msgid "Start your property search today."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:276
+msgid "Stat %d label"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:275
+msgid "Stat %d suffix"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:274
+msgid "Stat %d value"
+msgstr ""
+
+#: inc/admin/system-status.php:157
+msgid "Static page"
+msgstr ""
+
+#: inc/admin/system-status.php:149
+msgid "Static page (missing)"
+msgstr ""
+
+#: inc/admin/system-status.php:542
+msgid "Status"
+msgstr ""
+
+#: inc/admin/realty-admin.php:757
+msgid "Step %d"
+msgstr ""
+
+#: inc/admin/realty-admin.php:631
+msgid "Subscribe to Our YouTube Channel"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:259
+msgid "Subtitle"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:141
+msgid "Support"
+msgstr ""
+
+#: inc/admin/realty-admin.php:610
+msgid "Support Center"
+msgstr ""
+
+#: inc/customizer/helpers.php:38
+msgid "System Default"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:201
+msgid "System Status"
+msgstr ""
+
+#: inc/breadcrumbs.php:214
+msgid "Tag: "
+msgstr ""
+
+#: inc/template-tags.php:71
+msgid "Tagged %1$s"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:81
+msgid "Tags"
+msgstr ""
+
+#: templates/blog/content-single.php:78
+msgid "Tags:"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:425
+msgid "Talk to an Agent"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-testimonials-control.php:225
+msgid "Testimonial %d"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:398
+msgid "Testimonial items"
+msgstr ""
+
+#: template-parts/home/section-testimonials.php:73
+msgid "Testimonial pagination"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:26
+msgid "Testimonials"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:201
+msgid "Text Color"
+msgstr ""
+
+#: inc/admin/system-status.php:353
+msgid "Theme, plugin, and site setup diagnostics look good."
+msgstr ""
+
+#: inc/admin/system-status.php:221
+msgid "Theme integrity"
+msgstr ""
+
+#: inc/admin/realty-admin.php:709
+msgid "Theme setup completed. Your homepage and primary menu are ready."
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:34
+msgid "Theme Version"
+msgstr ""
+
+#: inc/admin/system-status.php:230
+msgid "Theme version"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-testimonials.php:43
+msgid "The team made finding our dream home effortless. The search tools and map view saved us weeks of browsing."
+msgstr ""
+
+#: inc/admin/system-status.php:544
+msgid "Time"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-why-control.php:169
+msgid "Title"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:258
+msgid "Title (after highlight)"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:256
+msgid "Title (before highlight)"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:257
+msgid "Title (highlighted)"
+msgstr ""
+
+#: inc/widgets/footer-widgets.php:100
+msgid "Title:"
+msgstr ""
+
+#: inc/customizer/customizer-ui.php:128
+msgid "Toggle item"
+msgstr ""
+
+#: functions.php:193
+msgid "Toggle submenu"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:455
+msgid "Transparent Fees"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:379
+msgid "Trusted by buyers and sellers alike"
+msgstr ""
+
+#: inc/admin/system-status.php:539
+msgid "Type"
+msgstr ""
+
+#: inc/customizer/sections.php:33
+msgid "Typography Settings"
+msgstr ""
+
+#: inc/customizer/sections.php:240
+msgid "Used as the primary header button when no custom Primary Button Label is set above."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:266
+msgid "Valuation Verified"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:437
+msgid "Verified Listings"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:449
+msgid "Vetted Agents"
+msgstr ""
+
+#: template-parts/home/section-properties.php:58
+msgid "View All Listings"
+msgstr ""
+
+#: templates/blog/content-single.php:95
+msgid "View all posts"
+msgstr ""
+
+#: inc/integration-fallbacks.php:352
+msgid "View All Properties"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:77
+msgid "View badge"
+msgstr ""
+
+#: inc/integrations/havenlytics/carousel.php:193
+msgid "View Details"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:63
+msgid "View feature"
+msgstr ""
+
+#: inc/integration-fallbacks.php:570
+msgid "View location"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:70
+msgid "View status"
+msgstr ""
+
+#: inc/core/class-hvn-realty-theme-integrity.php:324
+msgid "View System Status"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:84
+msgid "View tag"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-settings.php:56
+msgid "View type"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:168
+msgid "View website"
+msgstr ""
+
+#: inc/setup/theme-launch.php:312
+msgid "View Website"
+msgstr ""
+
+#: inc/admin/realty-admin.php:166
+msgid "View your website"
+msgstr ""
+
+#: inc/admin/realty-admin.php:157
+msgid "Waiting for import"
+msgstr ""
+
+#: inc/admin/realty-onboarding.php:159
+msgid "Watch a quick walkthrough for installing Havenlytics, importing properties, and launching your site."
+msgstr ""
+
+#: inc/admin/realty-onboarding.php:218
+msgid "Watch Later"
+msgstr ""
+
+#: inc/admin/realty-onboarding.php:198
+msgid "Watch this quick setup guide and launch your real estate website in minutes."
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:133
+msgid "Watch Tutorial"
+msgstr ""
+
+#: comments.php:85
+msgid "Website"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:316
+msgid "We combine licensed local expertise with continuously updated market data, so you always know what a home is actually worth."
+msgstr ""
+
+#: inc/admin/realty-onboarding.php:195
+msgid "Welcome to Havenlytics Realty"
+msgstr ""
+
+#: inc/admin/theme-welcome-notice.php:103
+msgid "Welcome to Havenlytics Realty. Import demo properties to launch your site in minutes."
+msgstr ""
+
+#: inc/admin/theme-welcome-notice.php:107
+msgid "Welcome to Havenlytics Realty. Install the free Havenlytics plugin to unlock your real estate homepage."
+msgstr ""
+
+#: functions.php:283
+msgid "Welcome to HVN Realty"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:359
+msgid "Whatever shape home takes for you"
+msgstr ""
+
+#: inc/customizer/homepage-style.php:21
+msgid "Why Choose Us"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:314
+msgid "Why Havenlytics"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-search-builder-control.php:190
+msgid "Width"
+msgstr ""
+
+#: inc/admin/system-status.php:244
+msgid "WordPress version"
+msgstr ""
+
+#: inc/customizer/helpers.php:30
+msgid "Work Sans"
+msgstr ""
+
+#: inc/customizer/helpers.php:583
+msgid "X / Twitter"
+msgstr ""
+
+#: inc/customizer/sections.php:410
+msgid "X / Twitter URL"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:271
+msgid "Years of Data"
+msgstr ""
+
+#: inc/admin/system-status.php:259
+msgid "Yes"
+msgstr ""
+
+#: inc/setup/theme-launch.php:307
+msgid "Your real estate site is ready!"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:176
+msgid "Your site is ready!"
+msgstr ""
+
+#: inc/admin/dashboard-overview.php:161
+msgid "Your site overview"
+msgstr ""
+
+#: inc/customizer/helpers.php:585
+msgid "YouTube"
+msgstr ""

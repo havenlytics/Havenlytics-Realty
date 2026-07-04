@@ -16,7 +16,8 @@
 		</div>
 
 		<?php
-		$empty_title_tag = ( is_archive() && ! is_search() ) ? 'h1' : 'h2';
+		// Archive headers already output the page H1; empty state stays H2.
+		$empty_title_tag = 'h2';
 		?>
 		<<?php echo tag_escape( $empty_title_tag ); ?> class="hvn-blog-none__title">
 			<?php esc_html_e( 'Nothing Found', 'havenlytics-realty' ); ?>
@@ -35,7 +36,6 @@
 				</p>
 			<?php elseif ( is_search() ) : ?>
 				<p><?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'havenlytics-realty' ); ?></p>
-				<?php get_search_form(); ?>
 			<?php else : ?>
 				<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'havenlytics-realty' ); ?></p>
 				<?php get_search_form(); ?>

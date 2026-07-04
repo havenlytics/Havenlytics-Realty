@@ -471,30 +471,17 @@ function hvn_realty_enqueue_mobile_search_drawer_assets() {
 		return;
 	}
 
-	$css_path = get_template_directory() . '/assets/css/home/mobile-search-drawer.css';
-	$js_path  = get_template_directory() . '/assets/js/home/mobile-search-drawer.js';
+	$style_deps = array( 'hvn-realty-theme' );
 
-	if ( file_exists( $css_path ) ) {
-		$style_deps = array( 'hvn-realty-theme' );
+	hvn_realty_enqueue_theme_style(
+		'hvn-realty-home-mobile-search-drawer',
+		'assets/css/home/mobile-search-drawer.css',
+		$style_deps,
+		false,
+		'(max-width: 991px)'
+	);
 
-		wp_enqueue_style(
-			'hvn-realty-home-mobile-search-drawer',
-			HVN_REALTY_TEMPLATE_URL . '/assets/css/home/mobile-search-drawer.css',
-			$style_deps,
-			HVN_REALTY_VERSION,
-			'(max-width: 991px)'
-		);
-	}
-
-	if ( file_exists( $js_path ) ) {
-		wp_enqueue_script(
-			'hvn-realty-home-mobile-search-drawer',
-			HVN_REALTY_TEMPLATE_URL . '/assets/js/home/mobile-search-drawer.js',
-			array(),
-			HVN_REALTY_VERSION,
-			true
-		);
-
+	if ( hvn_realty_enqueue_theme_script( 'hvn-realty-home-mobile-search-drawer', 'assets/js/home/mobile-search-drawer.js' ) ) {
 		wp_localize_script(
 			'hvn-realty-home-mobile-search-drawer',
 			'hvnRealtyMobileSearchDrawer',

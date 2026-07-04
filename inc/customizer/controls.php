@@ -57,74 +57,55 @@ function hvn_realty_get_customizer_home_section_visibility_map() {
 function hvn_realty_customize_controls_js() {
 	wp_enqueue_script( 'jquery-ui-sortable' );
 
-	if ( file_exists( get_template_directory() . '/assets/css/customizer-controls.css' ) ) {
-		wp_enqueue_style(
-			'hvn-realty-customizer-controls-ui',
-			get_template_directory_uri() . '/assets/css/customizer-controls.css',
-			array(),
-			HVN_REALTY_VERSION
-		);
+	$controls_css = hvn_realty_enqueue_style_safe(
+		'hvn-realty-customizer-controls-ui',
+		'assets/css/customizer-controls.css'
+	);
+
+	if ( $controls_css && function_exists( 'hvn_realty_get_design_tokens_css' ) ) {
+		$tokens_css = hvn_realty_get_design_tokens_css();
+		if ( is_string( $tokens_css ) && '' !== $tokens_css ) {
+			wp_add_inline_style( 'hvn-realty-customizer-controls-ui', $tokens_css );
+		}
 	}
 
-	if ( file_exists( get_template_directory() . '/assets/js/customizer-controls-framework.js' ) ) {
-		wp_enqueue_script(
-			'hvn-realty-customizer-controls-framework',
-			get_template_directory_uri() . '/assets/js/customizer-controls-framework.js',
-			array( 'customize-controls', 'jquery', 'jquery-ui-sortable' ),
-			HVN_REALTY_VERSION,
-			true
-		);
-	}
+	hvn_realty_enqueue_script_safe(
+		'hvn-realty-customizer-controls-framework',
+		'assets/js/customizer-controls-framework.js',
+		array( 'customize-controls', 'jquery', 'jquery-ui-sortable' )
+	);
 
-	if ( file_exists( get_template_directory() . '/assets/js/customizer-testimonials-control.js' ) ) {
-		wp_enqueue_script(
-			'hvn-realty-customizer-testimonials-control',
-			get_template_directory_uri() . '/assets/js/customizer-testimonials-control.js',
-			array( 'customize-controls', 'jquery', 'media-models', 'hvn-realty-customizer-controls-framework' ),
-			HVN_REALTY_VERSION,
-			true
-		);
-	}
+	hvn_realty_enqueue_script_safe(
+		'hvn-realty-customizer-testimonials-control',
+		'assets/js/customizer-testimonials-control.js',
+		array( 'customize-controls', 'jquery', 'media-models', 'hvn-realty-customizer-controls-framework' )
+	);
 
-	if ( file_exists( get_template_directory() . '/assets/js/customizer-why-control.js' ) ) {
-		wp_enqueue_script(
-			'hvn-realty-customizer-why-control',
-			get_template_directory_uri() . '/assets/js/customizer-why-control.js',
-			array( 'customize-controls', 'jquery', 'hvn-realty-customizer-controls-framework' ),
-			HVN_REALTY_VERSION,
-			true
-		);
-	}
+	hvn_realty_enqueue_script_safe(
+		'hvn-realty-customizer-why-control',
+		'assets/js/customizer-why-control.js',
+		array( 'customize-controls', 'jquery', 'hvn-realty-customizer-controls-framework' )
+	);
 
-	if ( file_exists( get_template_directory() . '/assets/js/customizer-section-order-control.js' ) ) {
-		wp_enqueue_script(
-			'hvn-realty-customizer-section-order-control',
-			get_template_directory_uri() . '/assets/js/customizer-section-order-control.js',
-			array( 'customize-controls', 'jquery', 'jquery-ui-sortable', 'hvn-realty-customizer-controls-framework' ),
-			HVN_REALTY_VERSION,
-			true
-		);
-	}
+	hvn_realty_enqueue_script_safe(
+		'hvn-realty-customizer-section-order-control',
+		'assets/js/customizer-section-order-control.js',
+		array( 'customize-controls', 'jquery', 'jquery-ui-sortable', 'hvn-realty-customizer-controls-framework' )
+	);
 
-	if ( file_exists( get_template_directory() . '/assets/js/customizer-search-builder-control.js' ) ) {
-		wp_enqueue_script(
-			'hvn-realty-customizer-search-builder-control',
-			get_template_directory_uri() . '/assets/js/customizer-search-builder-control.js',
-			array( 'customize-controls', 'jquery', 'jquery-ui-sortable', 'hvn-realty-customizer-controls-framework' ),
-			HVN_REALTY_VERSION,
-			true
-		);
-	}
+	hvn_realty_enqueue_script_safe(
+		'hvn-realty-customizer-search-builder-control',
+		'assets/js/customizer-search-builder-control.js',
+		array( 'customize-controls', 'jquery', 'jquery-ui-sortable', 'hvn-realty-customizer-controls-framework' )
+	);
 
-	if ( file_exists( get_template_directory() . '/assets/js/customizer-controls.js' ) ) {
-		wp_enqueue_script(
-			'hvn-realty-customizer-controls',
-			get_template_directory_uri() . '/assets/js/customizer-controls.js',
-			array( 'customize-controls', 'jquery' ),
-			HVN_REALTY_VERSION,
-			true
-		);
+	$controls_loaded = hvn_realty_enqueue_script_safe(
+		'hvn-realty-customizer-controls',
+		'assets/js/customizer-controls.js',
+		array( 'customize-controls', 'jquery' )
+	);
 
+	if ( $controls_loaded ) {
 		wp_localize_script(
 			'hvn-realty-customizer-controls',
 			'hvnRealtyCustomizerControls',

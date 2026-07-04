@@ -1,0 +1,41 @@
+# Havenlytics Realty — distribution exclude list
+# Used by bin/build-release.ps1 and manual ZIP workflows.
+# NEVER exclude inc/integrations/ or other runtime theme PHP.
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Version control / IDE
+.git/
+.gitignore
+.gitattributes
+.github/
+.vscode/
+.idea/
+*.code-workspace
+
+# Dev / audit tooling (not runtime)
+bin/
+docs/
+node_modules/
+vendor/
+composer.json
+composer.lock
+package.json
+package-lock.json
+
+# Logs and local env
+*.log
+.env
+.env.*
+
+# Build artifacts (if added later)
+*.map
+*.zip
+havenlytics-realty/
+
+# Optional dev docs (keep readme.txt — WordPress.org requires it)
+RELEASE-AUDIT.md
+*.md
+!readme.txt

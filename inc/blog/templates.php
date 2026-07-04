@@ -23,14 +23,12 @@ function hvn_realty_get_blog_template_part( $slug, $name = null ) {
 /**
  * Inline style attribute for grid column CSS variable.
  *
- * @return string Empty for list layout.
+ * Column count is driven by body data-blog-cols, loop classes, and
+ * wp_add_inline_style() so responsive breakpoints can override desktop values.
+ * Element-level --hvn-blog-columns inline styles block @media rules.
+ *
+ * @return string Always empty; Customizer preview sets columns via JS.
  */
 function hvn_realty_get_blog_grid_style_attr() {
-	if ( function_exists( 'hvn_realty_get_blog_layout' ) && 'list' === hvn_realty_get_blog_layout() ) {
-		return '';
-	}
-
-	$cols = function_exists( 'hvn_realty_get_blog_column_count' ) ? hvn_realty_get_blog_column_count() : 3;
-
-	return sprintf( ' style="%s"', esc_attr( '--hvn-blog-columns: ' . (int) $cols ) );
+	return '';
 }

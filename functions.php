@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'HVN_REALTY_VERSION' ) ) {
-	define( 'HVN_REALTY_VERSION', '2.0.5' );
+	define( 'HVN_REALTY_VERSION', '2.0.7' );
 }
 
 if ( ! defined( 'HVN_REALTY_TEMPLATE_URL' ) ) {
@@ -166,11 +166,11 @@ function hvn_realty_scripts() {
     }
 
     if ( function_exists( 'hvn_realty_enqueue_theme_style' ) ) {
-        hvn_realty_enqueue_theme_style( 'hvn-realty-theme', 'assets/css/theme.css', $font_deps );
+        hvn_realty_enqueue_theme_style( 'hvn-realty-theme', 'assets/css/theme.css', $font_deps, false, 'all', true );
         hvn_realty_enqueue_theme_style( 'hvn-realty-forms', 'assets/css/base/forms.css', array( 'hvn-realty-theme' ) );
         hvn_realty_enqueue_theme_style( 'hvn-realty-polish', 'assets/css/polish.css', array( 'hvn-realty-forms' ) );
         hvn_realty_enqueue_theme_style( 'hvn-realty-layouts', 'assets/css/layouts.css', array( 'hvn-realty-polish' ) );
-        hvn_realty_enqueue_theme_style( 'hvn-realty-style', 'style.css', array( 'hvn-realty-layouts' ) );
+        hvn_realty_enqueue_theme_style( 'hvn-realty-style', 'style.css', array( 'hvn-realty-layouts' ), false, 'all', true );
     } else {
         wp_enqueue_style( 'hvn-realty-theme', HVN_REALTY_TEMPLATE_URL . '/assets/css/theme.css', $font_deps, HVN_REALTY_VERSION );
         wp_enqueue_style( 'hvn-realty-forms', HVN_REALTY_TEMPLATE_URL . '/assets/css/base/forms.css', array( 'hvn-realty-theme' ), HVN_REALTY_VERSION );
@@ -180,7 +180,7 @@ function hvn_realty_scripts() {
     }
 
     if ( function_exists( 'hvn_realty_enqueue_theme_script' ) ) {
-        hvn_realty_enqueue_theme_script( 'hvn-realty-theme-js', 'assets/js/theme.js' );
+        hvn_realty_enqueue_theme_script( 'hvn-realty-theme-js', 'assets/js/theme.js', array(), false, true, true );
     } else {
         wp_enqueue_script( 'hvn-realty-theme-js', HVN_REALTY_TEMPLATE_URL . '/assets/js/theme.js', array(), HVN_REALTY_VERSION, true );
     }
@@ -533,6 +533,7 @@ if ( file_exists( $theme_loader ) ) {
 hvn_realty_load_theme_file( 'inc/design-tokens.php', false );
 hvn_realty_load_theme_file( 'inc/core/release-manifest.php', false );
 hvn_realty_load_theme_file( 'inc/core/class-hvn-realty-theme-integrity.php', false );
+hvn_realty_load_theme_file( 'inc/core/class-hvn-realty-asset-loader.php', false );
 hvn_realty_load_theme_file( 'inc/customizer/loader.php', false );
 hvn_realty_load_theme_file( 'inc/plugin-hooks.php', false );
 
