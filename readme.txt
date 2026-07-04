@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.7
+Stable tag: 2.0.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,19 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.0.8 - July 4, 2026 =
+* NEW: Standalone Blog Mode when Havenlytics plugin is inactive.
+* IMPROVED: Automatic detection of companion plugin via centralized hvn_realty_has_havenlytics() helper.
+* IMPROVED: Graceful fallback to native WordPress blog templates.
+* IMPROVED: Conditional loading of property templates and assets.
+* IMPROVED: Frontend performance when plugin is inactive.
+* IMPROVED: Better first-time user experience.
+* FIXED: Broken homepage layout before plugin installation.
+* FIXED: Empty property sections on fresh theme installation.
+* FIXED: Property-dependent template rendering when plugin is unavailable.
+* FIXED: Conditional asset loading for plugin components.
+* COMPATIBILITY: 100% backward compatible with all existing Havenlytics Realty installations.
 
 = 2.0.7 - July 3, 2026 =
 * Added universal runtime asset loader with graceful CSS/JS fallback recovery.
@@ -450,6 +463,9 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.0.8 =
+Recommended update introducing Standalone Blog Mode for sites without the Havenlytics plugin, with graceful fallbacks and improved first-install experience. Fully backward compatible.
 
 = 2.0.7 =
 Recommended update with runtime asset fallback recovery, improved theme integrity diagnostics, translation readiness, and stability improvements.

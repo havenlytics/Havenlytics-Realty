@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'HVN_REALTY_VERSION' ) ) {
-	define( 'HVN_REALTY_VERSION', '2.0.7' );
+	define( 'HVN_REALTY_VERSION', '2.0.8' );
 }
 
 if ( ! defined( 'HVN_REALTY_TEMPLATE_URL' ) ) {

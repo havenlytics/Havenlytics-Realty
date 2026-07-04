@@ -6,12 +6,33 @@
  */
 
 /**
+ * Whether the Havenlytics companion plugin is active.
+ *
+ * Canonical detection helper — use this (or hvn_realty_is_havenlytics_plugin_active)
+ * instead of scattering class_exists / function_exists checks.
+ *
+ * @return bool
+ */
+function hvn_realty_has_havenlytics() {
+	return class_exists( 'HvnlyNab' ) || function_exists( 'HVNLY_NAB' );
+}
+
+/**
  * Whether the Havenlytics plugin is active.
  *
  * @return bool
  */
 function hvn_realty_is_havenlytics_plugin_active() {
-	return class_exists( 'HvnlyNab' ) || function_exists( 'HVNLY_NAB' );
+	return hvn_realty_has_havenlytics();
+}
+
+/**
+ * Whether the theme is running without the Havenlytics plugin (standalone blog mode).
+ *
+ * @return bool
+ */
+function hvn_realty_is_standalone_blog_mode() {
+	return ! hvn_realty_has_havenlytics();
 }
 
 /**

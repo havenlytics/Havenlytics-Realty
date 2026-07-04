@@ -1,12 +1,7 @@
 <?php
 /**
- * Front page — Havenlytics Realty Homepage 2.0.0.
- *
- * A complete rebuild from the havenlytics-realty.html prototype. Each section
- * is a dedicated, Customizer-driven template part rendered by
- * hvn_realty_render_homepage_sections(). Uses the dedicated homepage header
- * and footer so the prototype's transparent sticky header and dark footer
- * match exactly, while the rest of the site keeps its existing chrome.
+ * Front page — realty homepage when the Havenlytics plugin is active,
+ * otherwise standard WordPress front-page behavior (standalone blog mode).
  *
  * @package Havenlytics_Realty
  */
@@ -15,14 +10,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-get_header( 'home' );
-?>
-<main id="primary" class="hvn-theme-home-main" role="main">
-	<?php
-	if ( function_exists( 'hvn_realty_render_homepage_sections' ) ) {
-		hvn_realty_render_homepage_sections();
-	}
+if ( function_exists( 'hvn_realty_should_show_realty_home' ) && hvn_realty_should_show_realty_home() ) {
+	get_header( 'home' );
 	?>
-</main>
-<?php
-get_footer( 'home' );
+	<main id="primary" class="hvn-theme-home-main" role="main">
+		<?php
+		if ( function_exists( 'hvn_realty_render_homepage_sections' ) ) {
+			hvn_realty_render_homepage_sections();
+		}
+		?>
+	</main>
+	<?php
+	get_footer( 'home' );
+	return;
+}
+
+if ( function_exists( 'hvn_realty_get_standalone_front_template' ) && 'home' === hvn_realty_get_standalone_front_template() ) {
+	if ( function_exists( 'hvn_realty_is_empty_realty_front_page' ) && hvn_realty_is_empty_realty_front_page() ) {
+		get_header();
+		hvn_realty_render_standalone_blog_index();
+		get_footer();
+		return;
+	}
+
+	require get_template_directory() . '/home.php';
+	return;
+}
+
+require get_template_directory() . '/page.php';

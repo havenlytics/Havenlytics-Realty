@@ -9,12 +9,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'hvn_realty_has_havenlytics' ) ) {
+	/**
+	 * @return bool
+	 */
+	function hvn_realty_has_havenlytics() {
+		return class_exists( 'HvnlyNab' ) || function_exists( 'HVNLY_NAB' );
+	}
+}
+
 if ( ! function_exists( 'hvn_realty_is_havenlytics_plugin_active' ) ) {
 	/**
 	 * @return bool
 	 */
 	function hvn_realty_is_havenlytics_plugin_active() {
-		return class_exists( 'HvnlyNab' ) || function_exists( 'HVNLY_NAB' );
+		return hvn_realty_has_havenlytics();
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_is_standalone_blog_mode' ) ) {
+	/**
+	 * @return bool
+	 */
+	function hvn_realty_is_standalone_blog_mode() {
+		return ! hvn_realty_has_havenlytics();
 	}
 }
 
@@ -231,8 +249,12 @@ if ( ! function_exists( 'hvn_realty_is_havenlytics_view' ) ) {
 	/**
 	 * @return bool
 	 */
-	function hvn_realty_is_havenlytics_view() {
-		return hvn_realty_is_property_view()
+function hvn_realty_is_havenlytics_view() {
+	if ( ! hvn_realty_has_havenlytics() ) {
+		return false;
+	}
+
+	return hvn_realty_is_property_view()
 			|| hvn_realty_is_agent_context()
 			|| hvn_realty_is_agency_context()
 			|| ( function_exists( 'hvn_realty_is_plugin_shortcode_page' ) && hvn_realty_is_plugin_shortcode_page() );

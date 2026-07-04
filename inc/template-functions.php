@@ -44,7 +44,7 @@ function hvn_realty_body_classes( $classes ) {
 		$classes[] = 'hvn-view-page';
 	}
 
-	if ( ( is_home() || is_search() || ( is_archive() && ! ( function_exists( 'hvn_realty_is_property_context' ) && hvn_realty_is_property_context() ) && ! ( function_exists( 'hvn_realty_is_havenlytics_view' ) && hvn_realty_is_havenlytics_view() ) ) ) ) {
+	if ( ( is_home() || is_search() || ( is_archive() && ! ( function_exists( 'hvn_realty_is_property_context' ) && hvn_realty_is_property_context() ) && ! ( function_exists( 'hvn_realty_is_havenlytics_view' ) && hvn_realty_is_havenlytics_view() ) ) ) || ( function_exists( 'hvn_realty_is_blog_view' ) && hvn_realty_is_blog_view() && is_front_page() ) ) {
 		$classes[] = 'hvn-view-blog';
 		$classes[] = 'hvn-posts-cols-' . hvn_realty_get_blog_column_count();
 		if ( 'list' === hvn_realty_get_blog_layout() ) {

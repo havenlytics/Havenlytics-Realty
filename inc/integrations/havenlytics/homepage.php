@@ -62,6 +62,10 @@ function hvn_realty_home_section_visible( $section ) {
  * @return void
  */
 function hvn_realty_render_homepage_sections() {
+	if ( ! hvn_realty_has_havenlytics() ) {
+		return;
+	}
+
 	$sections = hvn_realty_get_home_sections();
 
 	// Safety net: never allow an empty homepage. Fall back to the default order.

@@ -32,6 +32,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hvn_realty_should_enqueue_blog_assets() {
 
+	if ( function_exists( 'hvn_realty_is_standalone_blog_mode' ) && hvn_realty_is_standalone_blog_mode() ) {
+		if ( function_exists( 'hvn_realty_is_empty_realty_front_page' ) && hvn_realty_is_empty_realty_front_page() ) {
+			return true;
+		}
+	}
+
 	if ( function_exists( 'hvn_realty_should_show_realty_home' ) && hvn_realty_should_show_realty_home() ) {
 
 		return false;

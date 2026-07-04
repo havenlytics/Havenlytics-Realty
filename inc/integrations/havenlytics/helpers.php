@@ -54,6 +54,10 @@ function hvn_realty_should_show_realty_home() {
 		return false;
 	}
 
+	if ( ! hvn_realty_has_havenlytics() ) {
+		return false;
+	}
+
 	if ( hvn_realty_is_realty_homepage() ) {
 		return true;
 	}
@@ -75,6 +79,10 @@ function hvn_realty_should_show_realty_home() {
  * @return bool
  */
 function hvn_realty_is_home_design() {
+	if ( ! hvn_realty_has_havenlytics() ) {
+		return false;
+	}
+
 	if ( function_exists( 'hvn_realty_should_show_realty_home' ) && hvn_realty_should_show_realty_home() ) {
 		return true;
 	}
