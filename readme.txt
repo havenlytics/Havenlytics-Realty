@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,16 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.0.9 - July 6, 2026 =
+* NEW: Improved custom testimonial carousel with seamless infinite looping using the native theme slider.
+* IMPROVED: Continuous carousel experience without blank spaces at the beginning or end.
+* IMPROVED: Responsive carousel calculations for desktop, tablet, and mobile.
+* IMPROVED: Pagination synchronization with active slide.
+* IMPROVED: Resize handling for consistent behavior across viewport changes.
+* FIXED: Empty space appearing after the final testimonial slide.
+* FIXED: Responsive carousel edge-case calculations.
+* COMPATIBILITY: Fully backward compatible with all existing Havenlytics Realty installations.
 
 = 2.0.8 - July 4, 2026 =
 * NEW: Standalone Blog Mode when Havenlytics plugin is inactive.
@@ -463,6 +473,9 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.0.9 =
+Recommended update with seamless infinite-loop testimonial carousel, improved responsive slide calculations, and pagination sync. Fully backward compatible.
 
 = 2.0.8 =
 Recommended update introducing Standalone Blog Mode for sites without the Havenlytics plugin, with graceful fallbacks and improved first-install experience. Fully backward compatible.

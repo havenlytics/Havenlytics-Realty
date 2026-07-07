@@ -28,7 +28,7 @@ $hvn_star = '<svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1L8.6 4
 			<span class="hvn-theme-home-eyebrow hvn-theme-home-eyebrow--center"><?php echo esc_html( hvn_realty_get_home_section_subtitle( 'testimonials', __( 'Client Stories', 'havenlytics-realty' ) ) ); ?></span>
 			<h2 id="hvn-theme-home-testimonials-title"><?php echo esc_html( hvn_realty_get_home_section_title( 'testimonials', __( 'Trusted by buyers and sellers alike', 'havenlytics-realty' ) ) ); ?></h2>
 		</div>
-		<div class="hvn-theme-home-testimonial-wrap">
+		<div class="hvn-theme-home-testimonial-wrap" role="region" aria-roledescription="<?php esc_attr_e( 'carousel', 'havenlytics-realty' ); ?>" aria-labelledby="hvn-theme-home-testimonials-title">
 			<div class="hvn-theme-home-testimonial-track" id="hvn-theme-home-testimonial-track">
 				<?php
 				foreach ( $hvn_items as $hvn_item ) :
@@ -46,8 +46,8 @@ $hvn_star = '<svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1L8.6 4
 					$hvn_init   = function_exists( 'hvn_realty_get_testimonial_avatar_initial' ) ? hvn_realty_get_testimonial_avatar_initial( $hvn_name ) : '';
 					?>
 					<figure class="hvn-theme-home-testimonial-card">
-						<div class="hvn-theme-home-testimonial-stars" aria-label="<?php echo esc_attr( sprintf( /* translators: %d: rating out of 5. */ __( '%d out of 5 stars', 'havenlytics-realty' ), $hvn_rating ) ); ?>">
-							<?php echo str_repeat( $hvn_star, $hvn_rating ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<div class="hvn-theme-home-testimonial-stars" role="img" aria-label="<?php echo esc_attr( sprintf( /* translators: %d: rating out of 5. */ __( '%d out of 5 stars', 'havenlytics-realty' ), $hvn_rating ) ); ?>">
+							<span class="hvn-theme-home-testimonial-stars__icons" aria-hidden="true"><?php echo str_repeat( $hvn_star, $hvn_rating ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 						</div>
 						<?php if ( $hvn_text ) : ?>
 							<p><?php echo esc_html( $hvn_text ); ?></p>
@@ -70,9 +70,9 @@ $hvn_star = '<svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1L8.6 4
 			</div>
 		</div>
 		<?php if ( count( $hvn_items ) > 1 ) : ?>
-			<div class="hvn-theme-home-testimonial-nav" role="tablist" aria-label="<?php esc_attr_e( 'Testimonial pagination', 'havenlytics-realty' ); ?>">
+			<div class="hvn-theme-home-testimonial-nav" role="group" aria-label="<?php esc_attr_e( 'Testimonial slides', 'havenlytics-realty' ); ?>">
 				<?php foreach ( $hvn_items as $hvn_dot_index => $hvn_dot_item ) : ?>
-					<button class="hvn-theme-home-testimonial-dot<?php echo 0 === $hvn_dot_index ? ' hvn-theme-home-active' : ''; ?>" data-hvn-theme-dot="<?php echo esc_attr( (string) $hvn_dot_index ); ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %d: slide number. */ __( 'Show testimonial %d', 'havenlytics-realty' ), (int) $hvn_dot_index + 1 ) ); ?>"></button>
+					<button type="button" class="hvn-theme-home-testimonial-dot<?php echo 0 === $hvn_dot_index ? ' hvn-theme-home-active' : ''; ?>" data-hvn-theme-dot="<?php echo esc_attr( (string) $hvn_dot_index ); ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %d: slide number. */ __( 'Show testimonial %d', 'havenlytics-realty' ), (int) $hvn_dot_index + 1 ) ); ?>"<?php echo 0 === $hvn_dot_index ? ' aria-current="true"' : ''; ?>></button>
 				<?php endforeach; ?>
 			</div>
 		<?php endif; ?>

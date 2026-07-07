@@ -1263,6 +1263,10 @@ a.hvn-theme-home-why__card:hover h3 {
 	display: flex;
 	gap: 0.2rem;
 }
+.hvn-theme-home-testimonial-stars__icons {
+	display: flex;
+	gap: 0.2rem;
+}
 .hvn-theme-home-testimonial-stars svg {
 	fill: var(--hvn-theme-gold);
 	stroke: var(--hvn-theme-gold);
@@ -1310,18 +1314,35 @@ a.hvn-theme-home-why__card:hover h3 {
 	margin-top: 2rem;
 }
 .hvn-theme-home-testimonial-dot {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	background: transparent;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+.hvn-theme-home-testimonial-dot::before {
+	content: '';
+	display: block;
 	width: 9px;
 	height: 9px;
 	border-radius: 50%;
 	background: var(--hvn-theme-line-strong);
-	border: none;
-	cursor: pointer;
-	padding: 0;
 	transition: background 0.3s, transform 0.3s;
 }
-.hvn-theme-home-testimonial-dot.hvn-theme-home-active {
+.hvn-theme-home-testimonial-dot.hvn-theme-home-active::before {
 	background: var(--hvn-theme-gold);
 	transform: scale(1.25);
+}
+.hvn-theme-home-testimonial-dot:focus-visible {
+	outline: 2px solid var(--hvn-theme-gold);
+	outline-offset: 2px;
 }
 
 /* ===================================================================
