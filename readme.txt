@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.9
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,18 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.1.0 - July 20, 2026 =
+* NEW: Smart authentication-aware header integrated with Havenlytics Agent Workspace.
+* NEW: Dynamic Sign In, Sign Up, My Account, and Logout actions.
+* NEW: Header Favorites icon with quick access to Saved Properties.
+* NEW: Featured Properties cards now support Favorites (guest and logged-in).
+* NEW: Responsive authenticated navigation in the mobile menu.
+* IMPROVED: Better integration between Havenlytics Realty and Havenlytics.
+* IMPROVED: UX for logged-in agents and guest visitors.
+* IMPROVED: Header navigation and account experience.
+* IMPROVED: Mobile authentication flow.
+* COMPATIBILITY: Fully backward compatible. Theme still works without the Havenlytics plugin. No database changes. No duplicate authentication or favorites systems.
 
 = 2.0.9 - July 6, 2026 =
 * NEW: Improved custom testimonial carousel with seamless infinite looping using the native theme slider.
@@ -473,6 +485,9 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.1.0 =
+Recommended update with smart Workspace authentication in the header, Favorites quick access, and Featured Property favorite buttons. Fully backward compatible; theme still works without the plugin.
 
 = 2.0.9 =
 Recommended update with seamless infinite-loop testimonial carousel, improved responsive slide calculations, and pagination sync. Fully backward compatible.

@@ -4,7 +4,8 @@
  *
  * One component used across every header context (default header, homepage
  * header, and mobile menu). Driven entirely by the Customizer so the buttons
- * stay consistent site-wide.
+ * stay consistent site-wide. When Havenlytics Workspace is available, smart
+ * auth + favorites render alongside the primary CTA.
  *
  * @package Havenlytics_Realty
  *
@@ -19,16 +20,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $hvn_context = isset( $args['context'] ) ? sanitize_key( $args['context'] ) : 'default';
 
-if ( ! function_exists( 'hvn_realty_get_header_action_buttons' ) || ! hvn_realty_show_header_actions( $hvn_context ) ) {
+$hvn_show_actions = function_exists( 'hvn_realty_show_header_actions' ) && hvn_realty_show_header_actions( $hvn_context );
+$hvn_show_smart   = function_exists( 'hvn_realty_should_show_smart_header_auth' ) && hvn_realty_should_show_smart_header_auth();
+
+if ( ! $hvn_show_actions && ! $hvn_show_smart ) {
 	return;
 }
 
-$hvn_buttons = hvn_realty_get_header_action_buttons( $hvn_context );
-if ( empty( $hvn_buttons ) ) {
+$hvn_buttons = array();
+if ( $hvn_show_actions && function_exists( 'hvn_realty_get_header_action_buttons' ) ) {
+	$hvn_buttons = hvn_realty_get_header_action_buttons( $hvn_context );
+}
+
+if ( empty( $hvn_buttons ) && ! $hvn_show_smart ) {
 	return;
 }
 
-$hvn_target = hvn_realty_header_actions_open_new_tab() ? ' target="_blank" rel="noopener noreferrer"' : '';
+$hvn_target = ( function_exists( 'hvn_realty_header_actions_open_new_tab' ) && hvn_realty_header_actions_open_new_tab() )
+	? ' target="_blank" rel="noopener noreferrer"'
+	: '';
 
 $hvn_variant_classes = array(
 	'default' => array(
@@ -49,6 +59,10 @@ $hvn_classes = isset( $hvn_variant_classes[ $hvn_context ] ) ? $hvn_variant_clas
 ?>
 <div class="hvn-theme-header-actions hvn-theme-header-actions--<?php echo esc_attr( $hvn_context ); ?>">
 	<?php
+	if ( $hvn_show_smart ) {
+		get_template_part( 'template-parts/header/header-account', null, array( 'context' => $hvn_context ) );
+	}
+
 	foreach ( $hvn_buttons as $hvn_button ) :
 		$hvn_variant = isset( $hvn_button['variant'] ) ? $hvn_button['variant'] : 'primary';
 		$hvn_class   = isset( $hvn_classes[ $hvn_variant ] ) ? $hvn_classes[ $hvn_variant ] : $hvn_classes['primary'];

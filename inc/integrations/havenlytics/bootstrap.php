@@ -15,6 +15,7 @@ if ( ! function_exists( 'hvn_realty_load_theme_file' ) ) {
 
 $integration_files = array(
 	'helpers.php',
+	'header-auth.php',
 	'carousel.php',
 	'homepage-settings.php',
 	'homepage-property-types.php',

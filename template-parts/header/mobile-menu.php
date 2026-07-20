@@ -5,8 +5,8 @@
  * One mobile menu shared across the entire theme — homepage, property pages,
  * search, blog, archives, 404 and every other page. Loaded by both the homepage
  * header (header-home.php) and the internal header (header.php) so the markup,
- * styling and behaviour are identical everywhere. Header action buttons
- * (Sign In / List a Property) are intentionally excluded from the mobile menu.
+ * styling and behaviour are identical everywhere. Auth / CTA actions render
+ * below the nav when enabled (smart auth + List a Property).
  *
  * @package Havenlytics_Realty
  */
@@ -47,5 +47,8 @@ $hvn_mobile_walker = function_exists( 'hvn_realty_get_nav_menu_walker' ) ? hvn_r
 		}
 		?>
 	</nav>
+	<div class="hvn-theme-home-mobile__actions">
+		<?php get_template_part( 'template-parts/header/header-actions', null, array( 'context' => 'mobile' ) ); ?>
+	</div>
 	<?php get_template_part( 'template-parts/footer/social-links', null, array( 'context' => 'mobile' ) ); ?>
 </div>

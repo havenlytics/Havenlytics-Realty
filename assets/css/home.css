@@ -942,6 +942,42 @@ a.hvn-theme-home-why__card:hover h3 {
 	border-radius: 999px;
 	z-index: 2;
 }
+.hvn-theme-home-property-fav {
+	position: absolute;
+	top: 0.85rem;
+	right: 0.85rem;
+	z-index: 3;
+	width: 40px;
+	height: 40px;
+	min-width: 40px;
+	min-height: 40px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.95);
+	color: var(--hvn-theme-ink, #151a1f);
+	box-shadow: 0 2px 10px rgba(21, 26, 31, 0.12);
+	cursor: pointer;
+	padding: 0;
+	transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.hvn-theme-home-property-fav:hover,
+.hvn-theme-home-property-fav:focus-visible {
+	color: var(--hvn-theme-gold, #c9a36b);
+	outline: none;
+}
+.hvn-theme-home-property-fav:focus-visible {
+	box-shadow: 0 0 0 2px var(--hvn-theme-white), 0 0 0 4px var(--hvn-theme-gold, #c9a36b);
+}
+.hvn-theme-home-property-fav.is-favorited {
+	color: var(--hvn-theme-gold, #c9a36b);
+}
+.hvn-theme-home-property-fav i {
+	font-size: 1rem;
+	line-height: 1;
+}
 .hvn-theme-home-property-badge--rent {
 	background: var(--hvn-theme-deep);
 }
@@ -1856,6 +1892,32 @@ body.hvn-theme-home .hvn-theme-home-fallback__text {
 	display: flex;
 	align-items: center;
 	gap: 0.6rem;
+}
+
+/* Transparent homepage: auth + heart must read on the hero (white). */
+.hvn-theme-home-header .hvn-theme-header-fav__toggle,
+.hvn-theme-home-header .hvn-theme-header-account__link,
+.hvn-theme-home-header .hvn-theme-header-user__toggle {
+	color: var(--hvn-theme-white);
+	transition: color 0.4s var(--hvn-theme-ease), border-color 0.4s var(--hvn-theme-ease), background 0.4s var(--hvn-theme-ease);
+}
+.hvn-theme-home-header .hvn-theme-header-fav__toggle svg {
+	stroke: currentColor;
+}
+.hvn-theme-home-header .hvn-theme-header-user__caret {
+	stroke: currentColor;
+}
+
+/* Scrolled homepage: dark text matching nav/logo. */
+.hvn-theme-home-header.hvn-theme-home-scrolled .hvn-theme-header-fav__toggle,
+.hvn-theme-home-header.hvn-theme-home-scrolled .hvn-theme-header-account__link,
+.hvn-theme-home-header.hvn-theme-home-scrolled .hvn-theme-header-user__toggle {
+	color: var(--hvn-theme-ink);
+}
+
+.hvn-theme-home-header .hvn-theme-header-fav__panel,
+.hvn-theme-home-header .hvn-theme-header-user__menu {
+	color: var(--hvn-theme-ink, #151a1f);
 }
 
 .hvn-theme-home-mobile__actions {

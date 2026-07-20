@@ -85,6 +85,31 @@ if ( ! $hvn_query->have_posts() ) {
 				<article class="hvn-theme-home-property-card hvn-theme-home-reveal">
 					<div class="hvn-theme-home-property-card__media">
 						<span class="hvn-theme-home-property-badge<?php echo $hvn_is_rent ? ' hvn-theme-home-property-badge--rent' : ''; ?>"><?php echo esc_html( $hvn_status_name ); ?></span>
+						<?php
+						if ( function_exists( 'hvn_realty_favorites_available' ) && hvn_realty_favorites_available() ) {
+							$hvn_is_favorited = function_exists( 'hvnly_is_property_favorited' ) ? hvnly_is_property_favorited( $hvn_id ) : false;
+							$hvn_fav_label    = $hvn_is_favorited
+								? __( 'Remove from favorites', 'havenlytics-realty' )
+								: __( 'Add to favorites', 'havenlytics-realty' );
+							$hvn_toast        = function_exists( 'hvnly_get_favorite_toast_data' )
+								? hvnly_get_favorite_toast_data( $hvn_id )
+								: array( 'title' => get_the_title( $hvn_id ), 'thumb' => '' );
+							?>
+							<button
+								type="button"
+								class="hvnly-property--grid-list--favorite hvn-theme-home-property-fav<?php echo $hvn_is_favorited ? ' is-favorited' : ''; ?>"
+								data-hvnly-favorite="1"
+								data-property-id="<?php echo esc_attr( (string) $hvn_id ); ?>"
+								data-property-title="<?php echo esc_attr( isset( $hvn_toast['title'] ) ? $hvn_toast['title'] : '' ); ?>"
+								data-property-thumb="<?php echo esc_url( isset( $hvn_toast['thumb'] ) ? $hvn_toast['thumb'] : '' ); ?>"
+								aria-pressed="<?php echo $hvn_is_favorited ? 'true' : 'false'; ?>"
+								aria-label="<?php echo esc_attr( $hvn_fav_label ); ?>"
+							>
+								<i class="<?php echo $hvn_is_favorited ? 'fas' : 'far'; ?> fa-heart" aria-hidden="true"></i>
+							</button>
+							<?php
+						}
+						?>
 						<a href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
 							<?php if ( has_post_thumbnail() ) : ?>
 								<?php the_post_thumbnail( 'medium_large', array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => esc_attr( get_the_title() ) ) ); ?>

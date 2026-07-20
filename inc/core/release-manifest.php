@@ -75,6 +75,7 @@ function hvn_realty_get_release_manifest() {
 		// Havenlytics integration.
 		'inc/integrations/havenlytics/bootstrap.php'       => 'integration',
 		'inc/integrations/havenlytics/helpers.php'       => 'integration',
+		'inc/integrations/havenlytics/header-auth.php'     => 'integration',
 		'inc/integrations/havenlytics/carousel.php'        => 'integration',
 		'inc/integrations/havenlytics/homepage-settings.php' => 'integration',
 		'inc/integrations/havenlytics/homepage.php'        => 'integration',
@@ -116,6 +117,7 @@ function hvn_realty_get_release_manifest() {
 		'template-parts/header/navigation.php'           => 'partials',
 		'template-parts/header/actions.php'              => 'partials',
 		'template-parts/header/header-actions.php'       => 'partials',
+		'template-parts/header/header-account.php'       => 'partials',
 		'template-parts/header/mobile-menu.php'          => 'partials',
 		'template-parts/header/preloader.php'            => 'partials',
 		'template-parts/header/property-search-panel.php' => 'partials',
@@ -199,6 +201,7 @@ function hvn_realty_get_release_manifest() {
 
 		// Core JS.
 		'assets/js/theme.js'                             => 'assets-js',
+		'assets/js/header-account.js'                    => 'assets-js',
 		'assets/js/customizer.js'                        => 'assets-js',
 		'assets/js/customizer-controls-framework.js'     => 'assets-js',
 		'assets/js/customizer-controls.js'               => 'assets-js',
