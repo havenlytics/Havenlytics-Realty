@@ -2067,7 +2067,7 @@ background: rgba(108, 96, 254, 0.08)
 @media (max-width: 991px) {
     /* Show hamburger button */
     .hvn-theme-menu-toggle {
-        display: block;
+        display: inline-flex;
     }
     
     /* Hide desktop navigation */
@@ -2077,14 +2077,17 @@ background: rgba(108, 96, 254, 0.08)
         display: none;
     }
 
-    /* Mobile header parity with the homepage: logo (left) + hamburger (right)
-       only. Hide the internal header's action buttons (Sign In / List a
-       Property) and the search toggle so nothing else sits beside the
-       hamburger. Scoped to .hvn-theme-actions so the desktop header and the
-       slide-in mobile menu are unaffected. */
-    .hvn-theme-actions .hvn-theme-header-actions,
+    /*
+     * Mobile top bar: keep a compact auth group (Favorites + Login / Account)
+     * beside the menu button. Primary CTA remains in the slide-in mobile menu.
+     * Search toggle stays header-panel only (desktop / tablet wide).
+     */
     .hvn-theme-actions .hvn-theme-search-toggle {
         display: none;
+    }
+
+    .hvn-theme-actions .hvn-theme-header-actions__btn {
+        display: none !important;
     }
 }
 
@@ -5646,12 +5649,366 @@ margin-top: 1.25rem;
 }
 .hvn-theme-header-account--mobile .hvn-theme-header-fav__toggle {
 	width: 100%;
-	justify-content: flex-start;
-	gap: 0.5rem;
+	justify-content: center;
+	gap: 0;
 	border: 1px solid rgba(21, 26, 31, 0.12);
+	overflow: visible;
+	/*
+	 * Heart + badge share one centered cell so the count sits on the icon,
+	 * not the far corner of the full-width button.
+	 */
+	display: grid;
+	place-items: center;
 }
+
+.hvn-theme-header-account--mobile .hvn-theme-header-fav__icon {
+	grid-area: 1 / 1;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 0;
+}
+
+.hvn-theme-header-account--mobile .hvn-theme-header-fav__count {
+	grid-area: 1 / 1;
+	position: relative;
+	top: auto;
+	right: auto;
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	min-width: 1.25em;
+	min-height: 1.25em;
+	height: auto;
+	padding: 0.15em 0.35em;
+	border-radius: 999px;
+	font-size: 0.625rem;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+	transform: translate(55%, -55%);
+	box-shadow: 0 0 0 0.125em var(--hvn-theme-color-white, #fff);
+	pointer-events: none;
+}
+
+.hvn-theme-header-account--mobile .hvn-theme-header-fav__count.is-empty,
+.hvn-theme-header-account--mobile .hvn-theme-header-fav__count[hidden] {
+	display: none;
+}
+
+/* ============================================================
+   2.1.1 — Mobile header action group (premium polish, ≤991px)
+   Desktop styles above remain unchanged.
+   ============================================================ */
 @media (max-width: 991px) {
+	.hvn-theme-actions,
+	.hvn-theme-home-header__actions {
+		--hvn-mh-size: 44px;
+		--hvn-mh-gap: 0.4rem;
+		--hvn-mh-radius: 999px;
+		--hvn-mh-border: 1.5px solid rgba(21, 26, 31, 0.14);
+		--hvn-mh-border-strong: 1.5px solid var(--hvn-theme-brand-primary, #c9a36b);
+		--hvn-mh-ink: var(--hvn-theme-ink, #151a1f);
+		--hvn-mh-ease: var(--hvn-theme-ease, cubic-bezier(0.22, 1, 0.36, 1));
+		display: flex;
+		align-items: center;
+		flex-wrap: nowrap;
+		gap: var(--hvn-mh-gap);
+	}
+
+	.hvn-theme-actions {
+		margin-left: auto;
+	}
+
+	/* Account group first, menu toggle last (premium app rhythm). */
+	.hvn-theme-actions .hvn-theme-header-actions {
+		display: inline-flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: var(--hvn-mh-gap);
+		order: 1;
+	}
+
+	.hvn-theme-actions .hvn-theme-menu-toggle {
+		order: 2;
+	}
+
 	.hvn-theme-actions .hvn-theme-header-account {
+		display: inline-flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: var(--hvn-mh-gap);
+		position: relative;
+	}
+
+	/* Unified circular / pill controls — equal height & radius. */
+	.hvn-theme-header-fav__toggle,
+	.hvn-theme-menu-toggle,
+	.hvn-theme-home-burger {
+		box-sizing: border-box;
+		width: var(--hvn-mh-size);
+		height: var(--hvn-mh-size);
+		min-width: var(--hvn-mh-size);
+		min-height: var(--hvn-mh-size);
+		padding: 0;
+		margin: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: var(--hvn-mh-radius);
+		border: var(--hvn-mh-border);
+		background: transparent;
+		color: var(--hvn-mh-ink);
+		line-height: 1;
+		cursor: pointer;
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
+		transition:
+			background 0.2s var(--hvn-mh-ease),
+			border-color 0.2s var(--hvn-mh-ease),
+			color 0.2s var(--hvn-mh-ease),
+			transform 0.2s var(--hvn-mh-ease);
+	}
+
+	.hvn-theme-header-fav__toggle svg {
+		width: 20px;
+		height: 20px;
+		stroke: currentColor;
+		flex-shrink: 0;
+	}
+
+	.hvn-theme-menu-toggle .hamburger,
+	.hvn-theme-menu-toggle .hamburger::before,
+	.hvn-theme-menu-toggle .hamburger::after {
+		width: 18px;
+		height: 2px;
+		background: currentColor;
+	}
+
+	.hvn-theme-menu-toggle .hamburger::before {
+		top: -6px;
+	}
+
+	.hvn-theme-menu-toggle .hamburger::after {
+		top: 6px;
+	}
+
+	.hvn-theme-home-burger span,
+	.hvn-theme-home-burger span::before,
+	.hvn-theme-home-burger span::after {
+		width: 18px;
+		height: 2px;
+	}
+
+	.hvn-theme-home-burger span::before {
+		top: -6px;
+	}
+
+	.hvn-theme-home-burger span::after {
+		top: 6px;
+	}
+
+	/* Login / My Account — same height as icon buttons. */
+	.hvn-theme-header-account__link,
+	.hvn-theme-header-user__toggle {
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.3rem;
+		height: var(--hvn-mh-size);
+		min-height: var(--hvn-mh-size);
+		padding: 0 0.85rem;
+		margin: 0;
+		border-radius: var(--hvn-mh-radius);
+		border: var(--hvn-mh-border);
+		background: transparent;
+		color: var(--hvn-mh-ink);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.01em;
+		line-height: 1;
+		text-decoration: none;
+		white-space: nowrap;
+		max-width: 7.25rem;
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
+		transition:
+			background 0.2s var(--hvn-mh-ease),
+			border-color 0.2s var(--hvn-mh-ease),
+			color 0.2s var(--hvn-mh-ease),
+			transform 0.2s var(--hvn-mh-ease);
+	}
+
+	.hvn-theme-header-user__label {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.hvn-theme-header-user__caret {
+		width: 10px;
+		height: 10px;
+		flex-shrink: 0;
+		opacity: 0.65;
+	}
+
+	/* Hover / active / focus — shared language. */
+	.hvn-theme-header-fav__toggle:hover,
+	.hvn-theme-header-account__link:hover,
+	.hvn-theme-header-user__toggle:hover,
+	.hvn-theme-menu-toggle:hover,
+	.hvn-theme-home-burger:hover {
+		background: rgba(201, 163, 107, 0.1);
+		border-color: var(--hvn-theme-brand-primary, #c9a36b);
+		color: var(--hvn-mh-ink);
+	}
+
+	.hvn-theme-header-fav__toggle:active,
+	.hvn-theme-header-account__link:active,
+	.hvn-theme-header-user__toggle:active,
+	.hvn-theme-menu-toggle:active,
+	.hvn-theme-home-burger:active {
+		transform: scale(0.96);
+		background: rgba(201, 163, 107, 0.16);
+	}
+
+	.hvn-theme-header-fav__toggle:focus-visible,
+	.hvn-theme-header-account__link:focus-visible,
+	.hvn-theme-header-user__toggle:focus-visible,
+	.hvn-theme-menu-toggle:focus-visible,
+	.hvn-theme-home-burger:focus-visible {
+		outline: 2px solid var(--hvn-theme-gold, #c9a36b);
+		outline-offset: 2px;
+	}
+
+	/* Favorites badge — anchored, contrast ring, no clip. */
+	.hvn-theme-header-fav__count {
+		top: 1px;
+		right: 1px;
+		min-width: 1.15rem;
+		height: 1.15rem;
+		padding: 0 0.28rem;
+		border-radius: 999px;
+		background: var(--hvn-theme-brand-primary, #c9a36b);
+		color: #fff;
+		font-size: 0.625rem;
+		font-weight: 700;
+		line-height: 1.15rem;
+		box-shadow: 0 0 0 2px var(--hvn-theme-color-white, #fff);
+		pointer-events: none;
+	}
+
+	.hvn-theme-header-fav__count.is-empty,
+	.hvn-theme-header-fav__count[hidden] {
 		display: none;
+	}
+
+	/* Dropdowns — stay on-screen on narrow widths. */
+	.hvn-theme-header-account--default .hvn-theme-header-fav__panel,
+	.hvn-theme-header-account--default .hvn-theme-header-user__menu,
+	.hvn-theme-header-account--home .hvn-theme-header-fav__panel,
+	.hvn-theme-header-account--home .hvn-theme-header-user__menu {
+		right: 0;
+		left: auto;
+		min-width: 240px;
+		width: max-content;
+		max-width: min(300px, calc(100vw - 1.25rem));
+		border-radius: 14px;
+		box-shadow: 0 18px 40px rgba(21, 26, 31, 0.16);
+	}
+
+	.hvn-theme-header-fav__list a span {
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	/* Slide-in menu auth stack — same control language, full width. */
+	.hvn-theme-home-mobile__actions .hvn-theme-header-actions {
+		gap: 0.55rem;
+		align-items: stretch;
+	}
+
+	.hvn-theme-header-account--mobile {
+		gap: 0.55rem;
+	}
+
+	.hvn-theme-header-account--mobile .hvn-theme-header-fav__toggle,
+	.hvn-theme-header-account--mobile .hvn-theme-header-account__link,
+	.hvn-theme-header-account--mobile .hvn-theme-header-user__toggle,
+	.hvn-theme-home-mobile__actions .hvn-theme-header-actions__btn {
+		width: 100%;
+		max-width: none;
+		min-height: var(--hvn-mh-size);
+		height: auto;
+		padding: 0.85rem 1rem;
+		border-radius: 14px;
+		justify-content: center;
+		border: var(--hvn-mh-border);
+		font-size: 0.9375rem;
+	}
+
+	.hvn-theme-header-account--mobile .hvn-theme-header-fav__toggle {
+		display: grid;
+		place-items: center;
+		justify-content: center;
+		gap: 0;
+	}
+
+	/* Keep badge locked to the heart inside the full-width menu control. */
+	.hvn-theme-header-account--mobile .hvn-theme-header-fav__count {
+		top: auto;
+		right: auto;
+		grid-area: 1 / 1;
+		position: relative;
+		transform: translate(55%, -55%);
+		min-width: 1.25em;
+		min-height: 1.25em;
+		height: auto;
+		line-height: 1;
+		padding: 0.15em 0.35em;
+		box-shadow: 0 0 0 0.125em var(--hvn-theme-color-white, #fff);
+	}
+
+	.hvn-theme-header-account--mobile .hvn-theme-header-fav__panel,
+	.hvn-theme-header-account--mobile .hvn-theme-header-user__menu {
+		max-width: none;
+		width: 100%;
+		border-radius: 14px;
+	}
+}
+
+/* Very small phones — tighten Login / Account without wrapping. */
+@media (max-width: 374px) {
+	.hvn-theme-actions,
+	.hvn-theme-home-header__actions {
+		--hvn-mh-gap: 0.3rem;
+	}
+
+	.hvn-theme-header-account__link,
+	.hvn-theme-header-user__toggle {
+		padding: 0 0.65rem;
+		font-size: 0.75rem;
+		max-width: 5.75rem;
+	}
+
+	.hvn-theme-header-user__caret {
+		display: none;
+	}
+}
+
+/* Safe-area aware header breathing room on notched devices. */
+@supports (padding: max(0px)) {
+	@media (max-width: 991px) {
+		.hvn-theme-header-row,
+		.hvn-theme-home-header__inner {
+			padding-left: max(1rem, env(safe-area-inset-left, 0px));
+			padding-right: max(1rem, env(safe-area-inset-right, 0px));
+		}
 	}
 }

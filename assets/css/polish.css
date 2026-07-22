@@ -1837,3 +1837,85 @@ body.hvn-theme-is-loading {
 	font-size: 1.1rem;
 	font-weight: 500;
 }
+
+/* ==========================================================================
+   2.1.1 — Mobile header action group cascade fixes
+   Loaded after theme.css so menu-toggle / outline-btn conflicts resolve
+   to the unified 44×44 control language on small screens only.
+   ========================================================================== */
+@media (max-width: 991px) {
+	.hvn-theme-actions {
+		gap: 0.4rem;
+		flex-wrap: nowrap;
+		align-items: center;
+	}
+
+	.hvn-theme-menu-toggle {
+		display: inline-flex !important;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		min-width: 44px;
+		min-height: 44px;
+		padding: 0;
+		border-radius: 999px;
+		border: 1.5px solid rgba(21, 26, 31, 0.14);
+		background: transparent;
+		color: var(--hvn-theme-ink, #151a1f);
+	}
+
+	.hvn-theme-menu-toggle:hover,
+	.hvn-theme-menu-toggle:focus-visible {
+		background: rgba(201, 163, 107, 0.1);
+		border-color: var(--hvn-theme-brand-primary, #c9a36b);
+	}
+
+	.hvn-theme-menu-toggle:focus-visible {
+		outline: 2px solid var(--hvn-theme-gold, #c9a36b);
+		outline-offset: 2px;
+	}
+
+	.hvn-theme-actions .hvn-theme-header-account__link.hvn-theme-btn,
+	.hvn-theme-actions .hvn-theme-header-user__toggle.hvn-theme-btn,
+	.hvn-theme-actions .hvn-theme-header-account__link.hvn-theme-btn-outline,
+	.hvn-theme-actions .hvn-theme-header-user__toggle.hvn-theme-btn-outline {
+		height: 44px;
+		min-height: 44px;
+		padding: 0 0.85rem;
+		border-radius: 999px;
+		border-width: 1.5px;
+		border-style: solid;
+		border-color: rgba(21, 26, 31, 0.14);
+		background: transparent;
+		color: var(--hvn-theme-ink, #151a1f);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1;
+		box-shadow: none;
+		max-width: 7.25rem;
+	}
+
+	.hvn-theme-actions .hvn-theme-header-account__link.hvn-theme-btn-outline:hover,
+	.hvn-theme-actions .hvn-theme-header-user__toggle.hvn-theme-btn-outline:hover,
+	.hvn-theme-actions .hvn-theme-header-account__link.hvn-theme-btn:hover,
+	.hvn-theme-actions .hvn-theme-header-user__toggle.hvn-theme-btn:hover {
+		background: rgba(201, 163, 107, 0.1);
+		border-color: var(--hvn-theme-brand-primary, #c9a36b);
+		color: var(--hvn-theme-ink, #151a1f);
+	}
+
+	.hvn-header-layout-2 .hvn-theme-actions {
+		position: static;
+		transform: none;
+	}
+}
+
+@media (max-width: 374px) {
+	.hvn-theme-actions .hvn-theme-header-account__link,
+	.hvn-theme-actions .hvn-theme-header-user__toggle {
+		padding: 0 0.65rem;
+		font-size: 0.75rem;
+		max-width: 5.75rem;
+	}
+}

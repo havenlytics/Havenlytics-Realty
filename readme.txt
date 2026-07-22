@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,11 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.1.1 - July 23, 2026 =
+* IMPROVED: Premium mobile header action group — unified 44×44 Favorites, Login / Account, and menu controls with consistent borders, spacing, badge placement, and focus states.
+* IMPROVED: Disabled the legacy theme mobile floating bottom dock on Single Property pages. This contact experience is now provided by the Havenlytics plugin mobile contact dock for a unified mobile experience.
+* COMPATIBILITY: Desktop header, navigation, favorites logic, and Homepage Mobile Search Drawer are unchanged.
 
 = 2.1.0 - July 20, 2026 =
 * NEW: Smart authentication-aware header integrated with Havenlytics Agent Workspace.
@@ -485,6 +490,9 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.1.1 =
+Maintenance update: polished mobile header action controls and theme floating bottom dock no longer renders on Single Property pages so the Havenlytics plugin mobile contact dock can own that experience. Homepage search drawer and desktop header unchanged.
 
 = 2.1.0 =
 Recommended update with smart Workspace authentication in the header, Favorites quick access, and Featured Property favorite buttons. Fully backward compatible; theme still works without the plugin.

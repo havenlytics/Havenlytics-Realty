@@ -75,6 +75,16 @@ function hvn_realty_should_render_mobile_search_drawer() {
 		return false;
 	}
 
+	/*
+	 * 2.1.1 — Do not render the theme floating bottom dock on Single Property
+	 * pages. Agent Call / WhatsApp / contact chrome is now provided by the
+	 * Havenlytics plugin mobile contact dock (unified mobile experience).
+	 * Homepage Mobile Search Drawer markup, assets, and behaviour are unchanged.
+	 */
+	if ( post_type_exists( 'hvnly_property' ) && is_singular( 'hvnly_property' ) ) {
+		return false;
+	}
+
 	if ( ! function_exists( 'hvn_realty_home_search_is_available' ) || ! hvn_realty_home_search_is_available() ) {
 		return false;
 	}
