@@ -86,23 +86,18 @@ function hvn_realty_get_getting_started_url() {
 }
 
 /**
- * Whether Havenlytics plugin, demo import, and homepage setup are complete.
+ * Whether Havenlytics plugin + live site configuration are complete.
+ *
+ * Uses live property / homepage / menu detection — not legacy import flags.
  *
  * @return bool
  */
 function hvn_realty_is_site_setup_complete() {
-	if ( ! hvn_realty_is_havenlytics_plugin_active() ) {
-		return false;
+	if ( function_exists( 'hvn_realty_is_launch_complete' ) ) {
+		return hvn_realty_is_launch_complete();
 	}
 
-	if ( ! get_option( 'hvnly_demo_properties_imported', false ) ) {
-		return false;
-	}
-
-	$launch_complete = (bool) get_option( HVN_REALTY_LAUNCH_COMPLETE_OPTION, false );
-	$homepage_ready  = $launch_complete || ( function_exists( 'hvn_realty_is_realty_homepage' ) && hvn_realty_is_realty_homepage() && 'page' === get_option( 'show_on_front', 'posts' ) );
-
-	return $homepage_ready;
+	return false;
 }
 
 /**
@@ -111,16 +106,18 @@ function hvn_realty_is_site_setup_complete() {
  * @return array<int, array<string, mixed>>
  */
 function hvn_realty_get_setup_checklist() {
-	$plugin_active   = hvn_realty_is_havenlytics_plugin_active();
-	$demo_imported   = (bool) get_option( 'hvnly_demo_properties_imported', false );
-	$launch_complete = (bool) get_option( HVN_REALTY_LAUNCH_COMPLETE_OPTION, false );
-	$homepage_ready  = $launch_complete || ( function_exists( 'hvn_realty_is_realty_homepage' ) && hvn_realty_is_realty_homepage() && 'page' === get_option( 'show_on_front', 'posts' ) );
+	$plugin_active    = hvn_realty_is_havenlytics_plugin_active();
+	$import_complete  = function_exists( 'hvn_realty_is_property_import_complete' ) && hvn_realty_is_property_import_complete();
+	$theme_configured = function_exists( 'hvn_realty_is_theme_configuration_complete' ) && hvn_realty_is_theme_configuration_complete();
+	$launch_complete  = function_exists( 'hvn_realty_is_launch_complete' ) && hvn_realty_is_launch_complete();
 
 	$import_url = $plugin_active
-		? admin_url( 'edit.php?post_type=hvnly_property&page=hvnly-property-import' )
+		? ( function_exists( 'hvn_realty_get_property_setup_wizard_url' ) ? hvn_realty_get_property_setup_wizard_url() : admin_url( 'edit.php?post_type=hvnly_property&page=hvnly-property-onboarding' ) )
 		: hvn_realty_get_plugin_install_url();
 
-	$home_id   = (int) get_option( HVN_REALTY_HOME_PAGE_OPTION, 0 );
+	$home_id   = function_exists( 'hvn_realty_get_configured_home_page_id' )
+		? hvn_realty_get_configured_home_page_id()
+		: (int) get_option( HVN_REALTY_HOME_PAGE_OPTION, 0 );
 	$home_edit = $home_id > 0 ? get_edit_post_link( $home_id, 'raw' ) : '';
 
 	$steps = array(
@@ -140,37 +137,37 @@ function hvn_realty_get_setup_checklist() {
 			'icon'           => 'dashicons-database-import',
 			'title'          => __( 'Import demo properties', 'havenlytics-realty' ),
 			'description'    => __( 'Run the Setup Wizard to import sample listings, agents, and plugin pages.', 'havenlytics-realty' ),
-			'complete'       => $demo_imported,
-			'action_label'   => $demo_imported ? __( 'Completed', 'havenlytics-realty' ) : __( 'Run Setup Wizard', 'havenlytics-realty' ),
+			'complete'       => $import_complete,
+			'action_label'   => $import_complete ? __( 'Completed', 'havenlytics-realty' ) : __( 'Run Setup Wizard', 'havenlytics-realty' ),
 			'action_url'     => $import_url,
-			'action_primary' => $plugin_active && ! $demo_imported,
-			'disabled'       => ! $plugin_active || $demo_imported,
+			'action_primary' => $plugin_active && ! $import_complete,
+			'disabled'       => ! $plugin_active || $import_complete,
 		),
 		array(
 			'id'             => 'homepage',
 			'icon'           => 'dashicons-admin-home',
 			'title'          => __( 'Configure homepage', 'havenlytics-realty' ),
 			'description'    => __( 'Creates your Home page, primary menu, and static front page after demo import.', 'havenlytics-realty' ),
-			'complete'       => $homepage_ready,
-			'action_label'   => $homepage_ready
+			'complete'       => $theme_configured,
+			'action_label'   => $theme_configured
 				? __( 'Completed', 'havenlytics-realty' )
-				: ( $demo_imported ? __( 'Run theme setup', 'havenlytics-realty' ) : __( 'Waiting for import', 'havenlytics-realty' ) ),
-			'action_url'     => $homepage_ready && $home_edit ? $home_edit : hvn_realty_get_realty_admin_url(),
-			'action_primary' => $demo_imported && ! $homepage_ready,
-			'disabled'       => ! $demo_imported || $homepage_ready,
-			'is_setup'       => $demo_imported && ! $homepage_ready,
+				: ( $import_complete ? __( 'Run theme setup', 'havenlytics-realty' ) : __( 'Waiting for import', 'havenlytics-realty' ) ),
+			'action_url'     => $theme_configured && $home_edit ? $home_edit : hvn_realty_get_realty_admin_url(),
+			'action_primary' => $import_complete && ! $theme_configured,
+			'disabled'       => ! $import_complete || $theme_configured,
+			'is_setup'       => $import_complete && ! $theme_configured,
 		),
 		array(
 			'id'             => 'launch',
 			'icon'           => 'dashicons-visibility',
 			'title'          => __( 'View your website', 'havenlytics-realty' ),
 			'description'    => __( 'Preview your live real estate homepage with search, listings, and navigation.', 'havenlytics-realty' ),
-			'complete'       => $homepage_ready && $plugin_active,
+			'complete'       => $launch_complete,
 			'action_label'   => __( 'View website', 'havenlytics-realty' ),
 			'action_url'     => home_url( '/' ),
-			'action_primary' => $homepage_ready && $plugin_active,
+			'action_primary' => $launch_complete,
 			'external'       => true,
-			'disabled'       => ! $homepage_ready,
+			'disabled'       => ! $launch_complete,
 		),
 	);
 
@@ -568,12 +565,12 @@ function hvn_realty_admin_handle_setup() {
 		return;
 	}
 
-	if ( ! hvn_realty_is_havenlytics_plugin_active() || ! get_option( 'hvnly_demo_properties_imported', false ) ) {
+	if ( ! hvn_realty_is_havenlytics_plugin_active() || ! function_exists( 'hvn_realty_is_property_import_complete' ) || ! hvn_realty_is_property_import_complete() ) {
 		wp_safe_redirect( hvn_realty_get_realty_admin_url() );
 		exit;
 	}
 
-	if ( ! get_option( HVN_REALTY_LAUNCH_COMPLETE_OPTION, false ) ) {
+	if ( ! function_exists( 'hvn_realty_is_theme_configuration_complete' ) || ! hvn_realty_is_theme_configuration_complete() ) {
 		hvn_realty_run_launch();
 	}
 

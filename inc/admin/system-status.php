@@ -63,16 +63,28 @@ function hvn_realty_get_system_plugin_version() {
 }
 
 /**
- * Property import status for display.
+ * Property import status for display (live database count).
  *
  * @return array{label: string, status: string, badge: string}
  */
 function hvn_realty_get_system_demo_status() {
-	if ( get_option( 'hvnly_demo_properties_imported', false ) ) {
+	$imported = function_exists( 'hvn_realty_is_property_import_complete' ) && hvn_realty_is_property_import_complete();
+
+	if ( $imported ) {
+		$count = function_exists( 'hvn_realty_get_existing_property_count' )
+			? hvn_realty_get_existing_property_count()
+			: 0;
+
 		return array(
 			'label'  => __( 'Imported', 'havenlytics-realty' ),
 			'status' => 'success',
-			'badge'  => __( 'Complete', 'havenlytics-realty' ),
+			'badge'  => $count > 0
+				? sprintf(
+					/* translators: %d: property count */
+					_n( '%d property', '%d properties', $count, 'havenlytics-realty' ),
+					$count
+				)
+				: __( 'Complete', 'havenlytics-realty' ),
 		);
 	}
 
@@ -84,13 +96,13 @@ function hvn_realty_get_system_demo_status() {
 }
 
 /**
- * Home page diagnostic row.
+ * Home page diagnostic row (live front page / theme home ID).
  *
  * @return array{label: string, value: string, status: string, detail: string}
  */
 function hvn_realty_get_system_home_page_status() {
-	$home_id = defined( 'HVN_REALTY_HOME_PAGE_OPTION' )
-		? (int) get_option( HVN_REALTY_HOME_PAGE_OPTION, 0 )
+	$home_id = function_exists( 'hvn_realty_get_configured_home_page_id' )
+		? hvn_realty_get_configured_home_page_id()
 		: 0;
 
 	if ( $home_id <= 0 ) {
@@ -209,9 +221,7 @@ function hvn_realty_get_system_status_checks() {
 	$home            = hvn_realty_get_system_home_page_status();
 	$front           = hvn_realty_get_system_front_page_status();
 	$menu            = hvn_realty_get_system_primary_menu_status();
-	$launch_complete = defined( 'HVN_REALTY_LAUNCH_COMPLETE_OPTION' )
-		? (bool) get_option( HVN_REALTY_LAUNCH_COMPLETE_OPTION, false )
-		: false;
+	$launch_complete = function_exists( 'hvn_realty_is_launch_complete' ) && hvn_realty_is_launch_complete();
 	$php_version     = PHP_VERSION;
 	$php_ok          = version_compare( $php_version, '7.4', '>=' );
 	$integrity       = class_exists( 'HVN_Realty_Theme_Integrity', false )

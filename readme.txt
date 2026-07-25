@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.1
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,7 +99,7 @@ Havenlytics Realty remains a fully functional WordPress theme for blogs, busines
 1. Install and activate **Havenlytics Realty** from **Appearance → Themes**.
 2. Open **Appearance → Realty** for the setup checklist.
 3. Install and activate the free **[Havenlytics plugin](https://wordpress.org/plugins/havenlytics/)** when prompted.
-4. In the plugin admin, run the **Property Import / Setup Wizard** to import demo listings, agents, and agencies.
+4. In the plugin admin, run the **Setup Wizard / Onboarding** to import demo listings, agents, and agencies.
 5. Visit your site — the theme automatically configures the homepage, primary menu, and static front page after import.
 
 **See the finished result:** [https://demo.havenlytics.com/](https://demo.havenlytics.com/)
@@ -205,6 +205,24 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.1.3 - July 24, 2026 =
+* FIXED: Replaced legacy onboarding detection with live Havenlytics status detection.
+* FIXED: Property Import status now reflects actual imported properties in the database.
+* FIXED: Launch Complete status uses real site configuration (plugin, properties, homepage, front page, primary menu).
+* FIXED: Theme Setup only appears when setup is genuinely incomplete.
+* IMPROVED: Better compatibility with the latest Havenlytics onboarding workflow.
+* IMPROVED: Admin dashboard and System Status accuracy.
+* COMPATIBILITY: Fully backward compatible. No database changes. No frontend template redesign.
+
+= 2.1.2 - July 24, 2026 =
+* FIXED: Updated the Realty Setup Wizard to use the new Havenlytics React onboarding page (`hvnly-property-onboarding`).
+* FIXED: Welcome Notice now appears only on fresh installations with zero Havenlytics Properties (all statuses).
+* FIXED: Removed obsolete onboarding links pointing to the legacy Property Import Wizard.
+* IMPROVED: Compatibility with the latest Havenlytics onboarding workflow.
+* IMPROVED: Admin onboarding experience and property-aware setup checklist.
+* IMPROVED: Complete version synchronization for reliable asset cache busting.
+* COMPATIBILITY: Fully backward compatible. No database changes. No frontend changes. No plugin modifications.
 
 = 2.1.1 - July 23, 2026 =
 * IMPROVED: Premium mobile header action group — unified 44×44 Favorites, Login / Account, and menu controls with consistent borders, spacing, badge placement, and focus states.
@@ -490,6 +508,12 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.1.3 =
+Recommended maintenance update: live Property Import / Launch Complete detection replaces legacy setup flags. Fully backward compatible.
+
+= 2.1.2 =
+Recommended maintenance update: React onboarding URL, Welcome Notice only on fresh installs (no existing properties), and full 2.1.2 version sync. Fully backward compatible.
 
 = 2.1.1 =
 Maintenance update: polished mobile header action controls and theme floating bottom dock no longer renders on Single Property pages so the Havenlytics plugin mobile contact dock can own that experience. Homepage search drawer and desktop header unchanged.

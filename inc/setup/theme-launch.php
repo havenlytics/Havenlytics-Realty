@@ -45,7 +45,7 @@ function hvn_realty_on_demo_import_added( $option, $value ) {
 add_action( 'added_option', 'hvn_realty_on_demo_import_added', 10, 2 );
 
 /**
- * Deferred launch check for sites that imported before theme update.
+ * Deferred launch check for sites that already have Havenlytics properties.
  *
  * @return void
  */
@@ -54,7 +54,7 @@ function hvn_realty_launch_admin_check() {
 		return;
 	}
 
-	if ( ! get_option( 'hvnly_demo_properties_imported', false ) ) {
+	if ( ! function_exists( 'hvn_realty_is_property_import_complete' ) || ! hvn_realty_is_property_import_complete() ) {
 		return;
 	}
 
@@ -64,7 +64,7 @@ function hvn_realty_launch_admin_check() {
 add_action( 'admin_init', 'hvn_realty_launch_admin_check', 20 );
 
 /**
- * Run launch when theme is activated and demo import already completed.
+ * Run launch when theme is activated and properties already exist.
  *
  * @return void
  */
@@ -73,7 +73,7 @@ function hvn_realty_launch_on_theme_switch() {
 		return;
 	}
 
-	if ( get_option( 'hvnly_demo_properties_imported', false ) ) {
+	if ( function_exists( 'hvn_realty_is_property_import_complete' ) && hvn_realty_is_property_import_complete() ) {
 		hvn_realty_maybe_run_launch();
 	}
 }
@@ -82,14 +82,24 @@ add_action( 'after_switch_theme', 'hvn_realty_launch_on_theme_switch', 30 );
 /**
  * Run launch pack if conditions are met.
  *
+ * Skips when the site is already live-configured (homepage + front page + menu).
+ *
  * @return bool True when launch ran successfully.
  */
 function hvn_realty_maybe_run_launch() {
+	if ( function_exists( 'hvn_realty_is_theme_configuration_complete' ) && hvn_realty_is_theme_configuration_complete() ) {
+		return false;
+	}
+
 	if ( get_option( HVN_REALTY_LAUNCH_COMPLETE_OPTION, false ) ) {
 		return false;
 	}
 
 	if ( ! hvn_realty_is_havenlytics_plugin_active() ) {
+		return false;
+	}
+
+	if ( ! function_exists( 'hvn_realty_is_property_import_complete' ) || ! hvn_realty_is_property_import_complete() ) {
 		return false;
 	}
 

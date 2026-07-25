@@ -29,7 +29,7 @@ function hvn_realty_maybe_seed_property_sidebar_widgets() {
 		return;
 	}
 
-	if ( ! get_option( 'hvnly_demo_properties_imported', false ) ) {
+	if ( ! function_exists( 'hvn_realty_is_property_import_complete' ) || ! hvn_realty_is_property_import_complete() ) {
 		return;
 	}
 

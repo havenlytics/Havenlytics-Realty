@@ -62,7 +62,8 @@ function hvn_realty_should_show_realty_home() {
 		return true;
 	}
 
-	if ( hvn_realty_is_havenlytics_plugin_active() && get_option( 'hvnly_demo_properties_imported', false ) ) {
+	// Live signal: properties exist (replaces legacy hvnly_demo_properties_imported flag).
+	if ( hvn_realty_is_havenlytics_plugin_active() && hvn_realty_is_property_import_complete() ) {
 		return true;
 	}
 
@@ -184,6 +185,189 @@ function hvn_realty_get_property_count() {
 	$counts = wp_count_posts( 'hvnly_property' );
 
 	return absint( $counts->publish ?? 0 );
+}
+
+/**
+ * Count existing Havenlytics properties across meaningful statuses.
+ *
+ * Used to detect whether a site is already configured (welcome notice / setup).
+ * Includes publish, draft, pending, private, and future. Excludes trash.
+ * Uses wp_count_posts() — no full post queries.
+ *
+ * @return int
+ */
+function hvn_realty_get_existing_property_count() {
+	static $count = null;
+
+	if ( null !== $count ) {
+		return $count;
+	}
+
+	if ( ! post_type_exists( 'hvnly_property' ) ) {
+		$count = 0;
+		return $count;
+	}
+
+	$counts = wp_count_posts( 'hvnly_property' );
+	$total  = 0;
+
+	foreach ( array( 'publish', 'draft', 'pending', 'private', 'future' ) as $status ) {
+		if ( isset( $counts->$status ) ) {
+			$total += absint( $counts->$status );
+		}
+	}
+
+	/**
+	 * Filter the existing-property count used for onboarding / welcome gates.
+	 *
+	 * @param int $total Property count.
+	 */
+	$count = (int) apply_filters( 'hvn_realty_existing_property_count', $total );
+
+	return $count;
+}
+
+/**
+ * Whether Havenlytics properties exist in the database (live import detection).
+ *
+ * @return bool
+ */
+function hvn_realty_is_property_import_complete() {
+	return hvn_realty_get_existing_property_count() > 0;
+}
+
+/**
+ * Resolved homepage page ID from live WordPress settings.
+ *
+ * Prefers the static front page, then the theme-tracked home page option.
+ *
+ * @return int
+ */
+function hvn_realty_get_configured_home_page_id() {
+	$page_on_front = (int) get_option( 'page_on_front', 0 );
+	if ( $page_on_front > 0 ) {
+		$post = get_post( $page_on_front );
+		if ( $post && 'page' === $post->post_type && 'trash' !== $post->post_status ) {
+			return $page_on_front;
+		}
+	}
+
+	$stored = defined( 'HVN_REALTY_HOME_PAGE_OPTION' )
+		? (int) get_option( HVN_REALTY_HOME_PAGE_OPTION, 0 )
+		: 0;
+
+	if ( $stored > 0 ) {
+		$post = get_post( $stored );
+		if ( $post && 'page' === $post->post_type && 'trash' !== $post->post_status ) {
+			return $stored;
+		}
+	}
+
+	return 0;
+}
+
+/**
+ * Whether a homepage page exists for the site.
+ *
+ * @return bool
+ */
+function hvn_realty_has_configured_homepage() {
+	return hvn_realty_get_configured_home_page_id() > 0;
+}
+
+/**
+ * Whether Reading settings use a static front page with a valid page.
+ *
+ * @return bool
+ */
+function hvn_realty_has_static_front_page() {
+	if ( 'page' !== (string) get_option( 'show_on_front', 'posts' ) ) {
+		return false;
+	}
+
+	$page_id = (int) get_option( 'page_on_front', 0 );
+	if ( $page_id <= 0 ) {
+		return false;
+	}
+
+	$post = get_post( $page_id );
+
+	return $post && 'page' === $post->post_type && 'trash' !== $post->post_status;
+}
+
+/**
+ * Whether a primary navigation menu is assigned.
+ *
+ * @return bool
+ */
+function hvn_realty_has_primary_menu() {
+	return has_nav_menu( 'primary' );
+}
+
+/**
+ * Whether theme front-end configuration is complete (live checks).
+ *
+ * Homepage exists, static front page is assigned, primary menu is set.
+ * Does not require properties (used to hide "Run Theme Setup").
+ *
+ * @return bool
+ */
+function hvn_realty_is_theme_configuration_complete() {
+	$complete = hvn_realty_has_configured_homepage()
+		&& hvn_realty_has_static_front_page()
+		&& hvn_realty_has_primary_menu();
+
+	/**
+	 * Filter live theme-configuration completeness.
+	 *
+	 * @param bool $complete Whether theme setup is complete.
+	 */
+	return (bool) apply_filters( 'hvn_realty_is_theme_configuration_complete', $complete );
+}
+
+/**
+ * Whether the full site launch is complete (live checks).
+ *
+ * Plugin active + properties exist + homepage + static front page + primary menu.
+ *
+ * @return bool
+ */
+function hvn_realty_is_launch_complete() {
+	$complete = function_exists( 'hvn_realty_is_havenlytics_plugin_active' )
+		&& hvn_realty_is_havenlytics_plugin_active()
+		&& hvn_realty_is_property_import_complete()
+		&& hvn_realty_is_theme_configuration_complete();
+
+	/**
+	 * Filter live launch completeness.
+	 *
+	 * @param bool $complete Whether launch is complete.
+	 */
+	return (bool) apply_filters( 'hvn_realty_is_launch_complete', $complete );
+}
+
+/**
+ * Admin URL for the Havenlytics property setup / onboarding wizard.
+ *
+ * Prefers the React onboarding page. Falls back to the legacy import slug when
+ * OnboardingWizard is unavailable (older plugin builds).
+ *
+ * @return string
+ */
+function hvn_realty_get_property_setup_wizard_url() {
+	if ( ! function_exists( 'hvn_realty_is_havenlytics_plugin_active' ) || ! hvn_realty_is_havenlytics_plugin_active() ) {
+		return function_exists( 'hvn_realty_get_plugin_install_url' )
+			? hvn_realty_get_plugin_install_url()
+			: admin_url( 'plugin-install.php?s=havenlytics&tab=search&type=term' );
+	}
+
+	// New React onboarding (current Havenlytics releases).
+	if ( class_exists( '\HvnlyNab\Admin\OnboardingWizard' ) ) {
+		return admin_url( 'edit.php?post_type=hvnly_property&page=hvnly-property-onboarding' );
+	}
+
+	// Legacy Property Import wizard (older plugin versions only).
+	return admin_url( 'edit.php?post_type=hvnly_property&page=hvnly-property-import' );
 }
 
 /**

@@ -287,6 +287,145 @@ if ( ! function_exists( 'hvn_realty_get_property_count' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hvn_realty_get_existing_property_count' ) ) {
+	/**
+	 * @return int
+	 */
+	function hvn_realty_get_existing_property_count() {
+		if ( ! post_type_exists( 'hvnly_property' ) ) {
+			return 0;
+		}
+
+		$counts = wp_count_posts( 'hvnly_property' );
+		$total  = 0;
+
+		foreach ( array( 'publish', 'draft', 'pending', 'private', 'future' ) as $status ) {
+			if ( isset( $counts->$status ) ) {
+				$total += absint( $counts->$status );
+			}
+		}
+
+		return $total;
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_is_property_import_complete' ) ) {
+	/**
+	 * @return bool
+	 */
+	function hvn_realty_is_property_import_complete() {
+		return hvn_realty_get_existing_property_count() > 0;
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_get_configured_home_page_id' ) ) {
+	/**
+	 * @return int
+	 */
+	function hvn_realty_get_configured_home_page_id() {
+		$page_on_front = (int) get_option( 'page_on_front', 0 );
+		if ( $page_on_front > 0 ) {
+			$post = get_post( $page_on_front );
+			if ( $post && 'page' === $post->post_type && 'trash' !== $post->post_status ) {
+				return $page_on_front;
+			}
+		}
+
+		$stored = defined( 'HVN_REALTY_HOME_PAGE_OPTION' )
+			? (int) get_option( HVN_REALTY_HOME_PAGE_OPTION, 0 )
+			: 0;
+
+		if ( $stored > 0 ) {
+			$post = get_post( $stored );
+			if ( $post && 'page' === $post->post_type && 'trash' !== $post->post_status ) {
+				return $stored;
+			}
+		}
+
+		return 0;
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_has_configured_homepage' ) ) {
+	/**
+	 * @return bool
+	 */
+	function hvn_realty_has_configured_homepage() {
+		return hvn_realty_get_configured_home_page_id() > 0;
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_has_static_front_page' ) ) {
+	/**
+	 * @return bool
+	 */
+	function hvn_realty_has_static_front_page() {
+		if ( 'page' !== (string) get_option( 'show_on_front', 'posts' ) ) {
+			return false;
+		}
+
+		$page_id = (int) get_option( 'page_on_front', 0 );
+		if ( $page_id <= 0 ) {
+			return false;
+		}
+
+		$post = get_post( $page_id );
+
+		return $post && 'page' === $post->post_type && 'trash' !== $post->post_status;
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_has_primary_menu' ) ) {
+	/**
+	 * @return bool
+	 */
+	function hvn_realty_has_primary_menu() {
+		return has_nav_menu( 'primary' );
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_is_theme_configuration_complete' ) ) {
+	/**
+	 * @return bool
+	 */
+	function hvn_realty_is_theme_configuration_complete() {
+		return hvn_realty_has_configured_homepage()
+			&& hvn_realty_has_static_front_page()
+			&& hvn_realty_has_primary_menu();
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_is_launch_complete' ) ) {
+	/**
+	 * @return bool
+	 */
+	function hvn_realty_is_launch_complete() {
+		return function_exists( 'hvn_realty_is_havenlytics_plugin_active' )
+			&& hvn_realty_is_havenlytics_plugin_active()
+			&& hvn_realty_is_property_import_complete()
+			&& hvn_realty_is_theme_configuration_complete();
+	}
+}
+
+if ( ! function_exists( 'hvn_realty_get_property_setup_wizard_url' ) ) {
+	/**
+	 * @return string
+	 */
+	function hvn_realty_get_property_setup_wizard_url() {
+		if ( ! function_exists( 'hvn_realty_is_havenlytics_plugin_active' ) || ! hvn_realty_is_havenlytics_plugin_active() ) {
+			return function_exists( 'hvn_realty_get_plugin_install_url' )
+				? hvn_realty_get_plugin_install_url()
+				: admin_url( 'plugin-install.php?s=havenlytics&tab=search&type=term' );
+		}
+
+		if ( class_exists( '\HvnlyNab\Admin\OnboardingWizard' ) ) {
+			return admin_url( 'edit.php?post_type=hvnly_property&page=hvnly-property-onboarding' );
+		}
+
+		return admin_url( 'edit.php?post_type=hvnly_property&page=hvnly-property-import' );
+	}
+}
+
 if ( ! function_exists( 'hvn_realty_get_agent_count' ) ) {
 	/**
 	 * @return int

@@ -2,6 +2,9 @@
 /**
  * Admin welcome notice after Havenlytics Realty theme activation.
  *
+ * Shown only on fresh installs (zero Havenlytics properties). Sites that
+ * already have listings never see this prompt.
+ *
  * @package Havenlytics_Realty
  */
 
@@ -54,7 +57,31 @@ function hvn_realty_theme_welcome_handle_dismiss() {
 add_action( 'admin_init', 'hvn_realty_theme_welcome_handle_dismiss' );
 
 /**
+ * Whether the current admin screen is a Havenlytics setup / onboarding page.
+ *
+ * @return bool
+ */
+function hvn_realty_is_property_setup_wizard_screen() {
+	if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return false;
+	}
+
+	$page = sanitize_key( wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	return in_array(
+		$page,
+		array(
+			'hvnly-property-onboarding',
+			'hvnly-property-import', // Legacy slug (older plugin builds).
+		),
+		true
+	);
+}
+
+/**
  * Whether the welcome notice should display.
+ *
+ * Hidden when any Havenlytics property exists, or when live launch is complete.
  *
  * @return bool
  */
@@ -67,12 +94,16 @@ function hvn_realty_should_show_welcome_notice() {
 		return false;
 	}
 
+	// Any existing Havenlytics property means the site is past fresh install.
+	if ( function_exists( 'hvn_realty_get_existing_property_count' ) && hvn_realty_get_existing_property_count() > 0 ) {
+		return false;
+	}
+
 	if ( function_exists( 'hvn_realty_is_site_setup_complete' ) && hvn_realty_is_site_setup_complete() ) {
 		return false;
 	}
 
-	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-	if ( $screen && isset( $_GET['page'] ) && 'hvnly-property-import' === sanitize_key( wp_unslash( $_GET['page'] ) ) ) {
+	if ( hvn_realty_is_property_setup_wizard_screen() ) {
 		return false;
 	}
 
@@ -98,7 +129,9 @@ function hvn_realty_theme_welcome_notice() {
 	$realty_url    = function_exists( 'hvn_realty_get_realty_admin_url' ) ? hvn_realty_get_realty_admin_url() : admin_url( 'themes.php' );
 
 	if ( $plugin_active ) {
-		$primary_url  = admin_url( 'edit.php?post_type=hvnly_property&page=hvnly-property-import' );
+		$primary_url  = function_exists( 'hvn_realty_get_property_setup_wizard_url' )
+			? hvn_realty_get_property_setup_wizard_url()
+			: admin_url( 'edit.php?post_type=hvnly_property&page=hvnly-property-onboarding' );
 		$primary_text = esc_html__( 'Run the Setup Wizard', 'havenlytics-realty' );
 		$message      = esc_html__( 'Welcome to Havenlytics Realty. Import demo properties to launch your site in minutes.', 'havenlytics-realty' );
 	} else {
