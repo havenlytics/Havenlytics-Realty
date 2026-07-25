@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,14 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.1.4 - July 25, 2026 =
+* FIXED: Header Favorites dropdown positioning on mobile devices so the panel stays fully inside the viewport.
+* FIXED: Prevented the Favorites panel from overflowing or being clipped outside the screen on narrow widths.
+* IMPROVED: Responsive alignment of the Favorites dropdown across phones and tablets.
+* IMPROVED: Better mobile usability for the Header Favorites component with viewport-aware positioning.
+* IMPROVED: Complete version synchronization for reliable asset cache busting.
+* COMPATIBILITY: Fully backward compatible. No database changes. No frontend feature changes. No plugin modifications. Desktop header behavior unchanged.
 
 = 2.1.3 - July 24, 2026 =
 * FIXED: Replaced legacy onboarding detection with live Havenlytics status detection.
@@ -508,6 +516,9 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.1.4 =
+Recommended maintenance update: fixes Header Favorites dropdown clipping on mobile so the panel stays fully visible. Desktop unchanged. Fully backward compatible.
 
 = 2.1.3 =
 Recommended maintenance update: live Property Import / Launch Complete detection replaces legacy setup flags. Fully backward compatible.

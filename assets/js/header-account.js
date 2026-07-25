@@ -65,6 +65,51 @@
 		};
 	}
 
+	function isCompactViewport() {
+		return window.matchMedia && window.matchMedia( '(max-width: 991px)' ).matches;
+	}
+
+	function clearPanelFit( panel ) {
+		if ( ! panel ) {
+			return;
+		}
+		panel.style.left = '';
+		panel.style.right = '';
+		panel.style.transform = '';
+	}
+
+	/**
+	 * Keep absolute dropdowns inside the viewport on compact screens.
+	 * CSS anchors to the account cluster; this only nudges when still clipped.
+	 */
+	function fitPanelInViewport( panel ) {
+		clearPanelFit( panel );
+		if ( ! panel || panel.hidden || ! isCompactViewport() ) {
+			return;
+		}
+
+		/* Slide-in menu uses static full-width panels — no offset needed. */
+		var style = window.getComputedStyle( panel );
+		if ( 'static' === style.position ) {
+			return;
+		}
+
+		var pad = 12;
+		var rect = panel.getBoundingClientRect();
+		var vw = window.innerWidth || document.documentElement.clientWidth;
+		var shift = 0;
+
+		if ( rect.left < pad ) {
+			shift = pad - rect.left;
+		} else if ( rect.right > vw - pad ) {
+			shift = ( vw - pad ) - rect.right;
+		}
+
+		if ( shift ) {
+			panel.style.transform = 'translateX(' + Math.round( shift ) + 'px)';
+		}
+	}
+
 	function closePanel( root, toggleSel, panelSel ) {
 		var toggle = root.querySelector( toggleSel );
 		var panel = root.querySelector( panelSel );
@@ -73,6 +118,7 @@
 		}
 		toggle.setAttribute( 'aria-expanded', 'false' );
 		panel.hidden = true;
+		clearPanelFit( panel );
 	}
 
 	function openPanel( root, toggleSel, panelSel ) {
@@ -83,6 +129,10 @@
 		}
 		toggle.setAttribute( 'aria-expanded', 'true' );
 		panel.hidden = false;
+		/* Measure after paint so width/position reflect open layout. */
+		window.requestAnimationFrame( function () {
+			fitPanelInViewport( panel );
+		} );
 	}
 
 	function closeAll( except ) {

@@ -5907,16 +5907,36 @@ margin-top: 1.25rem;
 		display: none;
 	}
 
-	/* Dropdowns — stay on-screen on narrow widths. */
+	/* Dropdowns — anchor to account cluster + clamp to safe viewport (≤991). */
+	.hvn-theme-actions,
+	.hvn-theme-header-actions,
+	.hvn-theme-home-header__actions,
+	.hvn-theme-home-header__inner {
+		overflow: visible;
+	}
+
+	.hvn-theme-header-account--default,
+	.hvn-theme-header-account--home {
+		position: relative;
+	}
+
+	.hvn-theme-header-account--default .hvn-theme-header-fav,
+	.hvn-theme-header-account--home .hvn-theme-header-fav,
+	.hvn-theme-header-account--default .hvn-theme-header-user,
+	.hvn-theme-header-account--home .hvn-theme-header-user {
+		position: static;
+	}
+
 	.hvn-theme-header-account--default .hvn-theme-header-fav__panel,
 	.hvn-theme-header-account--default .hvn-theme-header-user__menu,
 	.hvn-theme-header-account--home .hvn-theme-header-fav__panel,
 	.hvn-theme-header-account--home .hvn-theme-header-user__menu {
 		right: 0;
 		left: auto;
-		min-width: 240px;
-		width: max-content;
-		max-width: min(300px, calc(100vw - 1.25rem));
+		min-width: 0;
+		width: min(280px, calc(100vw - 1.5rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+		max-width: calc(100vw - 1.5rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+		box-sizing: border-box;
 		border-radius: 14px;
 		box-shadow: 0 18px 40px rgba(21, 26, 31, 0.16);
 	}
