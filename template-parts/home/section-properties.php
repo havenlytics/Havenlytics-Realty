@@ -1,9 +1,6 @@
 <?php
 /**
- * Homepage 2.0.0 — Featured properties.
- *
- * Rebuilt card markup from the prototype, populated by a real hvnly_property
- * WP_Query. Only renders when the Havenlytics property post type exists.
+ * Homepage 3.0 — Featured properties.
  *
  * @package Havenlytics_Realty
  */
@@ -19,11 +16,22 @@ if ( ! post_type_exists( 'hvnly_property' ) ) {
 $hvn_count    = (int) get_theme_mod( 'hvn_realty_home_featured_count', 6 );
 $hvn_count    = max( 3, min( 12, $hvn_count ) );
 $hvn_view_all = function_exists( 'hvn_realty_get_property_search_url' ) ? hvn_realty_get_property_search_url() : '';
+$hvn_total    = function_exists( 'hvn_realty_get_property_count' ) ? hvn_realty_get_property_count() : 0;
+
+$hvn_departments = function_exists( 'hvn_realty_get_property_departments' )
+	? hvn_realty_get_property_departments()
+	: array();
+
+// Load enough listings so department chips have cards to show (capped at 24).
+$hvn_query_count = $hvn_count;
+if ( ! empty( $hvn_departments ) ) {
+	$hvn_query_count = min( 24, max( $hvn_count, $hvn_count * 2 ) );
+}
 
 $hvn_query = new WP_Query(
 	array(
 		'post_type'           => 'hvnly_property',
-		'posts_per_page'      => $hvn_count,
+		'posts_per_page'      => $hvn_query_count,
 		'post_status'         => 'publish',
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
@@ -46,20 +54,35 @@ if ( ! $hvn_query->have_posts() ) {
 	wp_reset_postdata();
 	return;
 }
+
+$hvn_pin_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+$hvn_bed_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 9v9M2 13h20M2 9h18a2 2 0 0 1 2 2v7M6 13V7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"/></svg>';
+$hvn_bath_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h16M6 12V6a2 2 0 0 1 2-2h2m6 8v6M4 12v6M20 12v6"/></svg>';
+$hvn_area_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>';
+$hvn_arrow_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+$hvn_heart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 ?>
-<section class="hvn-theme-home-section hvn-theme-home-properties" id="hvn-theme-home-properties" aria-labelledby="hvn-theme-home-properties-title">
-	<div class="hvn-theme-home-container">
-		<div class="hvn-theme-home-properties__head">
-			<div class="hvn-theme-home-head hvn-theme-home-reveal">
-				<span class="hvn-theme-home-eyebrow"><?php echo esc_html( hvn_realty_get_home_section_subtitle( 'featured', __( 'Featured Properties', 'havenlytics-realty' ) ) ); ?></span>
+<section id="hvn-theme-home-properties" style="padding-top:88px;" aria-labelledby="hvn-theme-home-properties-title">
+	<div class="hvn-realty-wrap">
+		<div class="hvn-realty-section-head-row hvn-realty-reveal">
+			<div class="hvn-realty-section-head" style="margin-bottom:0;">
+				<?php
+				if ( function_exists( 'hvn_realty_render_home_eyebrow' ) ) {
+					hvn_realty_render_home_eyebrow( hvn_realty_get_home_section_subtitle( 'featured', __( 'Featured Properties', 'havenlytics-realty' ) ) );
+				}
+				?>
 				<h2 id="hvn-theme-home-properties-title"><?php echo esc_html( hvn_realty_get_home_section_title( 'featured', __( 'Handpicked homes worth a closer look', 'havenlytics-realty' ) ) ); ?></h2>
 			</div>
-			<?php if ( $hvn_view_all ) : ?>
-				<a href="<?php echo esc_url( $hvn_view_all ); ?>" class="hvn-theme-home-btn hvn-theme-home-btn--outline"><?php esc_html_e( 'View All Listings', 'havenlytics-realty' ); ?></a>
-			<?php endif; ?>
+			<div class="hvn-realty-chip-row" role="tablist" aria-label="<?php esc_attr_e( 'Filter listings', 'havenlytics-realty' ); ?>">
+				<button type="button" class="hvn-realty-chip hvn-realty-is-active" data-filter="all" role="tab" aria-selected="true"><?php esc_html_e( 'All', 'havenlytics-realty' ); ?></button>
+				<?php foreach ( $hvn_departments as $hvn_dept ) : ?>
+					<?php if ( ! $hvn_dept instanceof WP_Term ) { continue; } ?>
+					<button type="button" class="hvn-realty-chip" data-filter="<?php echo esc_attr( $hvn_dept->slug ); ?>" role="tab" aria-selected="false"><?php echo esc_html( $hvn_dept->name ); ?></button>
+				<?php endforeach; ?>
+			</div>
 		</div>
 
-		<div class="hvn-theme-home-property-grid">
+		<div class="hvn-realty-prop-grid" id="hvnRealtyPropGrid">
 			<?php
 			while ( $hvn_query->have_posts() ) :
 				$hvn_query->the_post();
@@ -75,86 +98,131 @@ if ( ! $hvn_query->have_posts() ) {
 				$hvn_baths = get_post_meta( $hvn_id, '_hvnly_property_bathrooms', true );
 				$hvn_area  = get_post_meta( $hvn_id, '_hvnly_property_sqft', true );
 
-				$hvn_status_term = function_exists( 'hvnly_get_property_status' ) ? hvnly_get_property_status( $hvn_id ) : false;
-				$hvn_status_name = ( $hvn_status_term && ! is_wp_error( $hvn_status_term ) ) ? $hvn_status_term->name : __( 'For Sale', 'havenlytics-realty' );
-				$hvn_is_rent     = ( false !== stripos( $hvn_status_name, 'rent' ) );
+				$hvn_status_name = function_exists( 'hvn_realty_get_property_status_name' )
+					? hvn_realty_get_property_status_name( $hvn_id )
+					: '';
+				$hvn_badge_class = 'hvn-realty-prop-badge';
+				if ( $hvn_status_name ) {
+					if ( false !== stripos( $hvn_status_name, 'new' ) ) {
+						$hvn_badge_class .= ' hvn-realty-badge-new';
+					} elseif ( false !== stripos( $hvn_status_name, 'open' ) ) {
+						$hvn_badge_class .= ' hvn-realty-badge-open';
+					} elseif ( false !== stripos( $hvn_status_name, 'exclusive' ) ) {
+						$hvn_badge_class .= ' hvn-realty-badge-exclusive';
+					} elseif ( false !== stripos( $hvn_status_name, 'sold' ) ) {
+						$hvn_badge_class .= ' hvn-realty-badge-sold';
+					} elseif ( false !== stripos( $hvn_status_name, 'pending' ) ) {
+						$hvn_badge_class .= ' hvn-realty-badge-pending';
+					} elseif ( false !== stripos( $hvn_status_name, 'rent' ) ) {
+						$hvn_badge_class .= ' hvn-realty-badge-rent';
+					}
+				}
+
+				$hvn_dept_terms = get_the_terms( $hvn_id, 'hvnly_prop_depts' );
+				$hvn_dept_slug  = ( $hvn_dept_terms && ! is_wp_error( $hvn_dept_terms ) && ! empty( $hvn_dept_terms[0]->slug ) )
+					? $hvn_dept_terms[0]->slug
+					: 'all';
 
 				$hvn_loc_terms = get_the_terms( $hvn_id, 'hvnly_prop_locations' );
 				$hvn_loc_name  = ( $hvn_loc_terms && ! is_wp_error( $hvn_loc_terms ) ) ? $hvn_loc_terms[0]->name : '';
+
+				$hvn_agent      = function_exists( 'hvnly_get_primary_property_agent' ) ? hvnly_get_primary_property_agent( $hvn_id ) : array();
+				$hvn_agent_name = '';
+				$hvn_agent_img  = '';
+				if ( is_array( $hvn_agent ) && ! empty( $hvn_agent['name'] ) ) {
+					$hvn_agent_name = (string) $hvn_agent['name'];
+					if ( ! empty( $hvn_agent['avatar'] ) ) {
+						$hvn_agent_img = (string) $hvn_agent['avatar'];
+					} elseif ( ! empty( $hvn_agent['photo'] ) ) {
+						$hvn_agent_img = (string) $hvn_agent['photo'];
+					} elseif ( ! empty( $hvn_agent['image'] ) ) {
+						$hvn_agent_img = (string) $hvn_agent['image'];
+					}
+				}
 				?>
-				<article class="hvn-theme-home-property-card hvn-theme-home-reveal">
-					<div class="hvn-theme-home-property-card__media">
-						<span class="hvn-theme-home-property-badge<?php echo $hvn_is_rent ? ' hvn-theme-home-property-badge--rent' : ''; ?>"><?php echo esc_html( $hvn_status_name ); ?></span>
-						<?php
-						if ( function_exists( 'hvn_realty_favorites_available' ) && hvn_realty_favorites_available() ) {
+				<article class="hvn-realty-prop-card hvn-realty-reveal" data-cat="<?php echo esc_attr( $hvn_dept_slug ); ?>">
+					<div class="hvn-realty-prop-media">
+						<?php if ( has_post_thumbnail() ) : ?>
+							<?php the_post_thumbnail( 'medium_large', array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => esc_attr( get_the_title() ) ) ); ?>
+						<?php endif; ?>
+						<?php if ( $hvn_status_name ) : ?>
+							<span class="<?php echo esc_attr( $hvn_badge_class ); ?>"><?php echo esc_html( $hvn_status_name ); ?></span>
+						<?php endif; ?>
+						<?php if ( function_exists( 'hvn_realty_favorites_available' ) && hvn_realty_favorites_available() ) : ?>
+							<?php
 							$hvn_is_favorited = function_exists( 'hvnly_is_property_favorited' ) ? hvnly_is_property_favorited( $hvn_id ) : false;
 							$hvn_fav_label    = $hvn_is_favorited
 								? __( 'Remove from favorites', 'havenlytics-realty' )
-								: __( 'Add to favorites', 'havenlytics-realty' );
+								: __( 'Save property', 'havenlytics-realty' );
 							$hvn_toast        = function_exists( 'hvnly_get_favorite_toast_data' )
 								? hvnly_get_favorite_toast_data( $hvn_id )
 								: array( 'title' => get_the_title( $hvn_id ), 'thumb' => '' );
 							?>
 							<button
 								type="button"
-								class="hvnly-property--grid-list--favorite hvn-theme-home-property-fav<?php echo $hvn_is_favorited ? ' is-favorited' : ''; ?>"
+								class="hvn-realty-fav-btn hvnly-property--grid-list--favorite<?php echo $hvn_is_favorited ? ' hvn-realty-is-active is-favorited' : ''; ?>"
 								data-hvnly-favorite="1"
 								data-property-id="<?php echo esc_attr( (string) $hvn_id ); ?>"
 								data-property-title="<?php echo esc_attr( isset( $hvn_toast['title'] ) ? $hvn_toast['title'] : '' ); ?>"
 								data-property-thumb="<?php echo esc_url( isset( $hvn_toast['thumb'] ) ? $hvn_toast['thumb'] : '' ); ?>"
 								aria-pressed="<?php echo $hvn_is_favorited ? 'true' : 'false'; ?>"
 								aria-label="<?php echo esc_attr( $hvn_fav_label ); ?>"
-							>
-								<i class="<?php echo $hvn_is_favorited ? 'fas' : 'far'; ?> fa-heart" aria-hidden="true"></i>
-							</button>
-							<?php
-						}
-						?>
-						<a href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
-							<?php if ( has_post_thumbnail() ) : ?>
-								<?php the_post_thumbnail( 'medium_large', array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => esc_attr( get_the_title() ) ) ); ?>
-							<?php else : ?>
-								<span class="hvn-theme-home-property-card__media-placeholder" aria-hidden="true">
-									<svg width="34" height="34" viewBox="0 0 34 34" fill="none"><path d="M5 16L17 6L29 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 14V28H26V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-								</span>
-							<?php endif; ?>
-						</a>
-					</div>
-					<div class="hvn-theme-home-property-body">
+							><?php echo $hvn_heart_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
+						<?php endif; ?>
 						<?php if ( $hvn_price ) : ?>
-							<div class="hvn-theme-home-property-price"><?php echo wp_kses_post( $hvn_price ); ?></div>
+							<span class="hvn-realty-prop-price"><?php echo wp_kses_post( $hvn_price ); ?></span>
 						<?php endif; ?>
-						<h3 class="hvn-theme-home-property-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+					</div>
+					<div class="hvn-realty-prop-body">
 						<?php if ( $hvn_loc_name ) : ?>
-							<div class="hvn-theme-home-property-loc">
-								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 13C7 13 12 9 12 5.5C12 3 9.8 1 7 1C4.2 1 2 3 2 5.5C2 9 7 13 7 13Z" stroke-width="1.3"/><circle cx="7" cy="5.5" r="1.6" stroke-width="1.3"/></svg>
-								<?php echo esc_html( $hvn_loc_name ); ?>
-							</div>
+							<div class="hvn-realty-prop-loc"><?php echo $hvn_pin_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $hvn_loc_name ); ?></div>
 						<?php endif; ?>
+						<h3 class="hvn-realty-prop-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 						<?php if ( '' !== $hvn_beds || '' !== $hvn_baths || '' !== $hvn_area ) : ?>
-							<div class="hvn-theme-home-property-meta">
+							<div class="hvn-realty-prop-meta">
 								<?php if ( '' !== $hvn_beds ) : ?>
-									<div><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 9V3.5C2 2.7 2.7 2 3.5 2H6C6.8 2 7.5 2.7 7.5 3.5V9M2 9H13V6.5C13 5.7 12.3 5 11.5 5H8.5M2 9V12M13 9V12" stroke-width="1.3"/></svg><?php echo esc_html( sprintf( /* translators: %s: bedroom count. */ _n( '%s Bed', '%s Beds', (int) $hvn_beds, 'havenlytics-realty' ), number_format_i18n( (int) $hvn_beds ) ) ); ?></div>
+									<div class="hvn-realty-prop-meta-item"><?php echo $hvn_bed_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( sprintf( _n( '%s bd', '%s bd', (int) $hvn_beds, 'havenlytics-realty' ), number_format_i18n( (float) $hvn_beds, 1 ) ) ); ?></div>
 								<?php endif; ?>
 								<?php if ( '' !== $hvn_baths ) : ?>
-									<div><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 8H13V10.5C13 11.3 12.3 12 11.5 12H3.5C2.7 12 2 11.3 2 10.5V8Z" stroke-width="1.3"/><path d="M3 8V3.5C3 2.7 3.7 2 4.5 2H5" stroke-width="1.3"/></svg><?php echo esc_html( sprintf( /* translators: %s: bathroom count. */ _n( '%s Bath', '%s Baths', (int) $hvn_baths, 'havenlytics-realty' ), number_format_i18n( (int) $hvn_baths ) ) ); ?></div>
+									<div class="hvn-realty-prop-meta-item"><?php echo $hvn_bath_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( sprintf( _n( '%s ba', '%s ba', (int) $hvn_baths, 'havenlytics-realty' ), number_format_i18n( (float) $hvn_baths, 1 ) ) ); ?></div>
 								<?php endif; ?>
 								<?php if ( '' !== $hvn_area ) : ?>
-									<div><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="2" y="2" width="11" height="11" stroke-width="1.3"/></svg><?php echo esc_html( sprintf( /* translators: %s: area in square feet. */ __( '%s sqft', 'havenlytics-realty' ), number_format_i18n( (float) $hvn_area ) ) ); ?></div>
+									<div class="hvn-realty-prop-meta-item"><?php echo $hvn_area_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( sprintf( __( '%s sqft', 'havenlytics-realty' ), number_format_i18n( (float) $hvn_area ) ) ); ?></div>
 								<?php endif; ?>
+							</div>
+						<?php endif; ?>
+						<?php if ( $hvn_agent_name ) : ?>
+							<div class="hvn-realty-prop-agent">
+								<div class="hvn-realty-prop-agent-who">
+									<?php if ( $hvn_agent_img ) : ?>
+										<img src="<?php echo esc_url( $hvn_agent_img ); ?>" alt="<?php echo esc_attr( $hvn_agent_name ); ?>" loading="lazy" decoding="async">
+									<?php endif; ?>
+									<span><?php echo esc_html( $hvn_agent_name ); ?></span>
+								</div>
+								<a class="hvn-realty-prop-agent-view" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: property title. */ __( 'View %s', 'havenlytics-realty' ), get_the_title() ) ); ?>"><?php echo $hvn_arrow_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 							</div>
 						<?php endif; ?>
 					</div>
 				</article>
-				<?php
-			endwhile;
-			wp_reset_postdata();
-			?>
+			<?php endwhile; ?>
+			<?php wp_reset_postdata(); ?>
 		</div>
 
 		<?php if ( $hvn_view_all ) : ?>
-			<div class="hvn-theme-home-properties__more">
-				<a href="<?php echo esc_url( $hvn_view_all ); ?>" class="hvn-theme-home-btn hvn-theme-home-btn--primary"><?php esc_html_e( 'Browse All Properties', 'havenlytics-realty' ); ?></a>
+			<div class="hvn-realty-grid-foot hvn-realty-reveal">
+				<a href="<?php echo esc_url( $hvn_view_all ); ?>" class="hvn-realty-btn hvn-realty-btn-ghost">
+					<?php
+					if ( $hvn_total > 0 ) {
+						printf(
+							/* translators: %s: listing count. */
+							esc_html__( 'View All %s Listings', 'havenlytics-realty' ),
+							esc_html( number_format_i18n( $hvn_total ) )
+						);
+					} else {
+						esc_html_e( 'View All Listings', 'havenlytics-realty' );
+					}
+					?>
+				</a>
 			</div>
 		<?php endif; ?>
 	</div>

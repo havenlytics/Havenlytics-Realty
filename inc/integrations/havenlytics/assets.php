@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Enqueue the single Homepage 2.0.0 stylesheet (homepage only).
+ * Enqueue Homepage 3.0 stylesheets (homepage only).
  *
  * @return void
  */
@@ -23,6 +23,7 @@ function hvn_realty_enqueue_home_styles() {
 
 	if ( function_exists( 'hvn_realty_enqueue_theme_style' ) ) {
 		hvn_realty_enqueue_theme_style( 'hvn-realty-home', 'assets/css/home.css', $dependency );
+		hvn_realty_enqueue_theme_style( 'hvn-realty-home-v3', 'assets/css/home-v3.css', array( 'hvn-realty-home' ) );
 	} elseif ( file_exists( get_template_directory() . '/assets/css/home.css' ) ) {
 		wp_enqueue_style(
 			'hvn-realty-home',
@@ -30,6 +31,14 @@ function hvn_realty_enqueue_home_styles() {
 			$dependency,
 			HVN_REALTY_VERSION
 		);
+		if ( file_exists( get_template_directory() . '/assets/css/home-v3.css' ) ) {
+			wp_enqueue_style(
+				'hvn-realty-home-v3',
+				HVN_REALTY_TEMPLATE_URL . '/assets/css/home-v3.css',
+				array( 'hvn-realty-home' ),
+				HVN_REALTY_VERSION
+			);
+		}
 	}
 }
 
@@ -71,14 +80,22 @@ function hvn_realty_enqueue_havenlytics_assets() {
 add_action( 'wp_enqueue_scripts', 'hvn_realty_enqueue_havenlytics_assets', 25 );
 
 /**
- * Homepage display font.
+ * Homepage 3.0 body font (Plus Jakarta Sans).
  *
- * Fraunces is now the theme's default heading font and is loaded globally by
- * hvn_realty_enqueue_google_fonts() (driven by the Typography Customizer), so a
- * separate homepage-only Fraunces request is no longer required. The Customizer
- * heading-font choice remains the single source of truth on every page.
+ * Fraunces remains the theme heading font via Typography Customizer.
  *
  * @return void
  */
 function hvn_realty_enqueue_homepage_fonts() {
+	if ( ! function_exists( 'hvn_realty_is_home_design' ) || ! hvn_realty_is_home_design() ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'hvn-realty-home-jakarta',
+		'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+		array(),
+		null
+	);
 }
+add_action( 'wp_enqueue_scripts', 'hvn_realty_enqueue_homepage_fonts', 5 );

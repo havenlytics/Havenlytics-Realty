@@ -176,7 +176,7 @@ function hvn_realty_get_hero_search_position_css() {
 	$offset_y = hvn_realty_get_hero_search_offset_y();
 	$width    = hvn_realty_get_hero_search_width();
 
-	return '.hvn-realty-section--hero-has-search{'
+	return '.hvn-realty-search-section,.hvn-realty-search-console,.hvn-realty-section--hero-has-search{'
 		. '--hvn-realty-hero-search-justify:' . $justify . ';'
 		. '--hvn-realty-hero-search-align:' . $align . ';'
 		. '--hvn-realty-hero-search-offset-x:' . $offset_x . 'px;'

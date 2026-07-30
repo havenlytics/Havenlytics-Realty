@@ -1,9 +1,6 @@
 <?php
 /**
- * Homepage 2.0.0 — Meet our agents.
- *
- * Rebuilt premium agent card from the prototype, populated by a real
- * hvnly_agent WP_Query. Keeps only dynamic data + agent meta helpers.
+ * Homepage 3.0 — Meet our agents.
  *
  * @package Havenlytics_Realty
  */
@@ -33,14 +30,21 @@ if ( ! $hvn_query->have_posts() ) {
 	wp_reset_postdata();
 	return;
 }
+
+$hvn_linkedin_svg = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34 0-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21H9z"/></svg>';
+$hvn_email_svg    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>';
 ?>
-<section class="hvn-theme-home-section hvn-theme-home-agents" id="hvn-theme-home-agents" aria-labelledby="hvn-theme-home-agents-title">
-	<div class="hvn-theme-home-container">
-		<div class="hvn-theme-home-head hvn-theme-home-head--center hvn-theme-home-reveal">
-			<span class="hvn-theme-home-eyebrow hvn-theme-home-eyebrow--center"><?php echo esc_html( hvn_realty_get_home_section_subtitle( 'agents', __( 'Meet Our Agents', 'havenlytics-realty' ) ) ); ?></span>
+<section id="hvn-theme-home-agents" aria-labelledby="hvn-theme-home-agents-title">
+	<div class="hvn-realty-wrap">
+		<div class="hvn-realty-section-head hvn-realty-reveal">
+			<?php
+			if ( function_exists( 'hvn_realty_render_home_eyebrow' ) ) {
+				hvn_realty_render_home_eyebrow( hvn_realty_get_home_section_subtitle( 'agents', __( 'Meet Our Agents', 'havenlytics-realty' ) ) );
+			}
+			?>
 			<h2 id="hvn-theme-home-agents-title"><?php echo esc_html( hvn_realty_get_home_section_title( 'agents', __( 'Local experts, vetted and ranked on results', 'havenlytics-realty' ) ) ); ?></h2>
 		</div>
-		<div class="hvn-theme-home-agents__grid">
+		<div class="hvn-realty-agent-grid">
 			<?php
 			while ( $hvn_query->have_posts() ) :
 				$hvn_query->the_post();
@@ -51,42 +55,75 @@ if ( ! $hvn_query->have_posts() ) {
 				$hvn_role     = $hvn_position ? $hvn_position : $hvn_company;
 				$hvn_linkedin = (string) get_post_meta( $hvn_id, '_hvnly_agent_linkedin', true );
 				$hvn_email    = (string) get_post_meta( $hvn_id, '_hvnly_agent_email', true );
+				$hvn_rating   = get_post_meta( $hvn_id, '_hvnly_agent_rating', true );
+				$hvn_rating   = ( '' !== $hvn_rating && null !== $hvn_rating ) ? (string) $hvn_rating : '—';
+				$hvn_exp      = get_post_meta( $hvn_id, '_hvnly_agent_experience', true );
+				if ( '' === $hvn_exp || null === $hvn_exp ) {
+					$hvn_exp = get_post_meta( $hvn_id, '_hvnly_agent_years', true );
+				}
+
+				$hvn_sold_count = 0;
+				if ( function_exists( 'hvnly_get_agent_properties_query' ) ) {
+					$hvn_agent_props = hvnly_get_agent_properties_query( $hvn_id );
+					if ( $hvn_agent_props instanceof WP_Query ) {
+						$hvn_sold_count = (int) $hvn_agent_props->found_posts;
+						// Restore the outer agents loop global post (do not wp_reset_postdata mid-loop).
+						if ( method_exists( $hvn_query, 'reset_postdata' ) ) {
+							$hvn_query->reset_postdata();
+						}
+					}
+				} else {
+					$hvn_sold_query = new WP_Query(
+						array(
+							'post_type'      => 'hvnly_property',
+							'post_status'    => 'publish',
+							'posts_per_page' => 1,
+							'fields'         => 'ids',
+							'no_found_rows'  => false,
+							'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+								array(
+									'key'   => '_hvnly_property_agent',
+									'value' => (string) $hvn_id,
+								),
+							),
+						)
+					);
+					$hvn_sold_count = (int) $hvn_sold_query->found_posts;
+					// found_posts only — no the_post(); keep outer loop intact.
+				}
 				?>
-				<article class="hvn-theme-home-agent-card hvn-theme-home-reveal">
-					<a class="hvn-theme-home-agent-card__photo" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( $hvn_name ); ?>">
+				<div class="hvn-realty-agent-card hvn-realty-reveal">
+					<div class="hvn-realty-agent-photo">
 						<?php if ( has_post_thumbnail() ) : ?>
-							<?php the_post_thumbnail( 'medium', array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => esc_attr( $hvn_name ) ) ); ?>
-						<?php else : ?>
-							<span class="hvn-theme-home-agent-card__photo-placeholder" aria-hidden="true">
-								<svg width="38" height="38" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M3 20C3 15.5 6.5 13 11 13C15.5 13 19 15.5 19 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-							</span>
-						<?php endif; ?>
-					</a>
-					<div class="hvn-theme-home-agent-card__body">
-						<h3><a href="<?php the_permalink(); ?>"><?php echo esc_html( $hvn_name ); ?></a></h3>
-						<?php if ( $hvn_role ) : ?>
-							<span class="hvn-theme-home-agent-card__role"><?php echo esc_html( $hvn_role ); ?></span>
+							<?php the_post_thumbnail( 'medium_large', array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => esc_attr( $hvn_name ) ) ); ?>
 						<?php endif; ?>
 						<?php if ( $hvn_linkedin || $hvn_email ) : ?>
-							<div class="hvn-theme-home-agent-card__socials">
+							<div class="hvn-realty-agent-social">
 								<?php if ( $hvn_linkedin ) : ?>
-									<a href="<?php echo esc_url( $hvn_linkedin ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: agent name. */ __( '%s on LinkedIn', 'havenlytics-realty' ), $hvn_name ) ); ?>">
-										<svg viewBox="0 0 24 24" fill="none"><path d="M4 4H20V20H4V4Z" stroke-width="1.6"/><path d="M8 11V17M8 8V8.01M12 17V11M12 11C12 11 13 10 14.5 10C16 10 16 11.5 16 12.5V17" stroke-width="1.6" stroke-linecap="round"/></svg>
-									</a>
+									<a href="<?php echo esc_url( $hvn_linkedin ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: agent name. */ __( '%s on LinkedIn', 'havenlytics-realty' ), $hvn_name ) ); ?>"><?php echo $hvn_linkedin_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 								<?php endif; ?>
 								<?php if ( $hvn_email ) : ?>
-									<a href="mailto:<?php echo esc_attr( $hvn_email ); ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: agent name. */ __( 'Email %s', 'havenlytics-realty' ), $hvn_name ) ); ?>">
-										<svg viewBox="0 0 24 24" fill="none"><path d="M4 6H20V18H4V6Z" stroke-width="1.6"/><path d="M4 6L12 13L20 6" stroke-width="1.6"/></svg>
-									</a>
+									<a href="mailto:<?php echo esc_attr( $hvn_email ); ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: agent name. */ __( 'Email %s', 'havenlytics-realty' ), $hvn_name ) ); ?>"><?php echo $hvn_email_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 								<?php endif; ?>
 							</div>
 						<?php endif; ?>
 					</div>
-				</article>
-				<?php
-			endwhile;
-			wp_reset_postdata();
-			?>
+					<div class="hvn-realty-agent-info">
+						<h3><a href="<?php the_permalink(); ?>"><?php echo esc_html( $hvn_name ); ?></a></h3>
+						<?php if ( $hvn_role ) : ?>
+							<div class="hvn-realty-agent-role"><?php echo esc_html( $hvn_role ); ?></div>
+						<?php endif; ?>
+						<div class="hvn-realty-agent-stats">
+							<div><b><?php echo esc_html( number_format_i18n( $hvn_sold_count ) ); ?></b><span><?php esc_html_e( 'Sold', 'havenlytics-realty' ); ?></span></div>
+							<div><b><?php echo esc_html( $hvn_rating ); ?></b><span><?php esc_html_e( 'Rating', 'havenlytics-realty' ); ?></span></div>
+							<?php if ( '' !== $hvn_exp && null !== $hvn_exp ) : ?>
+								<div><b><?php echo esc_html( sprintf( __( '%syr', 'havenlytics-realty' ), number_format_i18n( (float) $hvn_exp ) ) ); ?></b><span><?php esc_html_e( 'Experience', 'havenlytics-realty' ); ?></span></div>
+							<?php endif; ?>
+						</div>
+					</div>
+				</div>
+			<?php endwhile; ?>
+			<?php wp_reset_postdata(); ?>
 		</div>
 	</div>
 </section>

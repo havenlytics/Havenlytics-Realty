@@ -251,7 +251,10 @@ body:not(.hvn-header-no-cta) .hvn-theme-header-cta {
 /* ==========================================================================
    PHASE 3 — Footer
    ========================================================================== */
-
+.hvn-theme-copyright a {
+    color: #ccc;
+    text-decoration: none;
+}
 .hvn-theme-footer {
 	border-top: 1px solid rgba(255, 255, 255, 0.06);
 }

@@ -429,6 +429,33 @@ function hvn_realty_customizer_register_footer( $wp_customize ) {
 	}
 
 	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_show_back_to_top', $section, esc_html__( 'Show Back To Top Button', 'havenlytics-realty' ), false, 'postMessage' );
+
+	hvn_realty_customizer_add_checkbox(
+		$wp_customize,
+		'hvn_realty_floating_contact_enable',
+		$section,
+		esc_html__( 'Show Floating Contact Menu', 'havenlytics-realty' ),
+		true,
+		'refresh'
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_floating_contact_whatsapp',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_text_field',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_floating_contact_whatsapp',
+		array(
+			'label'       => esc_html__( 'Floating Contact WhatsApp', 'havenlytics-realty' ),
+			'description' => esc_html__( 'Phone number with country code (e.g. 15551234567). Falls back to Contact Phone when empty. Menu items use Footer Contact Phone and Email.', 'havenlytics-realty' ),
+			'section'     => $section,
+			'type'        => 'text',
+		)
+	);
 }
 
 /**

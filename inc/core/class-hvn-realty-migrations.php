@@ -587,6 +587,315 @@ class HVN_Realty_Migrations {
 	}
 
 	/**
+	 * Homepage 2.3.0 / Homepage 3.0 layout migration.
+	 *
+	 * Appends new sections, maps legacy CTA/hero theme_mods into current keys,
+	 * and never deletes user settings.
+	 *
+	 * @return bool True on success.
+	 */
+	public static function migrate_230_homepage_v3() {
+		self::migrate_230_append_new_sections();
+		self::migrate_230_map_legacy_cta_mods();
+		self::migrate_230_map_legacy_hero_image();
+		self::migrate_230_default_hero_bg_mode();
+
+		return true;
+	}
+
+	/**
+	 * Whether the 2.3.0 homepage migration should mutate theme_mods.
+	 *
+	 * @return bool
+	 */
+	public static function should_run_homepage_v3_migration() {
+		$order = get_theme_mod( 'hvn_realty_home_section_order', '' );
+		if ( is_string( $order ) && '' !== $order ) {
+			$decoded = json_decode( $order, true );
+			if ( is_array( $decoded ) ) {
+				$has_map         = in_array( 'map', $decoded, true );
+				$has_collections = in_array( 'collections', $decoded, true );
+				if ( ! $has_map || ! $has_collections ) {
+					return true;
+				}
+			}
+		}
+
+		if ( ! self::theme_mod_has_value( 'hvn_realty_home_cta_title' )
+			&& self::theme_mod_has_value( 'hvn_realty_home_cta_headline' )
+		) {
+			return true;
+		}
+
+		if ( ! self::theme_mod_has_value( 'hvn_realty_home_hero_image_a' )
+			&& self::theme_mod_has_value( 'hvn_realty_home_hero_image_b' )
+		) {
+			return true;
+		}
+
+		$installed = function_exists( 'hvn_realty_get_installed_version' )
+			? hvn_realty_get_installed_version()
+			: (string) get_option( 'hvn_realty_version', '' );
+
+		// Existing installs below 2.3 should always normalize once.
+		if ( '' !== $installed && version_compare( $installed, '2.3.0', '<' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Append map + collections to a saved section order without reordering
+	 * the user's existing sections.
+	 *
+	 * @return void
+	 */
+	private static function migrate_230_append_new_sections() {
+		$registry = function_exists( 'hvn_realty_get_default_home_section_order' )
+			? hvn_realty_get_default_home_section_order()
+			: array();
+
+		$stored  = get_theme_mod( 'hvn_realty_home_section_order', '' );
+		$decoded = array();
+
+		if ( is_string( $stored ) && '' !== $stored ) {
+			$maybe = json_decode( $stored, true );
+			if ( is_array( $maybe ) ) {
+				$decoded = array_values(
+					array_filter(
+						array_map( 'sanitize_key', $maybe )
+					)
+				);
+			}
+		}
+
+		if ( empty( $decoded ) ) {
+			// Fresh / unset order — sanitize path will use registry defaults.
+			return;
+		}
+
+		$append = array( 'map', 'collections' );
+		$changed = false;
+		foreach ( $append as $slug ) {
+			if ( ! in_array( $slug, $registry, true ) ) {
+				continue;
+			}
+			if ( in_array( $slug, $decoded, true ) ) {
+				continue;
+			}
+			// Insert map after locations when possible; collections after why/map.
+			if ( 'map' === $slug ) {
+				$loc_i = array_search( 'locations', $decoded, true );
+				if ( false !== $loc_i ) {
+					array_splice( $decoded, (int) $loc_i + 1, 0, array( 'map' ) );
+				} else {
+					$decoded[] = 'map';
+				}
+			} elseif ( 'collections' === $slug ) {
+				$why_i = array_search( 'why', $decoded, true );
+				$map_i = array_search( 'map', $decoded, true );
+				$insert_at = false !== $why_i ? (int) $why_i + 1 : ( false !== $map_i ? (int) $map_i + 1 : count( $decoded ) );
+				array_splice( $decoded, $insert_at, 0, array( 'collections' ) );
+			}
+			$changed = true;
+		}
+
+		if ( $changed ) {
+			set_theme_mod( 'hvn_realty_home_section_order', wp_json_encode( array_values( $decoded ) ) );
+		}
+	}
+
+	/**
+	 * Copy legacy CTA theme_mods into Homepage 3.0 keys when unset.
+	 *
+	 * @return void
+	 */
+	private static function migrate_230_map_legacy_cta_mods() {
+		$map = array(
+			'hvn_realty_home_cta_headline'     => 'hvn_realty_home_cta_title',
+			'hvn_realty_home_cta_subtext'      => 'hvn_realty_home_cta_subtitle',
+			'hvn_realty_home_cta_primary_text' => 'hvn_realty_home_cta_primary_label',
+		);
+
+		foreach ( $map as $legacy => $modern ) {
+			if ( self::theme_mod_has_value( $modern ) ) {
+				continue;
+			}
+			if ( ! self::theme_mod_has_value( $legacy ) ) {
+				continue;
+			}
+			set_theme_mod( $modern, get_theme_mod( $legacy ) );
+		}
+	}
+
+	/**
+	 * Prefer inset hero image as primary when large image was never set.
+	 *
+	 * @return void
+	 */
+	private static function migrate_230_map_legacy_hero_image() {
+		if ( self::theme_mod_has_value( 'hvn_realty_home_hero_image_a' ) ) {
+			return;
+		}
+		if ( ! self::theme_mod_has_value( 'hvn_realty_home_hero_image_b' ) ) {
+			return;
+		}
+		set_theme_mod( 'hvn_realty_home_hero_image_a', get_theme_mod( 'hvn_realty_home_hero_image_b' ) );
+	}
+
+	/**
+	 * Ensure hero background mode theme_mod exists (static default).
+	 *
+	 * @return void
+	 */
+	private static function migrate_230_default_hero_bg_mode() {
+		if ( self::theme_mod_has_value( 'hvn_realty_home_hero_bg_mode' ) ) {
+			return;
+		}
+		set_theme_mod( 'hvn_realty_home_hero_bg_mode', 'static' );
+	}
+
+	/**
+	 * Homepage 2.3.1 — normalize invalid testimonial slider settings.
+	 *
+	 * Upgraded sites with 4+ testimonials exposed a multi-slide flex overflow
+	 * bug. This migration only re-sanitizes slider-related theme_mods; it does
+	 * not delete or rewrite testimonial copy/photos beyond the existing
+	 * sanitizer (which preserves valid items).
+	 *
+	 * @return bool True on success.
+	 */
+	public static function migrate_231_testimonials_slider() {
+		self::migrate_231_normalize_testimonials_json();
+		self::migrate_231_clamp_testimonials_speed();
+		self::migrate_231_normalize_testimonials_autoplay();
+
+		return true;
+	}
+
+	/**
+	 * Whether the 2.3.1 testimonials slider migration should mutate theme_mods.
+	 *
+	 * @return bool
+	 */
+	public static function should_run_testimonials_slider_migration() {
+		$raw = get_theme_mod( 'hvn_realty_home_testimonials', null );
+
+		// Corrupt / non-JSON storage from older builds.
+		if ( is_array( $raw ) ) {
+			return true;
+		}
+
+		if ( is_string( $raw ) && '' !== $raw ) {
+			$decoded = json_decode( $raw, true );
+			if ( ! is_array( $decoded ) ) {
+				return true;
+			}
+		}
+
+		$speed = get_theme_mod( 'hvn_realty_home_testimonials_speed', null );
+		if ( null !== $speed && '' !== $speed ) {
+			$speed = absint( $speed );
+			if ( $speed < 2000 || $speed > 15000 ) {
+				return true;
+			}
+		}
+
+		$autoplay = get_theme_mod( 'hvn_realty_home_testimonials_autoplay', null );
+		if ( null !== $autoplay && ! is_bool( $autoplay ) && ! in_array( $autoplay, array( 0, 1, '0', '1', true, false ), true ) ) {
+			return true;
+		}
+
+		// Always safe to re-clamp once for upgraded 2.3.0 installs.
+		$installed = function_exists( 'hvn_realty_get_installed_version' )
+			? hvn_realty_get_installed_version()
+			: (string) get_option( 'hvn_realty_version', '' );
+
+		if ( '' !== $installed && version_compare( $installed, '2.3.1', '<' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Re-run testimonials JSON through the sanitizer when present.
+	 *
+	 * @return void
+	 */
+	private static function migrate_231_normalize_testimonials_json() {
+		$raw = get_theme_mod( 'hvn_realty_home_testimonials', null );
+		if ( null === $raw || '' === $raw ) {
+			return;
+		}
+
+		if ( ! function_exists( 'hvn_realty_sanitize_home_testimonials' ) ) {
+			return;
+		}
+
+		$sanitized = hvn_realty_sanitize_home_testimonials( $raw );
+		if ( ! is_string( $sanitized ) || '' === $sanitized ) {
+			return;
+		}
+
+		// Only write when storage shape changed (array → JSON, invalid → valid).
+		if ( is_array( $raw ) || ( is_string( $raw ) && $raw !== $sanitized ) ) {
+			$before = is_string( $raw ) ? json_decode( $raw, true ) : $raw;
+			$after  = json_decode( $sanitized, true );
+			$before_count = is_array( $before ) ? count( $before ) : -1;
+			$after_count  = is_array( $after ) ? count( $after ) : -1;
+
+			// Never wipe user content if sanitizer unexpectedly emptied a populated set.
+			if ( $before_count > 0 && 0 === $after_count ) {
+				return;
+			}
+
+			set_theme_mod( 'hvn_realty_home_testimonials', $sanitized );
+		}
+	}
+
+	/**
+	 * Clamp autoplay speed into the supported 2000–15000 ms range.
+	 *
+	 * @return void
+	 */
+	private static function migrate_231_clamp_testimonials_speed() {
+		$speed = get_theme_mod( 'hvn_realty_home_testimonials_speed', null );
+		if ( null === $speed || '' === $speed ) {
+			return;
+		}
+
+		$clamped = absint( $speed );
+		$clamped = max( 2000, min( 15000, $clamped ) );
+
+		if ( (int) $speed !== $clamped ) {
+			set_theme_mod( 'hvn_realty_home_testimonials_speed', $clamped );
+		}
+	}
+
+	/**
+	 * Coerce autoplay theme_mod to a real boolean.
+	 *
+	 * @return void
+	 */
+	private static function migrate_231_normalize_testimonials_autoplay() {
+		$autoplay = get_theme_mod( 'hvn_realty_home_testimonials_autoplay', null );
+		if ( null === $autoplay ) {
+			return;
+		}
+
+		$bool = (bool) $autoplay;
+		if ( is_string( $autoplay ) && in_array( strtolower( $autoplay ), array( 'false', 'off', 'no', '' ), true ) ) {
+			$bool = false;
+		}
+
+		if ( $autoplay !== $bool ) {
+			set_theme_mod( 'hvn_realty_home_testimonials_autoplay', $bool );
+		}
+	}
+
+	/**
 	 * Whether a theme_mod is meaningfully set.
 	 *
 	 * @param string $key Theme mod key.

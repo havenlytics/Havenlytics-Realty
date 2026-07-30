@@ -76,7 +76,7 @@ function hvn_realty_get_home_section_partial_map() {
 			),
 		),
 		'why'          => array(
-			'selector' => '.hvn-theme-home-why',
+			'selector' => '#hvn-theme-home-why',
 			'settings' => array(
 				'hvn_realty_home_why_items',
 			),
@@ -86,6 +86,16 @@ function hvn_realty_get_home_section_partial_map() {
 			'settings' => array(
 				'hvn_realty_home_featured_count',
 			),
+		),
+		'map'          => array(
+			'selector' => '#hvn-theme-home-map',
+			'settings' => array(
+				'hvn_realty_home_map_limit',
+			),
+		),
+		'collections'  => array(
+			'selector' => '#hvn-theme-home-collections',
+			'settings' => array(),
 		),
 		'agents'       => array(
 			'selector' => '#hvn-theme-home-agents',

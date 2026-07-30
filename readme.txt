@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.4
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,46 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.3.2 - July 30, 2026 =
+* IMPROVED: Hero search shows every enabled Search Builder field on tablet and mobile (stacked; no collapsed/advanced-only hide).
+* IMPROVED: Hero carousel navigation grouped as previous + dots + next with tighter premium spacing.
+* IMPROVED: Hero slider cross-fade overlaps outgoing/incoming slides for a cinematic transition without zoom jump.
+* NEW: Floating contact action menu (WhatsApp, Phone, Email) with staggered open/close motion, Customizer controls, and keyboard accessibility.
+
+= 2.3.1 - July 27, 2026 =
+* FIXED: Upgrade regression (2.3.0 → 2.3.1) where the Testimonials carousel overflowed horizontally on mobile when more than three testimonials were stored.
+* FIXED: Testimonial track width / translateX calculations so multi-slide carousels no longer widen the page, mobile menu, search, or footer.
+* IMPROVED: Testimonials carousel shows one card per view on mobile and three cards on desktop while keeping display:flex.
+* IMPROVED: Carousel respects Customizer autoplay + speed; pause on hover; resize-safe pixel transforms.
+* NEW: One-time migration (2.3.1) normalizes invalid testimonial slider settings (JSON shape, speed clamp, autoplay boolean) without deleting testimonial content.
+
+= 2.3.0 - July 27, 2026 =
+* NEW: Homepage redesign release candidate — pixel-faithful implementation from the approved design specification.
+* NEW: Interactive Property Map with custom tooltip (Leaflet + MarkerCluster via Havenlytics plugin assets).
+* NEW: Curated Collections section driven by featured properties.
+* NEW: Hero Background Mode — Static Image or Property Carousel with slide count, autoplay, transition, loop, pause-on-hover, and Ken Burns zoom.
+* NEW: One-time safe migration (2.3.0) maps legacy CTA/hero settings and appends map/collections without deleting user data.
+* IMPROVED: Cinematic hero cross-fade + zoom, stronger overlay for header/heading readability, subtle dotted rail decoration.
+* IMPROVED: Favorite buttons use a white circular chip with soft shadow for contrast on photos.
+* IMPROVED: Map tooltip close (outside, top-right) and favorite (top-left) never overlap; title contrast on media.
+* IMPROVED: Customizer live preview no longer clears the hero title on load.
+* IMPROVED: Search Console wraps the existing Search Builder; property status badges use hvnly_prop_status.
+* IMPROVED: Homepage-scoped white overlay typography without changing global theme fonts/colors.
+* COMPATIBILITY: Header, footer, Mobile Search Drawer, Favorites, Login/Workspace, colors, typography, and section order preserved. How It Works remains available.
+* COMPATIBILITY: Fully backward compatible. No database migrations of posts. No plugin modifications.
+
+= 3.0.0 - July 26, 2026 =
+* NOTE: Pre-release package label superseded by 2.3.0 for the public Homepage redesign release.
+
+= 2.2.0 - July 26, 2026 =
+* NEW: Homepage 2.2 premium redesign — immersive hero, search-led first impression, and intentional section rhythm from Hero through CTA.
+* NEW: How It Works process section with Customizer-managed steps (backward compatible; appended for existing section orders).
+* IMPROVED: Featured Properties mosaic layout with a large lead listing card.
+* IMPROVED: Editorial Why Choose Us, Types gallery, Locations chapter, human Agent cards, editorial Testimonials, and magazine Blog layout.
+* IMPROVED: Memorable CTA finale and fixed legacy CTA footer hash default.
+* IMPROVED: Fresh-install default section order prioritizes Search → Properties before marketing sections.
+* COMPATIBILITY: Header, footer, Mobile Search Drawer, Search Builder, Favorites, Login/Workspace, Customizer settings, visibility, and ordering preserved. Fully backward compatible.
 
 = 2.1.4 - July 25, 2026 =
 * FIXED: Header Favorites dropdown positioning on mobile devices so the panel stays fully inside the viewport.
@@ -516,6 +556,21 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.3.2 =
+Recommended update: full mobile hero search fields, refined hero slider/nav, and a new floating contact action menu. Fully backward compatible.
+
+= 2.3.1 =
+Recommended update: fixes Testimonials carousel horizontal overflow after upgrading from 2.3.0 (mobile). Normalizes invalid slider settings only; testimonial content is preserved.
+
+= 2.3.0 =
+Recommended update: Homepage redesign with property map, collections, hero carousel, and safe settings migration. Existing Customizer colors, typography, order, and visibility are preserved. Fully backward compatible.
+
+= 3.0.0 =
+Superseded by 2.3.0 (pre-release package label only).
+
+= 2.2.0 =
+Recommended update: premium Homepage 2.2 redesign with immersive hero, process section, and refined section layouts. Existing Customizer content, order, and visibility are preserved. Fully backward compatible.
 
 = 2.1.4 =
 Recommended maintenance update: fixes Header Favorites dropdown clipping on mobile so the panel stays fully visible. Desktop unchanged. Fully backward compatible.

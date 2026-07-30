@@ -64,6 +64,80 @@ function hvn_realty_sanitize_home_posts_count( $input ) {
 }
 
 /**
+ * Sanitize hero background mode.
+ *
+ * @param string $input Input.
+ * @return string
+ */
+function hvn_realty_sanitize_home_hero_bg_mode( $input ) {
+	return in_array( $input, array( 'static', 'carousel' ), true ) ? $input : 'static';
+}
+
+/**
+ * Sanitize hero carousel slide count (3–8).
+ *
+ * @param int|string $input Input.
+ * @return int
+ */
+function hvn_realty_sanitize_home_hero_carousel_count( $input ) {
+	$input = absint( $input );
+	return max( 3, min( 8, $input ) );
+}
+
+/**
+ * Sanitize hero carousel autoplay interval (2000–15000 ms).
+ *
+ * @param int|string $input Input.
+ * @return int
+ */
+function hvn_realty_sanitize_home_hero_carousel_autoplay( $input ) {
+	$input = absint( $input );
+	return max( 2000, min( 15000, $input ) );
+}
+
+/**
+ * Sanitize hero carousel transition duration (400–2000 ms).
+ *
+ * @param int|string $input Input.
+ * @return int
+ */
+function hvn_realty_sanitize_home_hero_carousel_transition( $input ) {
+	$input = absint( $input );
+	return max( 400, min( 2000, $input ) );
+}
+
+/**
+ * Sanitize hero Ken Burns zoom toggle.
+ *
+ * @param mixed $input Raw value.
+ * @return bool
+ */
+function hvn_realty_sanitize_home_hero_zoom( $input ) {
+	return (bool) $input;
+}
+
+/**
+ * Sanitize hero carousel transition effect.
+ *
+ * @param mixed $input Raw value.
+ * @return string
+ */
+function hvn_realty_sanitize_home_hero_transition_effect( $input ) {
+	$allowed = array( 'fade', 'fade_zoom', 'ken_burns', 'soft_scale' );
+	$input   = sanitize_key( (string) $input );
+	return in_array( $input, $allowed, true ) ? $input : 'fade_zoom';
+}
+
+/**
+ * Whether hero background carousel Customizer controls should display.
+ *
+ * @return bool
+ */
+function hvn_realty_customizer_hero_bg_is_carousel() {
+	return 'carousel' === get_theme_mod( 'hvn_realty_home_hero_bg_mode', 'static' );
+}
+
+/**
  * Register a homepage text control + setting.
  *
  * @param WP_Customize_Manager $wp_customize Manager.
@@ -169,7 +243,7 @@ function hvn_realty_customizer_register_homepage( $wp_customize ) {
 	$home_id  = (int) get_option( 'page_on_front', 0 );
 	$home_url = $home_id > 0 ? get_permalink( $home_id ) : home_url( '/' );
 
-	$description = esc_html__( 'Edit every section of the homepage: hero, search, why-choose, featured properties, property types, locations, agents, testimonials, blog and call to action.', 'havenlytics-realty' );
+	$description = esc_html__( 'Edit every section of the homepage: hero, search, featured properties, types, locations, map, why-choose, collections, agents, testimonials, blog and call to action.', 'havenlytics-realty' );
 	if ( $home_url ) {
 		$description .= ' ' . sprintf(
 			/* translators: %s: homepage URL */
@@ -191,10 +265,13 @@ function hvn_realty_customizer_register_homepage( $wp_customize ) {
 	$sections = array(
 		'hvn_realty_home_hero'           => array( 'title' => esc_html__( 'Hero', 'havenlytics-realty' ), 'priority' => 10 ),
 		'hvn_realty_home_search'         => array( 'title' => esc_html__( 'Search Panel', 'havenlytics-realty' ), 'priority' => 15 ),
-		'hvn_realty_home_why'            => array( 'title' => esc_html__( 'Why Choose Us', 'havenlytics-realty' ), 'priority' => 20 ),
-		'hvn_realty_home_featured'       => array( 'title' => esc_html__( 'Featured Properties', 'havenlytics-realty' ), 'priority' => 25 ),
-		'hvn_realty_home_property_types' => array( 'title' => esc_html__( 'Property Types', 'havenlytics-realty' ), 'priority' => 30 ),
-		'hvn_realty_home_locations'      => array( 'title' => esc_html__( 'Locations', 'havenlytics-realty' ), 'priority' => 35 ),
+		'hvn_realty_home_featured'       => array( 'title' => esc_html__( 'Featured Properties', 'havenlytics-realty' ), 'priority' => 18 ),
+		'hvn_realty_home_property_types' => array( 'title' => esc_html__( 'Property Types', 'havenlytics-realty' ), 'priority' => 25 ),
+		'hvn_realty_home_locations'      => array( 'title' => esc_html__( 'Locations', 'havenlytics-realty' ), 'priority' => 30 ),
+		'hvn_realty_home_map'            => array( 'title' => esc_html__( 'Property Map', 'havenlytics-realty' ), 'priority' => 33 ),
+		'hvn_realty_home_why'            => array( 'title' => esc_html__( 'Why Choose Us', 'havenlytics-realty' ), 'priority' => 35 ),
+		'hvn_realty_home_collections'    => array( 'title' => esc_html__( 'Curated Collections', 'havenlytics-realty' ), 'priority' => 36 ),
+		'hvn_realty_home_process'        => array( 'title' => esc_html__( 'How It Works', 'havenlytics-realty' ), 'priority' => 37 ),
 		'hvn_realty_home_agents'         => array( 'title' => esc_html__( 'Agents', 'havenlytics-realty' ), 'priority' => 40 ),
 		'hvn_realty_home_testimonials'   => array( 'title' => esc_html__( 'Testimonials', 'havenlytics-realty' ), 'priority' => 45 ),
 		'hvn_realty_home_blog'           => array( 'title' => esc_html__( 'Latest Blog', 'havenlytics-realty' ), 'priority' => 50 ),
@@ -257,12 +334,204 @@ function hvn_realty_customizer_register_homepage( $wp_customize ) {
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_title_highlight', $s, esc_html__( 'Title (highlighted)', 'havenlytics-realty' ), __( 'holds its value', 'havenlytics-realty' ) );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_title_after', $s, esc_html__( 'Title (after highlight)', 'havenlytics-realty' ), __( ', not just your attention.', 'havenlytics-realty' ) );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_subtitle', $s, esc_html__( 'Subtitle', 'havenlytics-realty' ), __( 'Havenlytics pairs licensed local agents with transparent market data, so every offer you make is grounded in evidence — not guesswork.', 'havenlytics-realty' ), 'textarea' );
-	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_primary_label', $s, esc_html__( 'Primary button label', 'havenlytics-realty' ), __( 'Browse Properties', 'havenlytics-realty' ) );
-	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_primary_url', $s, esc_html__( 'Primary button URL', 'havenlytics-realty' ), '#hvn-theme-home-search', 'url' );
-	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_ghost_label', $s, esc_html__( 'Secondary button label', 'havenlytics-realty' ), __( 'Meet an Agent', 'havenlytics-realty' ) );
-	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_ghost_url', $s, esc_html__( 'Secondary button URL', 'havenlytics-realty' ), '#hvn-theme-home-agents', 'url' );
+	// Legacy hero CTAs / float badge — settings preserved for BC; not rendered in Homepage 2.3 layout.
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_primary_label', $s, esc_html__( 'Primary button label (legacy)', 'havenlytics-realty' ), __( 'Browse Properties', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_primary_url', $s, esc_html__( 'Primary button URL (legacy)', 'havenlytics-realty' ), '#hvn-theme-home-search', 'url' );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_ghost_label', $s, esc_html__( 'Secondary button label (legacy)', 'havenlytics-realty' ), __( 'Meet an Agent', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_ghost_url', $s, esc_html__( 'Secondary button URL (legacy)', 'havenlytics-realty' ), '#hvn-theme-home-agents', 'url' );
 	hvn_realty_home_add_image( $wp_customize, 'hvn_realty_home_hero_image_a', $s, esc_html__( 'Hero image (large)', 'havenlytics-realty' ) );
-	hvn_realty_home_add_image( $wp_customize, 'hvn_realty_home_hero_image_b', $s, esc_html__( 'Hero image (inset)', 'havenlytics-realty' ) );
+	// image_b kept registered for backward compatibility; unused by Homepage 2.3 hero layout.
+	hvn_realty_home_add_image( $wp_customize, 'hvn_realty_home_hero_image_b', $s, esc_html__( 'Hero image (inset, unused)', 'havenlytics-realty' ) );
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_bg_mode',
+		array(
+			'default'           => 'static',
+			'sanitize_callback' => 'hvn_realty_sanitize_home_hero_bg_mode',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_bg_mode',
+		array(
+			'label'       => esc_html__( 'Hero background mode', 'havenlytics-realty' ),
+			'description' => esc_html__( 'Static uses the hero image above. Carousel pulls recent property photos.', 'havenlytics-realty' ),
+			'section'     => $s,
+			'type'        => 'select',
+			'choices'     => array(
+				'static'   => esc_html__( 'Static image', 'havenlytics-realty' ),
+				'carousel' => esc_html__( 'Property photo carousel', 'havenlytics-realty' ),
+			),
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_carousel_count',
+		array(
+			'default'           => 5,
+			'sanitize_callback' => 'hvn_realty_sanitize_home_hero_carousel_count',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_carousel_count',
+		array(
+			'label'           => esc_html__( 'Carousel slide count', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'number',
+			'input_attrs'     => array(
+				'min'  => 3,
+				'max'  => 8,
+				'step' => 1,
+			),
+			'active_callback' => 'hvn_realty_customizer_hero_bg_is_carousel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_carousel_autoplay',
+		array(
+			'default'           => 5000,
+			'sanitize_callback' => 'hvn_realty_sanitize_home_hero_carousel_autoplay',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_carousel_autoplay',
+		array(
+			'label'           => esc_html__( 'Slide duration (ms)', 'havenlytics-realty' ),
+			'description'     => esc_html__( 'How long each slide stays visible before advancing.', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'number',
+			'input_attrs'     => array(
+				'min'  => 2000,
+				'max'  => 15000,
+				'step' => 100,
+			),
+			'active_callback' => 'hvn_realty_customizer_hero_bg_is_carousel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_carousel_autoplay_enabled',
+		array(
+			'default'           => true,
+			'sanitize_callback' => 'hvn_realty_sanitize_checkbox',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_carousel_autoplay_enabled',
+		array(
+			'label'           => esc_html__( 'Autoplay', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'checkbox',
+			'active_callback' => 'hvn_realty_customizer_hero_bg_is_carousel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_carousel_transition',
+		array(
+			'default'           => 900,
+			'sanitize_callback' => 'hvn_realty_sanitize_home_hero_carousel_transition',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_carousel_transition',
+		array(
+			'label'           => esc_html__( 'Transition speed (ms)', 'havenlytics-realty' ),
+			'description'     => esc_html__( 'Duration of the fade between slides.', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'number',
+			'input_attrs'     => array(
+				'min'  => 400,
+				'max'  => 2000,
+				'step' => 50,
+			),
+			'active_callback' => 'hvn_realty_customizer_hero_bg_is_carousel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_carousel_loop',
+		array(
+			'default'           => true,
+			'sanitize_callback' => 'hvn_realty_sanitize_checkbox',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_carousel_loop',
+		array(
+			'label'           => esc_html__( 'Loop carousel', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'checkbox',
+			'active_callback' => 'hvn_realty_customizer_hero_bg_is_carousel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_carousel_pause_hover',
+		array(
+			'default'           => true,
+			'sanitize_callback' => 'hvn_realty_sanitize_checkbox',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_carousel_pause_hover',
+		array(
+			'label'           => esc_html__( 'Pause carousel on hover', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'checkbox',
+			'active_callback' => 'hvn_realty_customizer_hero_bg_is_carousel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_zoom',
+		array(
+			'default'           => true,
+			'sanitize_callback' => 'hvn_realty_sanitize_home_hero_zoom',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_zoom',
+		array(
+			'label'       => esc_html__( 'Zoom effect', 'havenlytics-realty' ),
+			'description' => esc_html__( 'Gentle cinematic zoom on the active hero background.', 'havenlytics-realty' ),
+			'section'     => $s,
+			'type'        => 'checkbox',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_hero_transition_effect',
+		array(
+			'default'           => 'fade_zoom',
+			'sanitize_callback' => 'hvn_realty_sanitize_home_hero_transition_effect',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_hero_transition_effect',
+		array(
+			'label'           => esc_html__( 'Transition effect', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'select',
+			'choices'         => array(
+				'fade'       => esc_html__( 'Fade', 'havenlytics-realty' ),
+				'fade_zoom'  => esc_html__( 'Fade + Zoom', 'havenlytics-realty' ),
+				'ken_burns'  => esc_html__( 'Ken Burns', 'havenlytics-realty' ),
+				'soft_scale' => esc_html__( 'Soft Scale', 'havenlytics-realty' ),
+			),
+			'active_callback' => 'hvn_realty_customizer_hero_bg_is_carousel',
+		)
+	);
+
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_float_title', $s, esc_html__( 'Floating badge title', 'havenlytics-realty' ), __( 'Valuation Verified', 'havenlytics-realty' ) );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_float_subtitle', $s, esc_html__( 'Floating badge subtitle', 'havenlytics-realty' ), __( 'Data-backed every listing', 'havenlytics-realty' ) );
 	$hero_stat_defaults = array(
@@ -365,6 +634,41 @@ function hvn_realty_customizer_register_homepage( $wp_customize ) {
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_locations_title', $s, esc_html__( 'Title', 'havenlytics-realty' ), __( 'Neighborhoods our agents know by heart', 'havenlytics-realty' ) );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_locations_text', $s, esc_html__( 'Description', 'havenlytics-realty' ), __( 'Every market we serve gets walked, photographed, and tracked by a local agent — not just listed.', 'havenlytics-realty' ), 'textarea' );
 
+	// --- Interactive Property Map -------------------------------------------
+	$s = 'hvn_realty_home_map';
+	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_home_show_map', $s, esc_html__( 'Show Property Map', 'havenlytics-realty' ), true, 'postMessage' );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_map_subtitle', $s, esc_html__( 'Eyebrow', 'havenlytics-realty' ), __( 'Explore The Map', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_map_title', $s, esc_html__( 'Title', 'havenlytics-realty' ), __( 'Every listing, precisely placed', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_map_text', $s, esc_html__( 'Description', 'havenlytics-realty' ), __( 'Pan the map, zoom into a block, and preview a home without leaving the page.', 'havenlytics-realty' ), 'textarea' );
+	hvn_realty_home_add_number( $wp_customize, 'hvn_realty_home_map_limit', $s, esc_html__( 'Max map markers', 'havenlytics-realty' ), 40, 'absint', array( 'min' => 5, 'max' => 100 ) );
+
+	// --- Curated Collections ------------------------------------------------
+	$s = 'hvn_realty_home_collections';
+	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_home_show_collections', $s, esc_html__( 'Show Curated Collections', 'havenlytics-realty' ), true, 'postMessage' );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_collections_subtitle', $s, esc_html__( 'Eyebrow', 'havenlytics-realty' ), __( 'Curated Collections', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_collections_title', $s, esc_html__( 'Title', 'havenlytics-realty' ), __( 'Portfolios for the particular buyer', 'havenlytics-realty' ) );
+
+	// --- How It Works / Process ---------------------------------------------
+	$s = 'hvn_realty_home_process';
+	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_home_show_process', $s, esc_html__( 'Show How It Works', 'havenlytics-realty' ), true, 'postMessage' );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_process_eyebrow', $s, esc_html__( 'Eyebrow', 'havenlytics-realty' ), __( 'How It Works', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_process_title', $s, esc_html__( 'Title', 'havenlytics-realty' ), __( 'A clearer path from search to keys', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_process_subtitle', $s, esc_html__( 'Subtitle', 'havenlytics-realty' ), __( 'Whether you are buying or selling, every step is guided by local expertise and transparent market data.', 'havenlytics-realty' ), 'textarea' );
+
+	$hvn_process_defaults = function_exists( 'hvn_realty_get_default_home_process_steps' )
+		? hvn_realty_get_default_home_process_steps()
+		: array();
+
+	for ( $hvn_pi = 1; $hvn_pi <= 4; $hvn_pi++ ) {
+		$hvn_pd = isset( $hvn_process_defaults[ $hvn_pi - 1 ] ) ? $hvn_process_defaults[ $hvn_pi - 1 ] : array( 'title' => '', 'text' => '', 'url' => '' );
+		/* translators: %d: step number */
+		hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_process_step' . $hvn_pi . '_title', $s, sprintf( esc_html__( 'Step %d title', 'havenlytics-realty' ), $hvn_pi ), $hvn_pd['title'] );
+		/* translators: %d: step number */
+		hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_process_step' . $hvn_pi . '_text', $s, sprintf( esc_html__( 'Step %d text', 'havenlytics-realty' ), $hvn_pi ), $hvn_pd['text'], 'textarea' );
+		/* translators: %d: step number */
+		hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_process_step' . $hvn_pi . '_url', $s, sprintf( esc_html__( 'Step %d URL', 'havenlytics-realty' ), $hvn_pi ), $hvn_pd['url'], 'url' );
+	}
+
 	// --- Agents -------------------------------------------------------------
 	$s = 'hvn_realty_home_agents';
 	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_home_show_agents', $s, esc_html__( 'Show Agents', 'havenlytics-realty' ), true, 'postMessage' );
@@ -421,7 +725,7 @@ function hvn_realty_customizer_register_homepage( $wp_customize ) {
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_cta_title', $s, esc_html__( 'Title', 'havenlytics-realty' ), __( 'Ready to see what your home is really worth?', 'havenlytics-realty' ) );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_cta_subtitle', $s, esc_html__( 'Subtitle', 'havenlytics-realty' ), __( 'Get a free, data-backed valuation from a local Havenlytics agent within 24 hours.', 'havenlytics-realty' ), 'textarea' );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_cta_primary_label', $s, esc_html__( 'Primary button label', 'havenlytics-realty' ), __( 'Get a Free Valuation', 'havenlytics-realty' ) );
-	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_cta_primary_url', $s, esc_html__( 'Primary button URL', 'havenlytics-realty' ), '#hvn-theme-home-footer', 'url' );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_cta_primary_url', $s, esc_html__( 'Primary button URL', 'havenlytics-realty' ), '#hvn-theme-home-agents', 'url' );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_cta_secondary_label', $s, esc_html__( 'Secondary button label', 'havenlytics-realty' ), __( 'Talk to an Agent', 'havenlytics-realty' ) );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_cta_secondary_url', $s, esc_html__( 'Secondary button URL', 'havenlytics-realty' ), '#hvn-theme-home-agents', 'url' );
 
@@ -432,6 +736,9 @@ function hvn_realty_customizer_register_homepage( $wp_customize ) {
 		'properties'   => 'hvn_realty_home_featured',
 		'types'        => 'hvn_realty_home_property_types',
 		'locations'    => 'hvn_realty_home_locations',
+		'map'          => 'hvn_realty_home_map',
+		'collections'  => 'hvn_realty_home_collections',
+		'process'      => 'hvn_realty_home_process',
 		'agents'       => 'hvn_realty_home_agents',
 		'testimonials' => 'hvn_realty_home_testimonials',
 		'blog'         => 'hvn_realty_home_blog',

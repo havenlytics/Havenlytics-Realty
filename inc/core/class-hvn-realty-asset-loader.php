@@ -136,6 +136,7 @@ class HVN_Realty_Asset_Loader {
 			'assets/css/page.css'                      => array( 'assets/css/layouts.css', 'assets/css/theme.css' ),
 			'assets/css/single.css'                    => array( 'assets/css/layouts.css', 'assets/css/theme.css' ),
 			'assets/css/home.css'                      => array( 'assets/css/theme.css' ),
+			'assets/css/home-v3.css'                   => array( 'assets/css/home.css', 'assets/css/theme.css' ),
 			'assets/css/home/mobile-search-drawer.css' => array( 'assets/css/home.css', 'assets/css/theme.css' ),
 			'assets/css/havenlytics-compat.css'        => array( 'assets/css/theme.css' ),
 			'assets/css/customizer-controls.css'     => array( 'assets/css/theme.css' ),

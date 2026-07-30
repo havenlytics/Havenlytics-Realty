@@ -18,6 +18,7 @@
 	</footer>
 </div><!-- #page -->
 
+<?php get_template_part( 'template-parts/footer/floating-contact' ); ?>
 <?php get_template_part( 'template-parts/footer/back-to-top' ); ?>
 
 <?php wp_footer(); ?>

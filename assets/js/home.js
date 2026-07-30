@@ -1,9 +1,9 @@
 /**
- * Havenlytics Realty — Homepage 2.0.0 behaviour.
+ * Havenlytics Realty — Homepage 3.0 behaviour.
  *
- * Vanilla JS only. No dependencies. Handles: sticky/transparent header,
- * mobile navigation, animated statistics, scroll reveal, search tabs,
- * testimonials slider and back-to-top.
+ * Vanilla JS only. Handles: sticky header, smooth scroll, counters,
+ * scroll reveal, search console, property department chips,
+ * testimonials slider.
  *
  * @package Havenlytics_Realty
  */
@@ -12,14 +12,20 @@
 
 	function hvnThemeStickyHeader() {
 		var header = document.getElementById( 'hvn-theme-home-header' );
+		var heroBg = document.getElementById( 'hvnRealtyHeroBg' );
 		if ( ! header ) {
 			return;
 		}
 		function onScroll() {
-			if ( window.scrollY > 40 ) {
+			var y = window.scrollY || 0;
+			if ( y > 40 ) {
 				header.classList.add( 'hvn-theme-home-scrolled' );
 			} else {
 				header.classList.remove( 'hvn-theme-home-scrolled' );
+			}
+			/* Parallax only for static hero bg — never transform the carousel slider. */
+			if ( heroBg && heroBg.classList.contains( 'hvn-realty-hero-bg' ) ) {
+				heroBg.style.transform = 'scale(1.08) translateY(' + Math.min( y * 0.12, 60 ) + 'px)';
 			}
 		}
 		window.addEventListener( 'scroll', onScroll, { passive: true } );
@@ -87,26 +93,24 @@
 	}
 
 	function hvnThemeReveal() {
-		var items = document.querySelectorAll( '.hvn-theme-home-reveal' );
+		var items = document.querySelectorAll( '.hvn-realty-reveal, .hvn-theme-home-reveal' );
 		if ( ! items.length ) {
 			return;
 		}
 		if ( ! ( 'IntersectionObserver' in window ) ) {
 			items.forEach( function ( el ) {
-				el.classList.add( 'hvn-theme-home-in-view' );
+				el.classList.add( 'hvn-realty-is-visible', 'hvn-theme-home-in-view' );
 			} );
 			return;
 		}
 		var observer = new IntersectionObserver( function ( entries ) {
-			entries.forEach( function ( entry, i ) {
+			entries.forEach( function ( entry ) {
 				if ( entry.isIntersecting ) {
-					setTimeout( function () {
-						entry.target.classList.add( 'hvn-theme-home-in-view' );
-					}, ( i % 4 ) * 80 );
+					entry.target.classList.add( 'hvn-realty-is-visible', 'hvn-theme-home-in-view' );
 					observer.unobserve( entry.target );
 				}
 			} );
-		}, { threshold: 0.15 } );
+		}, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' } );
 		items.forEach( function ( el ) {
 			observer.observe( el );
 		} );
@@ -135,10 +139,10 @@
 		tabs.forEach( function ( tab ) {
 			tab.addEventListener( 'click', function () {
 				tabs.forEach( function ( t ) {
-					t.classList.remove( 'hvn-theme-home-active' );
+					t.classList.remove( 'hvn-theme-home-active', 'hvn-realty-is-active' );
 					t.setAttribute( 'aria-selected', 'false' );
 				} );
-				tab.classList.add( 'hvn-theme-home-active' );
+				tab.classList.add( 'hvn-theme-home-active', 'hvn-realty-is-active' );
 				tab.setAttribute( 'aria-selected', 'true' );
 				if ( departmentInput ) {
 					departmentInput.value = tab.getAttribute( 'data-hvn-theme-department' ) || '';
@@ -173,250 +177,169 @@
 		var moreBtn = document.getElementById( 'hvn-theme-home-search-more' );
 		var advanced = document.getElementById( 'hvn-theme-home-search-advanced' );
 		if ( moreBtn && advanced ) {
+			function syncMobileAdvanced() {
+				var mobile = window.matchMedia( '(max-width: 980px)' ).matches;
+				if ( mobile ) {
+					advanced.hidden = false;
+					advanced.classList.add( 'hvn-realty-is-expanded', 'is-open' );
+					moreBtn.hidden = true;
+					moreBtn.setAttribute( 'aria-expanded', 'true' );
+					return;
+				}
+				moreBtn.hidden = false;
+				advanced.hidden = true;
+				advanced.classList.remove( 'hvn-realty-is-expanded', 'is-open' );
+				moreBtn.classList.remove( 'hvn-realty-is-expanded' );
+				moreBtn.setAttribute( 'aria-expanded', 'false' );
+			}
+
 			moreBtn.addEventListener( 'click', function () {
-				var isOpen = advanced.classList.toggle( 'is-open' );
+				if ( window.matchMedia( '(max-width: 980px)' ).matches ) {
+					return;
+				}
+				var isOpen = advanced.classList.toggle( 'hvn-realty-is-expanded' );
+				advanced.classList.toggle( 'is-open', isOpen );
 				advanced.hidden = ! isOpen;
+				moreBtn.classList.toggle( 'hvn-realty-is-expanded', isOpen );
 				moreBtn.setAttribute( 'aria-expanded', isOpen ? 'true' : 'false' );
 			} );
-		}
 
-		document.querySelectorAll( '[data-hvn-theme-wishlist]' ).forEach( function ( btn ) {
-			btn.addEventListener( 'click', function ( e ) {
-				e.preventDefault();
-				btn.classList.toggle( 'hvn-theme-home-active' );
-			} );
-		} );
+			syncMobileAdvanced();
+			window.addEventListener( 'resize', syncMobileAdvanced );
+		}
 	}
 
-	function hvnThemeSetTestimonialDot( dots, activeDot ) {
-		dots.forEach( function ( d ) {
-			d.classList.remove( 'hvn-theme-home-active' );
-			d.removeAttribute( 'aria-current' );
+	function hvnThemePropertyChips() {
+		var chips = document.querySelectorAll( '.hvn-realty-chip-row .hvn-realty-chip' );
+		var cards = document.querySelectorAll( '#hvnRealtyPropGrid .hvn-realty-prop-card' );
+		if ( ! chips.length || ! cards.length ) {
+			return;
+		}
+		chips.forEach( function ( chipEl ) {
+			chipEl.addEventListener( 'click', function () {
+				chips.forEach( function ( c ) {
+					c.classList.remove( 'hvn-realty-is-active' );
+					c.setAttribute( 'aria-selected', 'false' );
+				} );
+				chipEl.classList.add( 'hvn-realty-is-active' );
+				chipEl.setAttribute( 'aria-selected', 'true' );
+				var filter = chipEl.getAttribute( 'data-filter' ) || 'all';
+				cards.forEach( function ( card ) {
+					var show = filter === 'all' || card.getAttribute( 'data-cat' ) === filter;
+					card.style.display = show ? '' : 'none';
+				} );
+			} );
 		} );
-		activeDot.classList.add( 'hvn-theme-home-active' );
-		activeDot.setAttribute( 'aria-current', 'true' );
 	}
 
 	function hvnThemeTestimonials() {
-		var track = document.getElementById( 'hvn-theme-home-testimonial-track' );
-		var nav = document.querySelector( '.hvn-theme-home-testimonial-nav' );
-		if ( ! track || ! nav ) {
+		var track = document.getElementById( 'hvnRealtyTestiTrack' );
+		var nextBtn = document.getElementById( 'hvnRealtyTestiNext' );
+		var prevBtn = document.getElementById( 'hvnRealtyTestiPrev' );
+		if ( ! track ) {
 			return;
 		}
 
-		var dots = nav.querySelectorAll( '[data-hvn-theme-dot]' );
-		if ( ! dots.length ) {
+		var wrap = track.parentElement;
+		var slides = Array.prototype.slice.call( track.children );
+		if ( ! slides.length || ! wrap ) {
 			return;
 		}
 
-		if ( track._hvnTestimonialCarousel ) {
-			track._hvnTestimonialCarousel.destroy();
+		var autoplayOn = '1' === track.getAttribute( 'data-autoplay' );
+		var speed = parseInt( track.getAttribute( 'data-speed' ), 10 );
+		if ( isNaN( speed ) || speed < 2000 ) {
+			speed = 5000;
+		}
+		if ( speed > 15000 ) {
+			speed = 15000;
 		}
 
-		track._hvnTestimonialCarousel = hvnThemeCreateTestimonialCarousel( track, nav, dots );
-		track._hvnTestimonialCarousel.init();
-	}
+		var page = 0;
+		var timer = null;
+		var reduceMotion =
+			window.matchMedia &&
+			window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 
-	function hvnThemeCreateTestimonialCarousel( track, nav, dots ) {
-		var slideCount = 0;
-		var prefixCount = 0;
-		var logicalIndex = 0;
-		var physicalIndex = 0;
-		var step = 0;
-		var resizeTimer = null;
-		var onTransitionEnd = null;
-		var onNavClick = null;
-		var onResize = null;
-		var prefersReducedMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
-
-		function getOriginalSlides() {
-			return Array.prototype.filter.call( track.children, function ( slide ) {
-				return ! slide.hasAttribute( 'data-hvn-testimonial-clone' );
-			} );
+		function perView() {
+			return window.matchMedia( '(max-width: 980px)' ).matches ? 1 : 3;
 		}
 
-		function measureStep() {
-			var card = track.children[ prefixCount ];
-			if ( ! card ) {
-				return 0;
-			}
-			var styles = window.getComputedStyle( track );
-			var gap = parseFloat( styles.columnGap || styles.gap || '0' ) || 0;
-			return card.getBoundingClientRect().width + gap;
+		function pageCount() {
+			var pv = perView();
+			return Math.max( 1, Math.ceil( slides.length / pv ) );
 		}
 
-		function setPhysicalIndex( index, animate ) {
-			physicalIndex = index;
-			if ( animate && ! prefersReducedMotion ) {
-				track.style.transition = '';
-			} else {
-				track.style.transition = 'none';
-			}
-			track.style.transform = 'translate3d(' + ( -index * step ) + 'px,0,0)';
-			if ( ! animate || prefersReducedMotion ) {
-				void track.offsetHeight;
-				track.style.transition = '';
-			}
-		}
-
-		function normalizePhysicalIndex() {
-			var maxReal = prefixCount + slideCount;
-			var changed = false;
-
-			if ( physicalIndex >= maxReal ) {
-				physicalIndex -= slideCount;
-				changed = true;
-			} else if ( physicalIndex < prefixCount ) {
-				physicalIndex += slideCount;
-				changed = true;
-			}
-
-			if ( changed ) {
-				setPhysicalIndex( physicalIndex, false );
-			}
-		}
-
-		function syncDot( index ) {
-			var dot = nav.querySelector( '[data-hvn-theme-dot="' + index + '"]' );
-			if ( dot ) {
-				hvnThemeSetTestimonialDot( dots, dot );
-			}
-		}
-
-		function goToLogical( index ) {
-			if ( index < 0 || index >= slideCount || index === logicalIndex ) {
-				return;
-			}
-			logicalIndex = index;
-			setPhysicalIndex( prefixCount + logicalIndex, true );
-			syncDot( logicalIndex );
-		}
-
-		function buildClones() {
-			var originals = getOriginalSlides();
-			slideCount = originals.length;
-			prefixCount = slideCount;
-
-			if ( slideCount < 2 ) {
-				return false;
-			}
-
-			originals.forEach( function ( slide ) {
-				var appendClone = slide.cloneNode( true );
-				appendClone.setAttribute( 'data-hvn-testimonial-clone', '1' );
-				appendClone.setAttribute( 'aria-hidden', 'true' );
-				track.appendChild( appendClone );
-			} );
-
-			for ( var i = slideCount - 1; i >= 0; i-- ) {
-				var prependClone = originals[ i ].cloneNode( true );
-				prependClone.setAttribute( 'data-hvn-testimonial-clone', '1' );
-				prependClone.setAttribute( 'aria-hidden', 'true' );
-				track.insertBefore( prependClone, track.firstChild );
-			}
-
-			return true;
-		}
-
-		function removeClones() {
-			Array.prototype.slice.call( track.querySelectorAll( '[data-hvn-testimonial-clone]' ) ).forEach( function ( clone ) {
-				clone.parentNode.removeChild( clone );
-			} );
-			prefixCount = 0;
-			track.style.transition = 'none';
-			track.style.transform = '';
-			void track.offsetHeight;
-			track.style.transition = '';
-		}
-
-		function getActiveDotIndex() {
-			var active = nav.querySelector( '.hvn-theme-home-testimonial-dot.hvn-theme-home-active' );
-			if ( ! active ) {
-				return 0;
-			}
-			return parseInt( active.getAttribute( 'data-hvn-theme-dot' ), 10 ) || 0;
-		}
-
-		function bindEvents() {
-			onTransitionEnd = function ( event ) {
-				if ( event.target !== track || ( event.propertyName !== 'transform' && event.propertyName !== '-webkit-transform' ) ) {
-					return;
-				}
-				normalizePhysicalIndex();
-			};
-			track.addEventListener( 'transitionend', onTransitionEnd );
-
-			onNavClick = function ( event ) {
-				var dot = event.target.closest( '[data-hvn-theme-dot]' );
-				if ( ! dot || ! nav.contains( dot ) ) {
-					return;
-				}
-				goToLogical( parseInt( dot.getAttribute( 'data-hvn-theme-dot' ), 10 ) || 0 );
-			};
-			nav.addEventListener( 'click', onNavClick );
-
-			onResize = function () {
-				window.clearTimeout( resizeTimer );
-				resizeTimer = window.setTimeout( function () {
-					var saved = logicalIndex;
-					destroy( true );
-					init( saved );
-				}, 150 );
-			};
-			window.addEventListener( 'resize', onResize );
-		}
-
-		function unbindEvents() {
-			if ( onTransitionEnd ) {
-				track.removeEventListener( 'transitionend', onTransitionEnd );
-				onTransitionEnd = null;
-			}
-			if ( onNavClick ) {
-				nav.removeEventListener( 'click', onNavClick );
-				onNavClick = null;
-			}
-			if ( onResize ) {
-				window.removeEventListener( 'resize', onResize );
-				onResize = null;
-			}
-			window.clearTimeout( resizeTimer );
-		}
-
-		function init( startIndex ) {
-			removeClones();
-			if ( ! buildClones() ) {
+		function go( nextPage ) {
+			var pages = pageCount();
+			if ( pages < 2 ) {
+				page = 0;
+				track.style.transform = 'translate3d(0,0,0)';
 				return;
 			}
 
-			step = measureStep();
-			if ( ! step ) {
-				removeClones();
+			page = ( ( nextPage % pages ) + pages ) % pages;
+			var pv = perView();
+			var index = page * pv;
+			if ( index >= slides.length ) {
+				index = Math.max( 0, slides.length - pv );
+			}
+
+			var first = slides[ index ];
+			if ( ! first ) {
+				track.style.transform = 'translate3d(0,0,0)';
 				return;
 			}
 
-			logicalIndex = typeof startIndex === 'number' ? startIndex : getActiveDotIndex();
-			if ( logicalIndex < 0 || logicalIndex >= slideCount ) {
-				logicalIndex = 0;
-			}
-
-			physicalIndex = prefixCount + logicalIndex;
-			setPhysicalIndex( physicalIndex, false );
-			syncDot( logicalIndex );
-			bindEvents();
+			/*
+			 * Pixel offset of the page's first slide relative to the track.
+			 * Avoids translateX(%) against an oversized flex track (upgrade overflow).
+			 */
+			var offset = Math.max( 0, first.offsetLeft - track.offsetLeft );
+			track.style.transform = 'translate3d(-' + offset + 'px,0,0)';
 		}
 
-		function destroy( resetTransform ) {
-			unbindEvents();
-			removeClones();
-			if ( false !== resetTransform ) {
-				track.style.transform = '';
+		function stop() {
+			if ( timer ) {
+				window.clearInterval( timer );
+				timer = null;
 			}
 		}
 
-		return {
-			init: init,
-			destroy: destroy,
-		};
+		function start() {
+			stop();
+			if ( ! autoplayOn || reduceMotion || pageCount() < 2 ) {
+				return;
+			}
+			timer = window.setInterval( function () {
+				go( page + 1 );
+			}, speed );
+		}
+
+		if ( nextBtn && prevBtn && pageCount() > 1 ) {
+			nextBtn.addEventListener( 'click', function () {
+				go( page + 1 );
+				start();
+			} );
+			prevBtn.addEventListener( 'click', function () {
+				go( page - 1 );
+				start();
+			} );
+		} else if ( nextBtn && prevBtn ) {
+			nextBtn.hidden = true;
+			prevBtn.hidden = true;
+		}
+
+		wrap.addEventListener( 'mouseenter', stop );
+		wrap.addEventListener( 'mouseleave', start );
+
+		window.addEventListener( 'resize', function () {
+			go( page );
+			start();
+		} );
+
+		go( 0 );
+		start();
 	}
 
 	function hvnThemeHome() {
@@ -425,6 +348,7 @@
 		hvnThemeCounters();
 		hvnThemeReveal();
 		hvnThemeSearch();
+		hvnThemePropertyChips();
 		hvnThemeTestimonials();
 	}
 
@@ -434,16 +358,14 @@
 		hvnThemeHome();
 	}
 
-	/*
-	 * Re-initialise section-scoped behaviours after a Customizer selective-refresh
-	 * partial replaces a homepage section. Only behaviours bound to elements inside
-	 * the re-rendered markup are re-run; global once-bound listeners (sticky header,
-	 * smooth scroll, back-to-top) are intentionally skipped to avoid duplicates.
-	 */
 	window.hvnRealtyHomeReinit = function () {
 		hvnThemeCounters();
 		hvnThemeReveal();
 		hvnThemeSearch();
+		hvnThemePropertyChips();
 		hvnThemeTestimonials();
+		if ( typeof window.hvnRealtyHomeMapInit === 'function' ) {
+			window.hvnRealtyHomeMapInit();
+		}
 	};
 } )();

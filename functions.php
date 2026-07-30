@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'HVN_REALTY_VERSION' ) ) {
-	define( 'HVN_REALTY_VERSION', '2.1.4' );
+	define( 'HVN_REALTY_VERSION', '2.3.2' );
 }
 
 if ( ! defined( 'HVN_REALTY_TEMPLATE_URL' ) ) {
@@ -531,6 +531,7 @@ if ( file_exists( $theme_loader ) ) {
 }
 
 hvn_realty_load_theme_file( 'inc/design-tokens.php', false );
+hvn_realty_load_theme_file( 'inc/floating-contact.php', false );
 hvn_realty_load_theme_file( 'inc/core/release-manifest.php', false );
 hvn_realty_load_theme_file( 'inc/core/class-hvn-realty-theme-integrity.php', false );
 hvn_realty_load_theme_file( 'inc/core/class-hvn-realty-asset-loader.php', false );

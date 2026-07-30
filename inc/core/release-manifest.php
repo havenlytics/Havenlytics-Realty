@@ -127,6 +127,8 @@ function hvn_realty_get_release_manifest() {
 		'template-parts/footer/social-links.php'         => 'partials',
 		'template-parts/footer/site-info.php'            => 'partials',
 		'template-parts/footer/back-to-top.php'          => 'partials',
+		'template-parts/footer/floating-contact.php'     => 'partials',
+		'inc/floating-contact.php'                       => 'core-inc',
 		'template-parts/layout/blog-content.php'         => 'partials',
 		'template-parts/layout/page-heading.php'         => 'partials',
 		'templates/blog/content-grid.php'                => 'partials',
@@ -167,6 +169,7 @@ function hvn_realty_get_release_manifest() {
 		'template-parts/home/section-properties.php'     => 'homepage',
 		'template-parts/home/section-types.php'          => 'homepage',
 		'template-parts/home/section-locations.php'      => 'homepage',
+		'template-parts/home/section-process.php'        => 'homepage',
 		'template-parts/home/section-agents.php'         => 'homepage',
 		'template-parts/home/section-testimonials.php'   => 'homepage',
 		'template-parts/home/section-blog.php'           => 'homepage',
@@ -195,8 +198,9 @@ function hvn_realty_get_release_manifest() {
 		'assets/css/havenlytics-compat.css'              => 'assets-css',
 		'assets/css/customizer-controls.css'             => 'assets-css',
 
-		// Homepage 2.0.0 stylesheet.
+		// Homepage shell + 3.0 section chrome.
 		'assets/css/home.css'                            => 'assets-css',
+		'assets/css/home-v3.css'                         => 'assets-css',
 		'assets/css/home/mobile-search-drawer.css'       => 'assets-css',
 
 		// Core JS.
@@ -210,6 +214,9 @@ function hvn_realty_get_release_manifest() {
 		'assets/js/customizer-search-builder-control.js' => 'assets-js',
 		'assets/js/customizer-why-control.js'            => 'assets-js',
 		'assets/js/home.js'                              => 'assets-js',
+		'assets/js/home-hero.js'                         => 'assets-js',
+		'assets/js/floating-contact.js'                  => 'assets-js',
+		'assets/css/floating-contact.css'                => 'assets-css',
 		'assets/js/home/mobile-search-drawer.js'         => 'assets-js',
 		'assets/js/admin-realty-onboarding.js'           => 'assets-js',
 		'search.php'                                     => 'templates',

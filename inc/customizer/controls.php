@@ -18,14 +18,17 @@ function hvn_realty_get_customizer_home_section_selectors() {
 	return array(
 		'hvn_realty_home_hero'           => '#hvn-theme-home-hero',
 		'hvn_realty_home_search'         => '#hvn-theme-home-search',
-		'hvn_realty_home_why'            => '.hvn-theme-home-why',
+		'hvn_realty_home_why'            => '#hvn-theme-home-why',
 		'hvn_realty_home_featured'       => '#hvn-theme-home-properties',
 		'hvn_realty_home_property_types' => '#hvn-theme-home-types',
 		'hvn_realty_home_locations'      => '#hvn-theme-home-locations',
+		'hvn_realty_home_map'            => '#hvn-theme-home-map',
+		'hvn_realty_home_collections'    => '#hvn-theme-home-collections',
+		'hvn_realty_home_process'        => '#hvn-theme-home-process',
 		'hvn_realty_home_agents'         => '#hvn-theme-home-agents',
 		'hvn_realty_home_testimonials'   => '#hvn-theme-home-testimonials',
 		'hvn_realty_home_blog'           => '#hvn-theme-home-blog',
-		'hvn_realty_home_cta'            => '.hvn-theme-home-cta',
+		'hvn_realty_home_cta'            => '#hvn-theme-home-cta',
 	);
 }
 
@@ -38,14 +41,17 @@ function hvn_realty_get_customizer_home_section_visibility_map() {
 	return array(
 		'hvn_realty_home_show_hero'         => '#hvn-theme-home-hero',
 		'hvn_realty_home_show_search'       => '#hvn-theme-home-search',
-		'hvn_realty_home_show_why'          => '.hvn-theme-home-why',
+		'hvn_realty_home_show_why'          => '#hvn-theme-home-why',
 		'hvn_realty_home_show_properties'   => '#hvn-theme-home-properties',
 		'hvn_realty_home_show_types'        => '#hvn-theme-home-types',
 		'hvn_realty_home_show_locations'    => '#hvn-theme-home-locations',
+		'hvn_realty_home_show_map'          => '#hvn-theme-home-map',
+		'hvn_realty_home_show_collections'  => '#hvn-theme-home-collections',
+		'hvn_realty_home_show_process'      => '#hvn-theme-home-process',
 		'hvn_realty_home_show_agents'       => '#hvn-theme-home-agents',
 		'hvn_realty_home_show_testimonials' => '#hvn-theme-home-testimonials',
 		'hvn_realty_home_show_blog'         => '#hvn-theme-home-blog',
-		'hvn_realty_home_show_cta'          => '.hvn-theme-home-cta',
+		'hvn_realty_home_show_cta'          => '#hvn-theme-home-cta',
 	);
 }
 

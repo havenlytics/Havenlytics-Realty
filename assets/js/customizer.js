@@ -208,23 +208,49 @@
 		];
 
 		function updateHeroTitle() {
-			var h1 = document.querySelector( '#hvn-theme-home-hero h1' );
+			var h1 = document.querySelector( '#hvn-theme-home-hero-title' )
+				|| document.querySelector( '#hvn-theme-home-hero h1' );
 			if ( ! h1 ) {
 				return;
 			}
 
-			var before = wp.customize( 'hvn_realty_home_hero_title_before' ) ? wp.customize( 'hvn_realty_home_hero_title_before' ).get() : '';
-			var highlight = wp.customize( 'hvn_realty_home_hero_title_highlight' ) ? wp.customize( 'hvn_realty_home_hero_title_highlight' ).get() : '';
-			var after = wp.customize( 'hvn_realty_home_hero_title_after' ) ? wp.customize( 'hvn_realty_home_hero_title_after' ).get() : '';
-
-			h1.textContent = '';
-			h1.appendChild( document.createTextNode( before || '' ) );
-			if ( highlight ) {
-				var em = document.createElement( 'em' );
-				em.textContent = highlight;
-				h1.appendChild( em );
+			var beforeSetting = wp.customize( 'hvn_realty_home_hero_title_before' );
+			var highlightSetting = wp.customize( 'hvn_realty_home_hero_title_highlight' );
+			var afterSetting = wp.customize( 'hvn_realty_home_hero_title_after' );
+			if ( ! beforeSetting || ! highlightSetting || ! afterSetting ) {
+				return;
 			}
-			h1.appendChild( document.createTextNode( after || '' ) );
+
+			var before = String( beforeSetting.get() || '' );
+			var highlight = String( highlightSetting.get() || '' );
+			var after = String( afterSetting.get() || '' );
+
+			// Never wipe the heading to an empty node — keep at least a non-breaking space for layout.
+			if ( ! before && ! highlight && ! after ) {
+				return;
+			}
+
+			var frag = document.createDocumentFragment();
+			if ( before ) {
+				frag.appendChild( document.createTextNode( before + ( highlight || after ? ' ' : '' ) ) );
+			}
+			if ( highlight ) {
+				var accent = document.createElement( 'span' );
+				accent.className = 'hvn-realty-accent-serif';
+				accent.textContent = highlight;
+				frag.appendChild( accent );
+			}
+			if ( after ) {
+				frag.appendChild( document.createTextNode( after ) );
+			}
+
+			while ( h1.firstChild ) {
+				h1.removeChild( h1.firstChild );
+			}
+			h1.appendChild( frag );
+			if ( ! h1.id ) {
+				h1.id = 'hvn-theme-home-hero-title';
+			}
 		}
 
 		ids.forEach( function ( settingId ) {
@@ -236,7 +262,8 @@
 			} );
 		} );
 
-		updateHeroTitle();
+		// Do not call updateHeroTitle() on boot — that wiped the server-rendered H1
+		// when preview values were not ready yet.
 	}
 
 	function bindHeroButtonsPreview() {
@@ -288,12 +315,12 @@
 		[ 1, 2, 3 ].forEach( function ( n ) {
 			bindTextPreview(
 				'hvn_realty_home_hero_stat' + n + '_label',
-				'#hvn-theme-home-hero .hvn-theme-home-hero__stat:nth-child(' + n + ') span'
+				'#hvn-theme-home-hero .hvn-realty-hero-stat:nth-child(' + n + ') span'
 			);
 			if ( wp.customize( 'hvn_realty_home_hero_stat' + n + '_suffix' ) ) {
 				wp.customize( 'hvn_realty_home_hero_stat' + n + '_suffix', function ( value ) {
 					value.bind( function ( to ) {
-						var strong = document.querySelector( '#hvn-theme-home-hero .hvn-theme-home-hero__stat:nth-child(' + n + ') strong' );
+						var strong = document.querySelector( '#hvn-theme-home-hero .hvn-realty-hero-stat:nth-child(' + n + ') b' );
 						if ( strong ) {
 							strong.setAttribute( 'data-hvn-theme-suffix', to || '' );
 						}
@@ -312,14 +339,14 @@
 
 			if ( primaryLabel && primaryUrl ) {
 				setLink(
-					'.hvn-theme-home-cta__actions .hvn-theme-home-btn--gold',
-					resolveThemeLink( primaryUrl.get(), '#hvn-theme-home-footer' ),
+					'#hvn-theme-home-cta .hvn-realty-btn-gold',
+					resolveThemeLink( primaryUrl.get(), '#hvn-theme-home-agents' ),
 					primaryLabel.get()
 				);
 			}
 			if ( secondaryLabel && secondaryUrl ) {
 				setLink(
-					'.hvn-theme-home-cta__actions .hvn-theme-home-btn--ghost',
+					'#hvn-theme-home-cta .hvn-realty-btn-outline-light',
 					resolveThemeLink( secondaryUrl.get(), '#hvn-theme-home-agents' ),
 					secondaryLabel.get()
 				);
@@ -345,26 +372,34 @@
 
 	function bindHomeTextFields() {
 		var bindings = {
-			hvn_realty_home_hero_eyebrow: '#hvn-theme-home-hero .hvn-theme-home-eyebrow',
-			hvn_realty_home_hero_subtitle: '#hvn-theme-home-hero .hvn-theme-home-hero__copy > p',
+			hvn_realty_home_hero_eyebrow: '#hvn-theme-home-hero .hvn-realty-eyebrow-text',
+			hvn_realty_home_hero_subtitle: '#hvn-theme-home-hero .hvn-realty-hero-sub',
 			hvn_realty_home_featured_title: '#hvn-theme-home-properties-title',
-			hvn_realty_home_featured_subtitle: '#hvn-theme-home-properties .hvn-theme-home-eyebrow',
-			hvn_realty_home_why_eyebrow: '#hvn-theme-home-why .hvn-theme-home-eyebrow',
+			hvn_realty_home_featured_subtitle: '#hvn-theme-home-properties .hvn-realty-eyebrow-text',
+			hvn_realty_home_why_eyebrow: '#hvn-theme-home-why .hvn-realty-eyebrow-text',
 			hvn_realty_home_why_title: '#hvn-theme-home-why-title',
-			hvn_realty_home_why_subtitle: '#hvn-theme-home-why .hvn-theme-home-head p',
+			hvn_realty_home_why_subtitle: '#hvn-theme-home-why .hvn-realty-section-head > p',
 			hvn_realty_home_locations_title: '#hvn-theme-home-locations-title',
-			hvn_realty_home_locations_subtitle: '#hvn-theme-home-locations .hvn-theme-home-eyebrow',
-			hvn_realty_home_locations_text: '#hvn-theme-home-locations .hvn-theme-home-head p',
+			hvn_realty_home_locations_subtitle: '#hvn-theme-home-locations .hvn-realty-eyebrow-text',
+			hvn_realty_home_locations_text: '#hvn-theme-home-locations .hvn-realty-section-head > p',
+			hvn_realty_home_map_title: '#hvn-theme-home-map-title',
+			hvn_realty_home_map_subtitle: '#hvn-theme-home-map .hvn-realty-eyebrow-text',
+			hvn_realty_home_map_text: '#hvn-theme-home-map .hvn-realty-section-head > p',
+			hvn_realty_home_collections_title: '#hvn-theme-home-collections-title',
+			hvn_realty_home_collections_subtitle: '#hvn-theme-home-collections .hvn-realty-eyebrow-text',
 			hvn_realty_home_agents_title: '#hvn-theme-home-agents-title',
-			hvn_realty_home_agents_subtitle: '#hvn-theme-home-agents .hvn-theme-home-eyebrow',
+			hvn_realty_home_agents_subtitle: '#hvn-theme-home-agents .hvn-realty-eyebrow-text',
 			hvn_realty_home_blog_title: '#hvn-theme-home-blog-title',
-			hvn_realty_home_blog_subtitle: '#hvn-theme-home-blog .hvn-theme-home-eyebrow',
+			hvn_realty_home_blog_subtitle: '#hvn-theme-home-blog .hvn-realty-eyebrow-text',
 			hvn_realty_home_property_types_title: '#hvn-theme-home-types-title',
-			hvn_realty_home_property_types_subtitle: '#hvn-theme-home-types .hvn-theme-home-eyebrow',
+			hvn_realty_home_property_types_subtitle: '#hvn-theme-home-types .hvn-realty-eyebrow-text',
 			hvn_realty_home_testimonials_title: '#hvn-theme-home-testimonials-title',
-			hvn_realty_home_testimonials_subtitle: '#hvn-theme-home-testimonials .hvn-theme-home-eyebrow',
+			hvn_realty_home_testimonials_subtitle: '#hvn-theme-home-testimonials .hvn-realty-eyebrow-text',
 			hvn_realty_home_cta_title: '#hvn-theme-home-cta-title',
-			hvn_realty_home_cta_subtitle: '#hvn-theme-home-cta .hvn-theme-home-cta__copy p',
+			hvn_realty_home_cta_subtitle: '#hvn-theme-home-cta .hvn-realty-cta-inner > p',
+			hvn_realty_home_process_eyebrow: '#hvn-theme-home-process .hvn-theme-home-eyebrow',
+			hvn_realty_home_process_title: '#hvn-theme-home-process-title',
+			hvn_realty_home_process_subtitle: '#hvn-theme-home-process .hvn-theme-home-head p',
 		};
 
 		Object.keys( bindings ).forEach( function ( settingId ) {
@@ -422,7 +457,7 @@
 
 			wp.customize( prefix + '_animate', function ( value ) {
 				value.bind( function ( to ) {
-					var rules = to ? '' : 'body.hvn-theme-home ' + selector + ' .hvn-theme-home-reveal{opacity:1;transform:none}';
+					var rules = to ? '' : 'body.hvn-theme-home ' + selector + ' .hvn-realty-reveal,body.hvn-theme-home ' + selector + ' .hvn-theme-home-reveal{opacity:1;transform:none}';
 					setStyle( 'hvn-realty-home-style-' + slug + '-animate', rules );
 				} );
 			} );
@@ -895,21 +930,22 @@
 			} );
 		} );
 
+		// Legacy CTA setting IDs (pre-3.0) → live Homepage 3.0 markup.
 		wp.customize( 'hvn_realty_home_cta_headline', function ( value ) {
 			value.bind( function ( to ) {
-				setText( '#hvn-realty-cta-title', to );
+				setText( '#hvn-theme-home-cta-title', to );
 			} );
 		} );
 
 		wp.customize( 'hvn_realty_home_cta_primary_text', function ( value ) {
 			value.bind( function ( to ) {
-				setText( '.hvn-realty-home-cta__primary', to );
+				setText( '#hvn-theme-home-cta .hvn-realty-btn-gold', to );
 			} );
 		} );
 
 		wp.customize( 'hvn_realty_home_cta_subtext', function ( value ) {
 			value.bind( function ( to ) {
-				setText( '.hvn-realty-cta__text', to );
+				setText( '#hvn-theme-home-cta .hvn-realty-cta-inner > p', to );
 			} );
 		} );
 
@@ -922,7 +958,7 @@
 				height = Math.max( 40, Math.min( 100, height ) );
 				setStyle(
 					'hvn-realty-hero-height',
-					'.hvn-realty-section--hero{--hvn-realty-hero-height:' + height + 'vh;}'
+					'body.hvn-theme-home .hvn-realty-hero{--hvn-realty-hero-height:' + height + 'vh;min-height:var(--hvn-realty-hero-height);}'
 				);
 				if ( typeof window.hvnRealtyInvalidateHomeMap === 'function' ) {
 					window.setTimeout( window.hvnRealtyInvalidateHomeMap, 50 );
@@ -940,7 +976,7 @@
 				height = Math.max( 40, Math.min( 100, height ) );
 				setStyle(
 					'hvn-realty-hero-height-mobile',
-					'.hvn-realty-section--hero{--hvn-realty-hero-height-mobile:' + height + 'vh;}'
+					'@media(max-width:768px){body.hvn-theme-home .hvn-realty-hero{--hvn-realty-hero-height-mobile:' + height + 'vh;min-height:var(--hvn-realty-hero-height-mobile);}}'
 				);
 				if ( typeof window.hvnRealtyInvalidateHomeMap === 'function' ) {
 					window.setTimeout( window.hvnRealtyInvalidateHomeMap, 50 );
@@ -997,7 +1033,7 @@
 
 			setStyle(
 				'hvn-realty-hero-search-position',
-				'.hvn-realty-section--hero-has-search{'
+				'.hvn-realty-search-section,.hvn-realty-search-console,.hvn-realty-section--hero-has-search{'
 					+ '--hvn-realty-hero-search-justify:' + justify + ';'
 					+ '--hvn-realty-hero-search-align:' + align + ';'
 					+ '--hvn-realty-hero-search-offset-x:' + offsetX + 'px;'
@@ -1204,7 +1240,7 @@
 			target.classList.remove( 'hvn-realty-customizer-highlight' );
 		}, 1600 );
 
-		if ( '#hvn-realty-section-hero' === selector && typeof window.hvnRealtyInvalidateHomeMap === 'function' ) {
+		if ( '#hvn-theme-home-hero' === selector && typeof window.hvnRealtyInvalidateHomeMap === 'function' ) {
 			window.setTimeout( window.hvnRealtyInvalidateHomeMap, 350 );
 		}
 	}

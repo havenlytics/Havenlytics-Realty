@@ -16,16 +16,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function hvn_realty_get_home_section_registry() {
 	$registry = array(
-		'hero'          => __( 'Hero', 'havenlytics-realty' ),
-		'search'        => __( 'Search Panel', 'havenlytics-realty' ),
-		'why'           => __( 'Why Choose Us', 'havenlytics-realty' ),
-		'properties'    => __( 'Featured Properties', 'havenlytics-realty' ),
-		'types'         => __( 'Property Types', 'havenlytics-realty' ),
-		'locations'     => __( 'Locations', 'havenlytics-realty' ),
-		'agents'        => __( 'Agents', 'havenlytics-realty' ),
-		'testimonials'  => __( 'Testimonials', 'havenlytics-realty' ),
-		'blog'          => __( 'Latest Blog', 'havenlytics-realty' ),
-		'cta'           => __( 'Call to Action', 'havenlytics-realty' ),
+		'hero'         => __( 'Hero', 'havenlytics-realty' ),
+		'search'       => __( 'Search Panel', 'havenlytics-realty' ),
+		'properties'   => __( 'Featured Properties', 'havenlytics-realty' ),
+		'types'        => __( 'Property Types', 'havenlytics-realty' ),
+		'locations'    => __( 'Locations', 'havenlytics-realty' ),
+		'map'          => __( 'Property Map', 'havenlytics-realty' ),
+		'why'          => __( 'Why Choose Us', 'havenlytics-realty' ),
+		'collections'  => __( 'Curated Collections', 'havenlytics-realty' ),
+		'agents'       => __( 'Agents', 'havenlytics-realty' ),
+		'testimonials' => __( 'Testimonials', 'havenlytics-realty' ),
+		'blog'         => __( 'Latest Blog', 'havenlytics-realty' ),
+		'cta'          => __( 'Call to Action', 'havenlytics-realty' ),
+		'process'      => __( 'How It Works', 'havenlytics-realty' ),
 	);
 
 	/**
@@ -91,14 +94,17 @@ function hvn_realty_get_home_section_css_selector( $slug ) {
 	$map = array(
 		'hero'         => '#hvn-theme-home-hero',
 		'search'       => '#hvn-theme-home-search-form',
-		'why'          => '.hvn-theme-home-why',
+		'why'          => '#hvn-theme-home-why',
 		'properties'   => '#hvn-theme-home-properties',
 		'types'        => '#hvn-theme-home-types',
 		'locations'    => '#hvn-theme-home-locations',
+		'map'          => '#hvn-theme-home-map',
+		'collections'  => '#hvn-theme-home-collections',
+		'process'      => '#hvn-theme-home-process',
 		'agents'       => '#hvn-theme-home-agents',
 		'testimonials' => '#hvn-theme-home-testimonials',
 		'blog'         => '#hvn-theme-home-blog',
-		'cta'          => '.hvn-theme-home-cta',
+		'cta'          => '#hvn-theme-home-cta',
 	);
 
 	return isset( $map[ $slug ] ) ? $map[ $slug ] : '';
@@ -330,7 +336,7 @@ function hvn_realty_get_homepage_sections_custom_css() {
 		}
 
 		if ( ! $animate ) {
-			$rules[] = 'body.hvn-theme-home ' . $selector . ' .hvn-theme-home-reveal{opacity:1;transform:none}';
+			$rules[] = 'body.hvn-theme-home ' . $selector . ' .hvn-realty-reveal,body.hvn-theme-home ' . $selector . ' .hvn-theme-home-reveal{opacity:1;transform:none}';
 		}
 	}
 
@@ -353,6 +359,9 @@ function hvn_realty_output_homepage_sections_custom_css() {
 	}
 
 	wp_add_inline_style( 'hvn-realty-home', $css );
+	if ( wp_style_is( 'hvn-realty-home-v3', 'registered' ) || wp_style_is( 'hvn-realty-home-v3', 'enqueued' ) ) {
+		wp_add_inline_style( 'hvn-realty-home-v3', $css );
+	}
 }
 // Priority 30 ensures this runs AFTER the hvn-realty-home stylesheet is enqueued
 // (hvn_realty_enqueue_havenlytics_assets, priority 25). wp_add_inline_style()
@@ -372,6 +381,9 @@ function hvn_realty_customizer_preview_homepage_section_css() {
 	}
 
 	wp_add_inline_style( 'hvn-realty-home', $css );
+	if ( wp_style_is( 'hvn-realty-home-v3', 'registered' ) || wp_style_is( 'hvn-realty-home-v3', 'enqueued' ) ) {
+		wp_add_inline_style( 'hvn-realty-home-v3', $css );
+	}
 }
 add_action( 'customize_preview_init', 'hvn_realty_customizer_preview_homepage_section_css', 25 );
 
@@ -569,4 +581,67 @@ function hvn_realty_get_home_why_items() {
 	}
 
 	return ! empty( $legacy ) ? $legacy : $defaults;
+}
+
+/**
+ * Default How It Works steps for the homepage Process section.
+ *
+ * @return array<int, array<string, string>>
+ */
+function hvn_realty_get_default_home_process_steps() {
+	return array(
+		array(
+			'title' => __( 'Search with clarity', 'havenlytics-realty' ),
+			'text'  => __( 'Filter by lifestyle, budget, and neighborhood using live listing data — not outdated scrapes.', 'havenlytics-realty' ),
+			'url'   => '#hvn-theme-home-search',
+		),
+		array(
+			'title' => __( 'Tour with confidence', 'havenlytics-realty' ),
+			'text'  => __( 'Meet a vetted local agent who walks you through comps, condition, and true market position.', 'havenlytics-realty' ),
+			'url'   => '#hvn-theme-home-agents',
+		),
+		array(
+			'title' => __( 'Offer with evidence', 'havenlytics-realty' ),
+			'text'  => __( 'Ground every offer in transparent valuation signals so you never bid blind.', 'havenlytics-realty' ),
+			'url'   => '',
+		),
+		array(
+			'title' => __( 'Close with care', 'havenlytics-realty' ),
+			'text'  => __( 'From contract to keys, stay guided by specialists who treat the process like their own.', 'havenlytics-realty' ),
+			'url'   => '',
+		),
+	);
+}
+
+/**
+ * Resolve Process steps from theme_mods (4 fixed steps) with defaults.
+ *
+ * @return array<int, array<string, string>>
+ */
+function hvn_realty_get_home_process_steps() {
+	$defaults = hvn_realty_get_default_home_process_steps();
+	$steps    = array();
+
+	for ( $i = 1; $i <= 4; $i++ ) {
+		$default = isset( $defaults[ $i - 1 ] ) ? $defaults[ $i - 1 ] : array(
+			'title' => '',
+			'text'  => '',
+			'url'   => '',
+		);
+		$title   = (string) get_theme_mod( 'hvn_realty_home_process_step' . $i . '_title', $default['title'] );
+		$text    = (string) get_theme_mod( 'hvn_realty_home_process_step' . $i . '_text', $default['text'] );
+		$url     = (string) get_theme_mod( 'hvn_realty_home_process_step' . $i . '_url', $default['url'] );
+
+		if ( '' === $title && '' === $text ) {
+			continue;
+		}
+
+		$steps[] = array(
+			'title' => $title,
+			'text'  => $text,
+			'url'   => $url,
+		);
+	}
+
+	return $steps;
 }

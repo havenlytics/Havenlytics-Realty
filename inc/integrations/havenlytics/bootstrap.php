@@ -23,6 +23,7 @@ $integration_files = array(
 	'hero-search.php',
 	'mobile-search-drawer.php',
 	'homepage.php',
+	'homepage-v3.php',
 	'homepage-assets.php',
 	'breadcrumbs.php',
 	'body-classes.php',

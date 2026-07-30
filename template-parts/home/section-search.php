@@ -1,8 +1,6 @@
 <?php
 /**
- * Homepage 2.0.3 — Property search panel (overlaps hero).
- *
- * Fields render from the Search Builder configuration (theme_mod).
+ * Homepage 3.0 — Search console.
  *
  * @package Havenlytics_Realty
  */
@@ -46,8 +44,8 @@ $hvn_department_tabs = function_exists( 'hvn_realty_get_home_search_department_t
 	? hvn_realty_get_home_search_department_tabs()
 	: array();
 
-$hvn_default_department  = '';
-$hvn_default_dept_count  = null;
+$hvn_default_department = '';
+$hvn_default_dept_count = null;
 foreach ( $hvn_department_tabs as $hvn_tab ) {
 	if ( ! empty( $hvn_tab['is_default'] ) ) {
 		$hvn_default_department = isset( $hvn_tab['department'] ) ? (string) $hvn_tab['department'] : '';
@@ -60,9 +58,6 @@ $hvn_has_advanced = function_exists( 'hvn_realty_home_search_has_advanced_fields
 	? hvn_realty_home_search_has_advanced_fields()
 	: false;
 
-// Listing count shown beneath the tabs reflects the active Department. It starts
-// on the default tab's count and is updated client-side as tabs change. When no
-// Department taxonomy is available, fall back to the total published count.
 if ( null !== $hvn_default_dept_count ) {
 	$hvn_listing_count = (int) $hvn_default_dept_count;
 } else {
@@ -72,80 +67,105 @@ if ( null !== $hvn_default_dept_count ) {
 		$hvn_listing_count = isset( $hvn_counts->publish ) ? (int) $hvn_counts->publish : 0;
 	}
 }
-?>
-<div class="hvn-theme-home-container">
-	<div class="hvn-theme-home-search-wrap hvn-theme-home-reveal" id="hvn-theme-home-search">
-		<form class="hvn-theme-home-search" id="hvn-theme-home-search-form" action="<?php echo esc_url( $hvn_search_url ); ?>" method="get" aria-label="<?php esc_attr_e( 'Property search', 'havenlytics-realty' ); ?>">
-			<input type="hidden" name="department" id="hvn-theme-home-search-department" value="<?php echo esc_attr( $hvn_default_department ); ?>">
-			<input type="hidden" name="view_type" value="grid">
-			<input type="hidden" name="paged" value="1">
 
-			<div class="hvn-theme-home-search__tabrow">
-				<div class="hvn-theme-home-search__tabs" role="tablist" aria-label="<?php esc_attr_e( 'Listing type', 'havenlytics-realty' ); ?>">
-					<?php foreach ( $hvn_department_tabs as $hvn_tab_key => $hvn_tab ) : ?>
-						<?php
-						$hvn_is_active  = ! empty( $hvn_tab['is_default'] );
-						$hvn_dept_slug  = isset( $hvn_tab['department'] ) ? (string) $hvn_tab['department'] : '';
-						$hvn_dept_count = isset( $hvn_tab['count'] ) ? (int) $hvn_tab['count'] : 0;
-						?>
-						<button
-							type="button"
-							class="hvn-theme-home-search__tab<?php echo $hvn_is_active ? ' hvn-theme-home-active' : ''; ?>"
-							data-hvn-theme-tab="<?php echo esc_attr( $hvn_tab_key ); ?>"
-							data-hvn-theme-department="<?php echo esc_attr( $hvn_dept_slug ); ?>"
-							data-hvn-theme-count="<?php echo esc_attr( (string) $hvn_dept_count ); ?>"
-							role="tab"
-							aria-selected="<?php echo $hvn_is_active ? 'true' : 'false'; ?>"
-						><?php echo esc_html( $hvn_tab['label'] ); ?></button>
-					<?php endforeach; ?>
-				</div>
-				<?php if ( $hvn_has_advanced ) : ?>
-					<button type="button" class="hvn-theme-home-search__more" id="hvn-theme-home-search-more" aria-expanded="false" aria-controls="hvn-theme-home-search-advanced">
-						<span><?php esc_html_e( 'More Filters', 'havenlytics-realty' ); ?></span>
-						<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-					</button>
-				<?php endif; ?>
+/**
+ * Simple department tab icon for the search console.
+ *
+ * @param string $slug Department slug.
+ * @return string
+ */
+$hvn_realty_search_tab_icon = static function ( $slug ) {
+	$slug = sanitize_key( (string) $slug );
+	if ( false !== strpos( $slug, 'rent' ) ) {
+		return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
+	}
+	if ( false !== strpos( $slug, 'sell' ) ) {
+		return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>';
+	}
+	return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9v11h14V9"/></svg>';
+};
+?>
+<section id="hvn-theme-home-search" class="hvn-realty-search-section" aria-label="<?php esc_attr_e( 'Property search', 'havenlytics-realty' ); ?>">
+<div class="hvn-realty-wrap hvn-realty-search-console">
+	<form id="hvn-theme-home-search-form" action="<?php echo esc_url( $hvn_search_url ); ?>" method="get" aria-label="<?php esc_attr_e( 'Property search', 'havenlytics-realty' ); ?>">
+		<input type="hidden" name="department" id="hvn-theme-home-search-department" value="<?php echo esc_attr( $hvn_default_department ); ?>">
+		<input type="hidden" name="view_type" value="grid">
+		<input type="hidden" name="paged" value="1">
+
+		<div class="hvn-realty-console-card hvn-realty-reveal">
+		<?php if ( ! empty( $hvn_department_tabs ) ) : ?>
+			<div class="hvn-realty-console-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Listing type', 'havenlytics-realty' ); ?>">
+				<?php foreach ( $hvn_department_tabs as $hvn_tab_key => $hvn_tab ) : ?>
+					<?php
+					$hvn_is_active  = ! empty( $hvn_tab['is_default'] );
+					$hvn_dept_slug  = isset( $hvn_tab['department'] ) ? (string) $hvn_tab['department'] : '';
+					$hvn_dept_count = isset( $hvn_tab['count'] ) ? (int) $hvn_tab['count'] : 0;
+					$hvn_tab_class  = 'hvn-realty-is-active hvn-theme-home-active';
+					?>
+					<button
+						type="button"
+						class="<?php echo $hvn_is_active ? esc_attr( $hvn_tab_class ) : ''; ?>"
+						data-hvn-theme-tab="<?php echo esc_attr( $hvn_tab_key ); ?>"
+						data-hvn-theme-department="<?php echo esc_attr( $hvn_dept_slug ); ?>"
+						data-hvn-theme-count="<?php echo esc_attr( (string) $hvn_dept_count ); ?>"
+						role="tab"
+						aria-selected="<?php echo $hvn_is_active ? 'true' : 'false'; ?>"
+					><?php echo $hvn_realty_search_tab_icon( $hvn_dept_slug ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $hvn_tab['label'] ); ?></button>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+
+		<div class="hvn-realty-console-body">
+			<div class="hvn-realty-console-fields">
+				<?php
+				foreach ( $hvn_fields_config as $hvn_field_row ) {
+					if ( empty( $hvn_field_row['enabled'] ) || 'primary' !== $hvn_field_row['zone'] ) {
+						continue;
+					}
+					if ( function_exists( 'hvn_realty_render_home_search_field' ) ) {
+						hvn_realty_render_home_search_field( $hvn_field_row, $hvn_render_context );
+					}
+				}
+				?>
 			</div>
 
-			<?php
-			foreach ( $hvn_fields_config as $hvn_field_row ) {
-				if ( empty( $hvn_field_row['enabled'] ) || 'primary' !== $hvn_field_row['zone'] ) {
-					continue;
-				}
-				if ( function_exists( 'hvn_realty_render_home_search_field' ) ) {
-					hvn_realty_render_home_search_field( $hvn_field_row, $hvn_render_context );
-				}
-			}
-			?>
-
-			<button type="submit" class="hvn-theme-home-btn hvn-theme-home-btn--primary hvn-theme-home-search__submit"><?php esc_html_e( 'Search', 'havenlytics-realty' ); ?></button>
-
 			<?php if ( $hvn_has_advanced ) : ?>
-				<div class="hvn-theme-home-search__advanced" id="hvn-theme-home-search-advanced" hidden>
-					<?php
-					foreach ( $hvn_fields_config as $hvn_field_row ) {
-						if ( empty( $hvn_field_row['enabled'] ) || 'advanced' !== $hvn_field_row['zone'] ) {
-							continue;
+				<div class="hvn-realty-adv-panel" id="hvn-theme-home-search-advanced" hidden>
+					<div class="hvn-realty-adv-inner">
+						<?php
+						foreach ( $hvn_fields_config as $hvn_field_row ) {
+							if ( empty( $hvn_field_row['enabled'] ) || 'advanced' !== $hvn_field_row['zone'] ) {
+								continue;
+							}
+							if ( function_exists( 'hvn_realty_render_home_search_field' ) ) {
+								hvn_realty_render_home_search_field( $hvn_field_row, $hvn_render_context );
+							}
 						}
-						if ( function_exists( 'hvn_realty_render_home_search_field' ) ) {
-							hvn_realty_render_home_search_field( $hvn_field_row, $hvn_render_context );
-						}
-					}
-					?>
+						?>
+					</div>
 				</div>
 			<?php endif; ?>
 
-			<?php if ( $hvn_listing_count > 0 || ! empty( $hvn_department_tabs ) ) : ?>
-				<p class="hvn-theme-home-search__note">
-					<?php
-					printf(
-						/* translators: %s: number of listings. */
-						esc_html__( 'Searching %s verified listings updated this week.', 'havenlytics-realty' ),
-						'<b data-hvn-theme-search-count>' . esc_html( number_format_i18n( $hvn_listing_count ) ) . '</b>'
-					);
-					?>
-				</p>
+			<div class="hvn-realty-search-submit">
+				<button type="submit" aria-label="<?php esc_attr_e( 'Search', 'havenlytics-realty' ); ?>">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+				</button>
+			</div>
+		</div>
+
+		<div class="hvn-realty-console-foot">
+			<div class="hvn-realty-match-count">
+				<span class="hvn-realty-pulse"></span>
+				<b data-hvn-theme-search-count><?php echo esc_html( number_format_i18n( $hvn_listing_count ) ); ?></b>&nbsp;<?php esc_html_e( 'homes match these filters', 'havenlytics-realty' ); ?>
+			</div>
+			<?php if ( $hvn_has_advanced ) : ?>
+				<button type="button" class="hvn-realty-adv-toggle" id="hvn-theme-home-search-more" aria-expanded="false" aria-controls="hvn-theme-home-search-advanced">
+					<?php esc_html_e( 'Advanced Filters', 'havenlytics-realty' ); ?>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+				</button>
 			<?php endif; ?>
-		</form>
-	</div>
+		</div>
+		</div>
+	</form>
 </div>
+</section>

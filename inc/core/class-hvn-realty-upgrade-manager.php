@@ -31,6 +31,8 @@ class HVN_Realty_Upgrade_Manager {
 		'1.23.0' => array( 'HVN_Realty_Migrations', 'migrate_1230_active_starter_option' ),
 		'2.0.5'  => array( 'HVN_Realty_Migrations', 'migrate_2050_homepage_sections' ),
 		'2.0.6'  => array( 'HVN_Realty_Migrations', 'migrate_2060_visibility_recovery' ),
+		'2.3.0'  => array( 'HVN_Realty_Migrations', 'migrate_230_homepage_v3' ),
+		'2.3.1'  => array( 'HVN_Realty_Migrations', 'migrate_231_testimonials_slider' ),
 	);
 
 	/**
@@ -128,6 +130,15 @@ class HVN_Realty_Upgrade_Manager {
 			return;
 		}
 
+		// Clamp preview builds that briefly used a higher package version (e.g. 3.0.0)
+		// so the release candidate version remains authoritative.
+		if ( version_compare( $installed_version, $current_version, '>' ) ) {
+			self::run_pending_migrations( '2.2.0', $current_version );
+			update_option( self::VERSION_OPTION, $current_version, false );
+
+			return;
+		}
+
 		if ( version_compare( $installed_version, $current_version, '>=' ) ) {
 			return;
 		}
@@ -143,7 +154,7 @@ class HVN_Realty_Upgrade_Manager {
 	 * @return void
 	 */
 	private static function maybe_run_patch_migrations() {
-		$patch_migrations = array( '2.0.5', '2.0.6' );
+		$patch_migrations = array( '2.0.5', '2.0.6', '2.3.0', '2.3.1' );
 
 		foreach ( $patch_migrations as $migration_version ) {
 			if ( ! isset( self::$migrations[ $migration_version ] ) ) {
@@ -186,6 +197,26 @@ class HVN_Realty_Upgrade_Manager {
 				&& ! HVN_Realty_Migrations::should_run_visibility_recovery()
 			) {
 				return 'Skipped: no miswritten homepage visibility keys.';
+			}
+
+			return null;
+		}
+
+		if ( '2.3.0' === $migration_version ) {
+			if ( is_callable( array( 'HVN_Realty_Migrations', 'should_run_homepage_v3_migration' ) )
+				&& ! HVN_Realty_Migrations::should_run_homepage_v3_migration()
+			) {
+				return 'Skipped: homepage already on 2.3 layout or fresh install.';
+			}
+
+			return null;
+		}
+
+		if ( '2.3.1' === $migration_version ) {
+			if ( is_callable( array( 'HVN_Realty_Migrations', 'should_run_testimonials_slider_migration' ) )
+				&& ! HVN_Realty_Migrations::should_run_testimonials_slider_migration()
+			) {
+				return 'Skipped: testimonial slider settings already normalized.';
 			}
 
 			return null;
