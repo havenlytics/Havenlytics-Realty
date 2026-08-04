@@ -418,6 +418,7 @@ function hvn_realty_maybe_enqueue_favorites_assets( $should ) {
 	return false;
 }
 add_filter( 'hvnly_favorites_should_enqueue', 'hvn_realty_maybe_enqueue_favorites_assets' );
+add_filter( 'hvnly_compare_should_enqueue', 'hvn_realty_maybe_enqueue_favorites_assets' );
 
 /**
  * Enqueue Font Awesome (plugin) + lightweight header account script when needed.

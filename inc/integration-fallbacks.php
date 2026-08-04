@@ -481,6 +481,23 @@ if ( ! function_exists( 'hvn_realty_get_property_departments' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hvn_realty_get_theme_mod_text' ) ) {
+	/**
+	 * @param string $key     Theme mod key.
+	 * @param string $default Fallback.
+	 * @return string
+	 */
+	function hvn_realty_get_theme_mod_text( $key, $default = '' ) {
+		$value = get_theme_mod( $key, null );
+
+		if ( null === $value || '' === trim( (string) $value ) ) {
+			return (string) $default;
+		}
+
+		return (string) $value;
+	}
+}
+
 if ( ! function_exists( 'hvn_realty_get_home_section_title' ) ) {
 	/**
 	 * @param string $section Section key.
@@ -488,8 +505,9 @@ if ( ! function_exists( 'hvn_realty_get_home_section_title' ) ) {
 	 * @return string
 	 */
 	function hvn_realty_get_home_section_title( $section, $default ) {
-		unset( $section );
-		return (string) $default;
+		$key = 'hvn_realty_home_' . sanitize_key( $section ) . '_title';
+
+		return hvn_realty_get_theme_mod_text( $key, $default );
 	}
 }
 
@@ -500,8 +518,9 @@ if ( ! function_exists( 'hvn_realty_get_home_section_subtitle' ) ) {
 	 * @return string
 	 */
 	function hvn_realty_get_home_section_subtitle( $section, $default ) {
-		unset( $section );
-		return (string) $default;
+		$key = 'hvn_realty_home_' . sanitize_key( $section ) . '_subtitle';
+
+		return hvn_realty_get_theme_mod_text( $key, $default );
 	}
 }
 

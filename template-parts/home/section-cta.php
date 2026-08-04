@@ -9,20 +9,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$hvn_title    = (string) get_theme_mod( 'hvn_realty_home_cta_title', __( 'Ready to see what your home is really worth?', 'havenlytics-realty' ) );
-$hvn_subtitle = (string) get_theme_mod( 'hvn_realty_home_cta_subtitle', __( 'Get a free, data-backed valuation from a local Havenlytics agent within 24 hours.', 'havenlytics-realty' ) );
-$hvn_p_label  = (string) get_theme_mod( 'hvn_realty_home_cta_primary_label', __( 'Get a Free Valuation', 'havenlytics-realty' ) );
+$hvn_title    = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_cta_title', __( 'Ready to see what your home is really worth?', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_cta_title', __( 'Ready to see what your home is really worth?', 'havenlytics-realty' ) );
+$hvn_subtitle = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_cta_subtitle', __( 'Get a free, data-backed valuation from a local Havenlytics agent within 24 hours.', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_cta_subtitle', __( 'Get a free, data-backed valuation from a local Havenlytics agent within 24 hours.', 'havenlytics-realty' ) );
+$hvn_p_label  = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_cta_primary_label', __( 'Get a Free Valuation', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_cta_primary_label', __( 'Get a Free Valuation', 'havenlytics-realty' ) );
 $hvn_p_url    = (string) get_theme_mod( 'hvn_realty_home_cta_primary_url', '#hvn-theme-home-agents' );
-$hvn_s_label  = (string) get_theme_mod( 'hvn_realty_home_cta_secondary_label', __( 'Talk to an Agent', 'havenlytics-realty' ) );
+$hvn_s_label  = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_cta_secondary_label', __( 'Talk to an Agent', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_cta_secondary_label', __( 'Talk to an Agent', 'havenlytics-realty' ) );
 $hvn_s_url    = (string) get_theme_mod( 'hvn_realty_home_cta_secondary_url', '#hvn-theme-home-agents' );
 
 if ( '#hvn-theme-home-footer' === $hvn_p_url ) {
 	$hvn_p_url = '#hvn-theme-home-agents';
 }
 
-if ( '' === $hvn_title && '' === $hvn_subtitle ) {
-	return;
-}
+// Never hide CTA because Customizer fields were cleared — restore defaults above.
 
 $hvn_bg_url = '';
 if ( function_exists( 'hvn_realty_get_home_cta_bg_image_id' ) ) {

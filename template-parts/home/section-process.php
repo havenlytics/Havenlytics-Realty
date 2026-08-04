@@ -13,13 +13,22 @@ $hvn_steps = function_exists( 'hvn_realty_get_home_process_steps' )
 	? hvn_realty_get_home_process_steps()
 	: array();
 
-if ( empty( $hvn_steps ) ) {
+if ( empty( $hvn_steps ) && ! is_customize_preview() ) {
 	return;
 }
+if ( ! is_array( $hvn_steps ) ) {
+	$hvn_steps = array();
+}
 
-$hvn_eyebrow  = (string) get_theme_mod( 'hvn_realty_home_process_eyebrow', __( 'How It Works', 'havenlytics-realty' ) );
-$hvn_title    = (string) get_theme_mod( 'hvn_realty_home_process_title', __( 'A clearer path from search to keys', 'havenlytics-realty' ) );
-$hvn_subtitle = (string) get_theme_mod( 'hvn_realty_home_process_subtitle', __( 'Whether you are buying or selling, every step is guided by local expertise and transparent market data.', 'havenlytics-realty' ) );
+$hvn_eyebrow  = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_process_eyebrow', __( 'How It Works', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_process_eyebrow', __( 'How It Works', 'havenlytics-realty' ) );
+$hvn_title    = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_process_title', __( 'A clearer path from search to keys', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_process_title', __( 'A clearer path from search to keys', 'havenlytics-realty' ) );
+$hvn_subtitle = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_process_subtitle', __( 'Whether you are buying or selling, every step is guided by local expertise and transparent market data.', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_process_subtitle', __( 'Whether you are buying or selling, every step is guided by local expertise and transparent market data.', 'havenlytics-realty' ) );
 ?>
 <section class="hvn-theme-home-section hvn-theme-home-process" id="hvn-theme-home-process" aria-labelledby="hvn-theme-home-process-title">
 	<div class="hvn-theme-home-container">

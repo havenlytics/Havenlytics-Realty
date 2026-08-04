@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Havenlytics Realty package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Havenlytics Realty 2.3.2\n"
+"Project-Id-Version: Havenlytics Realty 2.3.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/havenlytics-realty\n"
-"POT-Creation-Date: 2026-07-02 20:38:14+0000\n"
+"POT-Creation-Date: 2026-08-04 17:00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2584,4 +2584,136 @@ msgstr ""
 
 #: inc/customizer/helpers.php:585
 msgid "YouTube"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:624
+msgid "Section Description"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:637
+msgid "Property Source"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:638
+msgid "All Properties is the default. Featured Only shows curated listings. Selected Departments filters by taxonomy."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:642
+msgid "All Properties"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:643
+msgid "Featured Properties Only"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:644
+msgid "Selected Departments"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:663
+msgid "Property Departments"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:664
+msgid "Used when Property Source is Selected Departments (filters the grid), or when Tab Source is Selected Departments (filters tabs only). Leave empty to include all departments."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:674
+msgid "Maximum Properties"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-featured.php:68
+msgid "Newest"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-featured.php:69
+msgid "Oldest"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-featured.php:71
+msgid "Random"
+msgstr ""
+
+#: inc/integrations/havenlytics/homepage-featured.php:73
+msgid "Menu Order"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:707
+msgid "Order"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:708
+msgid "Used for Price, Title, and Menu Order. Newest/Oldest set their own direction."
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:712
+msgid "Descending"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:713
+msgid "Ascending"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:718
+msgid "Enable Filter Tabs"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:731
+msgid "Hide Empty Department Tabs"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:749
+msgid "Tab Source"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:753
+msgid "All Departments"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:771
+msgid "Active Tab"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:776
+msgid "First Department"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:782
+msgid "Desktop Columns"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:783
+msgid "Tablet Columns"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:784
+msgid "Mobile Columns"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:786
+msgid "Show View All Button"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:787
+msgid "View All Button Text"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:788
+msgid "View All Button URL"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:537
+msgid "Floating badge title (legacy)"
+msgstr ""
+
+#: inc/customizer/sections-homepage.php:538
+msgid "Floating badge subtitle (legacy)"
+msgstr ""
+
+#: inc/customizer/class-hvn-realty-term-checklist-control.php:103
+msgid "No departments found. Add Property Department terms in Havenlytics."
+msgstr ""
+
+#: template-parts/home/section-properties.php:305
+msgid "No properties match the current Featured Properties settings."
 msgstr ""

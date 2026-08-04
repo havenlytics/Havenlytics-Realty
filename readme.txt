@@ -5,7 +5,7 @@ Tags: two-columns, right-sidebar, custom-logo, custom-menu, featured-images, ful
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.3.2
+Stable tag: 2.3.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,18 +39,24 @@ The plugin is the property engine. It registers properties, agents, and agencies
 
 = Real estate homepage (Havenlytics plugin active) =
 
-Eight sections, each toggleable in **Appearance → Customize → Real Estate Homepage**:
+Toggleable sections in **Appearance → Customize → Real Estate Homepage** (order is customizable):
 
-1. **Hero map** — Interactive property map with Customizer department filtering and adjustable height (desktop/mobile)
-2. **Featured properties** — Curated listing carousel (featured meta)
-3. **Properties by department** — Tabbed grids per department (Sale, Rent, Let, Commercial, etc.)
-4. **Browse Properties** — Configurable taxonomy cards (locations, types, features, status, badges, or tags)
-5. **Agents** — Agent directory carousel
-6. **Agencies** — Agency directory carousel
-7. **Latest blog posts** — Content marketing section (core WordPress posts)
-8. **Call to action** — Search and agent discovery prompts
+1. **Hero** — Headline, stats, static image or property photo carousel
+2. **Search Panel** — Department tabs and searchable filters (Search Builder)
+3. **Featured Properties** — Listing grid with optional department tabs; source can be all listings, featured-only, or selected departments
+4. **Property Types** — Browse-by-type cards
+5. **Locations** — Featured location cards
+6. **Property Map** — Interactive map of listings
+7. **Why Choose Us** — Feature repeater
+8. **Curated Collections** — Highlighted listing portfolios
+9. **How It Works** — Process steps
+10. **Agents** — Agent directory cards
+11. **Testimonials** — Client stories carousel
+12. **Latest Blog** — Recent posts
+13. **Call to Action** — Conversion banner with buttons
 
 **Header search:** The search icon opens a property search panel (keyword, type, location, bedrooms, bathrooms, min/max price) that submits to the plugin Property Search page.
+**Mobile:** Optional Mobile Search Drawer for phone-friendly filtering.
 
 = Havenlytics plugin integration =
 
@@ -205,6 +211,24 @@ Recommended WordPress.org screenshot set (accurate to the product):
 8. **Mobile homepage** — Responsive map hero and listing cards
 
 == Changelog ==
+
+= 2.3.4 - August 4, 2026 =
+* IMPROVED: Featured Properties defaults to all published listings (Featured Only remains available in Customizer).
+* NEW: Featured Properties source modes — All Properties, Featured Only, Selected Departments (multi-select).
+* NEW: Featured Properties controls for order, columns, filter tabs, description, and View All button.
+* IMPROVED: Department filter tabs support multi-term listings, keyboard navigation, and hide-empty options.
+* FIXED: Search Panel spacing/background Customizer styles now target the full search section.
+* IMPROVED: Homepage description in readme matches the current section set.
+* IMPROVED: Backward compatible — existing theme_mod keys preserved; legacy Hero controls retained and labeled.
+
+= 2.3.3 - August 1, 2026 =
+* FIXED: Homepage migration compatibility for existing installations.
+* FIXED: Customizer synchronization across homepage sections.
+* FIXED: Cases where homepage sections could become empty after Customizer updates.
+* FIXED: Featured Properties title and permalink falling back to the global WordPress post instead of the queried listing.
+* IMPROVED: Backward compatibility for upgraded sites.
+* IMPROVED: Homepage rendering reliability and Customizer consistency.
+* IMPROVED: Theme update reliability and production stability.
 
 = 2.3.2 - July 30, 2026 =
 * IMPROVED: Hero search shows every enabled Search Builder field on tablet and mobile (stacked; no collapsed/advanced-only hide).
@@ -556,6 +580,12 @@ Havenlytics Realty Theme is distributed under the terms of the GNU GPL.
 * **Author:** https://profiles.wordpress.org/havenlytics/
 
 == Upgrade Notice ==
+
+= 2.3.4 =
+Recommended update: Featured Properties source modes (all / featured / departments), improved tabs and Customizer controls, and Search Panel style targeting fix. Existing settings preserved. Fully backward compatible.
+
+= 2.3.3 =
+Recommended update: production stability release — homepage Customizer/migration reliability and Featured Properties title/permalink fix. Existing settings preserved. Fully backward compatible.
 
 = 2.3.2 =
 Recommended update: full mobile hero search fields, refined hero slider/nav, and a new floating contact action menu. Fully backward compatible.

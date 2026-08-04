@@ -93,7 +93,7 @@ function hvn_realty_sanitize_home_section_order( $value ) {
 function hvn_realty_get_home_section_css_selector( $slug ) {
 	$map = array(
 		'hero'         => '#hvn-theme-home-hero',
-		'search'       => '#hvn-theme-home-search-form',
+		'search'       => '#hvn-theme-home-search',
 		'why'          => '#hvn-theme-home-why',
 		'properties'   => '#hvn-theme-home-properties',
 		'types'        => '#hvn-theme-home-types',

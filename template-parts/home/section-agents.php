@@ -26,7 +26,7 @@ $hvn_query = new WP_Query(
 	)
 );
 
-if ( ! $hvn_query->have_posts() ) {
+if ( ! $hvn_query->have_posts() && ! is_customize_preview() ) {
 	wp_reset_postdata();
 	return;
 }
@@ -49,7 +49,8 @@ $hvn_email_svg    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 			while ( $hvn_query->have_posts() ) :
 				$hvn_query->the_post();
 				$hvn_id       = get_the_ID();
-				$hvn_name     = get_the_title();
+				$hvn_name     = get_the_title( $hvn_id );
+				$hvn_permalink = get_permalink( $hvn_id );
 				$hvn_position = (string) get_post_meta( $hvn_id, '_hvnly_agent_position', true );
 				$hvn_company  = (string) get_post_meta( $hvn_id, '_hvnly_agent_company', true );
 				$hvn_role     = $hvn_position ? $hvn_position : $hvn_company;
@@ -94,8 +95,8 @@ $hvn_email_svg    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 				?>
 				<div class="hvn-realty-agent-card hvn-realty-reveal">
 					<div class="hvn-realty-agent-photo">
-						<?php if ( has_post_thumbnail() ) : ?>
-							<?php the_post_thumbnail( 'medium_large', array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => esc_attr( $hvn_name ) ) ); ?>
+						<?php if ( has_post_thumbnail( $hvn_id ) ) : ?>
+							<?php echo get_the_post_thumbnail( $hvn_id, 'medium_large', array( 'loading' => 'lazy', 'decoding' => 'async', 'alt' => esc_attr( $hvn_name ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core escapes attributes. ?>
 						<?php endif; ?>
 						<?php if ( $hvn_linkedin || $hvn_email ) : ?>
 							<div class="hvn-realty-agent-social">
@@ -109,7 +110,7 @@ $hvn_email_svg    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 						<?php endif; ?>
 					</div>
 					<div class="hvn-realty-agent-info">
-						<h3><a href="<?php the_permalink(); ?>"><?php echo esc_html( $hvn_name ); ?></a></h3>
+						<h3><a href="<?php echo esc_url( $hvn_permalink ); ?>"><?php echo esc_html( $hvn_name ); ?></a></h3>
 						<?php if ( $hvn_role ) : ?>
 							<div class="hvn-realty-agent-role"><?php echo esc_html( $hvn_role ); ?></div>
 						<?php endif; ?>

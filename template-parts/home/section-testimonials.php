@@ -36,9 +36,15 @@ if ( ! function_exists( 'hvn_realty_get_home_testimonials' ) ) {
 
 $hvn_items = hvn_realty_get_home_testimonials();
 
-if ( empty( $hvn_items ) || ! is_array( $hvn_items ) ) {
+if ( ( empty( $hvn_items ) || ! is_array( $hvn_items ) ) && ! is_customize_preview() ) {
 
 	return;
+
+}
+
+if ( ! is_array( $hvn_items ) ) {
+
+	$hvn_items = array();
 
 }
 

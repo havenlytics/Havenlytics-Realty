@@ -52,6 +52,7 @@ function hvn_realty_get_optional_customizer_control_files() {
 		'class-hvn-realty-section-order-control.php',
 		'class-hvn-realty-search-builder-control.php',
 		'class-hvn-realty-why-control.php',
+		'class-hvn-realty-term-checklist-control.php',
 	);
 }
 

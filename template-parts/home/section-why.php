@@ -10,8 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $hvn_why_items = function_exists( 'hvn_realty_get_home_why_items' ) ? hvn_realty_get_home_why_items() : array();
-if ( empty( $hvn_why_items ) || ! is_array( $hvn_why_items ) ) {
+if ( ( empty( $hvn_why_items ) || ! is_array( $hvn_why_items ) ) && ! is_customize_preview() ) {
 	return;
+}
+if ( ! is_array( $hvn_why_items ) ) {
+	$hvn_why_items = array();
 }
 ?>
 <section id="hvn-theme-home-why" aria-labelledby="hvn-theme-home-why-title">
@@ -20,11 +23,15 @@ if ( empty( $hvn_why_items ) || ! is_array( $hvn_why_items ) ) {
 			<div class="hvn-realty-section-head hvn-realty-reveal">
 				<?php
 				if ( function_exists( 'hvn_realty_render_home_eyebrow' ) ) {
-					hvn_realty_render_home_eyebrow( (string) get_theme_mod( 'hvn_realty_home_why_eyebrow', __( 'Why Havenlytics', 'havenlytics-realty' ) ) );
+					hvn_realty_render_home_eyebrow(
+						function_exists( 'hvn_realty_get_theme_mod_text' )
+							? hvn_realty_get_theme_mod_text( 'hvn_realty_home_why_eyebrow', __( 'Why Havenlytics', 'havenlytics-realty' ) )
+							: (string) get_theme_mod( 'hvn_realty_home_why_eyebrow', __( 'Why Havenlytics', 'havenlytics-realty' ) )
+					);
 				}
 				?>
-				<h2 id="hvn-theme-home-why-title"><?php echo esc_html( get_theme_mod( 'hvn_realty_home_why_title', __( 'Real estate, grounded in evidence', 'havenlytics-realty' ) ) ); ?></h2>
-				<p><?php echo esc_html( get_theme_mod( 'hvn_realty_home_why_subtitle', __( 'We combine licensed local expertise with continuously updated market data, so you always know what a home is actually worth.', 'havenlytics-realty' ) ) ); ?></p>
+				<h2 id="hvn-theme-home-why-title"><?php echo esc_html( function_exists( 'hvn_realty_get_theme_mod_text' ) ? hvn_realty_get_theme_mod_text( 'hvn_realty_home_why_title', __( 'Real estate, grounded in evidence', 'havenlytics-realty' ) ) : (string) get_theme_mod( 'hvn_realty_home_why_title', __( 'Real estate, grounded in evidence', 'havenlytics-realty' ) ) ); ?></h2>
+				<p><?php echo esc_html( function_exists( 'hvn_realty_get_theme_mod_text' ) ? hvn_realty_get_theme_mod_text( 'hvn_realty_home_why_subtitle', __( 'We combine licensed local expertise with continuously updated market data, so you always know what a home is actually worth.', 'havenlytics-realty' ) ) : (string) get_theme_mod( 'hvn_realty_home_why_subtitle', __( 'We combine licensed local expertise with continuously updated market data, so you always know what a home is actually worth.', 'havenlytics-realty' ) ) ); ?></p>
 			</div>
 			<div class="hvn-realty-why-grid">
 				<?php

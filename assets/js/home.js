@@ -212,24 +212,87 @@
 	function hvnThemePropertyChips() {
 		var chips = document.querySelectorAll( '.hvn-realty-chip-row .hvn-realty-chip' );
 		var cards = document.querySelectorAll( '#hvnRealtyPropGrid .hvn-realty-prop-card' );
+		var grid = document.getElementById( 'hvnRealtyPropGrid' );
 		if ( ! chips.length || ! cards.length ) {
 			return;
 		}
-		chips.forEach( function ( chipEl ) {
+
+		var chipList = Array.prototype.slice.call( chips );
+
+		function cardMatches( card, filter ) {
+			if ( filter === 'all' ) {
+				return true;
+			}
+			var cats = ( card.getAttribute( 'data-cat' ) || '' ).split( /\s+/ );
+			return cats.indexOf( filter ) !== -1;
+		}
+
+		function setCardVisible( card, show ) {
+			card.style.display = show ? '' : 'none';
+			if ( show ) {
+				card.removeAttribute( 'hidden' );
+			} else {
+				card.setAttribute( 'hidden', 'hidden' );
+			}
+		}
+
+		function activateChip( chipEl, focus ) {
+			chipList.forEach( function ( c ) {
+				var on = c === chipEl;
+				c.classList.toggle( 'hvn-realty-is-active', on );
+				c.setAttribute( 'aria-selected', on ? 'true' : 'false' );
+				c.setAttribute( 'tabindex', on ? '0' : '-1' );
+			} );
+			var filter = chipEl.getAttribute( 'data-filter' ) || 'all';
+			cards.forEach( function ( card ) {
+				setCardVisible( card, cardMatches( card, filter ) );
+			} );
+			if ( focus ) {
+				chipEl.focus();
+			}
+		}
+
+		chipList.forEach( function ( chipEl, index ) {
 			chipEl.addEventListener( 'click', function () {
-				chips.forEach( function ( c ) {
-					c.classList.remove( 'hvn-realty-is-active' );
-					c.setAttribute( 'aria-selected', 'false' );
-				} );
-				chipEl.classList.add( 'hvn-realty-is-active' );
-				chipEl.setAttribute( 'aria-selected', 'true' );
-				var filter = chipEl.getAttribute( 'data-filter' ) || 'all';
-				cards.forEach( function ( card ) {
-					var show = filter === 'all' || card.getAttribute( 'data-cat' ) === filter;
-					card.style.display = show ? '' : 'none';
-				} );
+				activateChip( chipEl, false );
+			} );
+
+			chipEl.addEventListener( 'keydown', function ( event ) {
+				var key = event.key;
+				var nextIndex = index;
+
+				if ( key === 'ArrowRight' || key === 'ArrowDown' ) {
+					event.preventDefault();
+					nextIndex = ( index + 1 ) % chipList.length;
+				} else if ( key === 'ArrowLeft' || key === 'ArrowUp' ) {
+					event.preventDefault();
+					nextIndex = ( index - 1 + chipList.length ) % chipList.length;
+				} else if ( key === 'Home' ) {
+					event.preventDefault();
+					nextIndex = 0;
+				} else if ( key === 'End' ) {
+					event.preventDefault();
+					nextIndex = chipList.length - 1;
+				} else if ( key === 'Enter' || key === ' ' ) {
+					event.preventDefault();
+					activateChip( chipEl, false );
+					return;
+				} else {
+					return;
+				}
+
+				activateChip( chipList[ nextIndex ], true );
 			} );
 		} );
+
+		// Apply initial filter from server (Active Tab = First Department).
+		var initial = grid ? ( grid.getAttribute( 'data-hvn-initial-filter' ) || 'all' ) : 'all';
+		var initialChip = chipList.filter( function ( c ) {
+			return ( c.getAttribute( 'data-filter' ) || '' ) === initial;
+		} )[ 0 ] || chipList[ 0 ];
+		if ( initialChip ) {
+			activateChip( initialChip, false );
+		}
 	}
 
 	function hvnThemeTestimonials() {

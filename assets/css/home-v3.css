@@ -533,9 +533,33 @@ body.hvn-theme-home .hvn-realty-chip:hover{ border-color:var(--hvn-realty-forest
 body.hvn-theme-home .hvn-realty-chip.hvn-realty-is-active{ background:var(--hvn-realty-forest-800); color:var(--hvn-realty-white); border-color:var(--hvn-realty-forest-800); }
 
 /* ============ PROPERTY GRID ============ */
-body.hvn-theme-home .hvn-realty-prop-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:26px; margin-top:36px; }
-@media(max-width:980px){ body.hvn-theme-home .hvn-realty-prop-grid{ grid-template-columns:repeat(2,1fr); } }
-@media(max-width:640px){ body.hvn-theme-home .hvn-realty-prop-grid{ grid-template-columns:1fr; } }
+body.hvn-theme-home #hvn-theme-home-properties{ padding-top:88px; }
+body.hvn-theme-home .hvn-realty-prop-grid{
+  display:grid;
+  grid-template-columns:repeat(var(--hvn-prop-cols-d, 3), 1fr);
+  gap:26px;
+  margin-top:36px;
+}
+@media(max-width:980px){
+  body.hvn-theme-home .hvn-realty-prop-grid{ grid-template-columns:repeat(var(--hvn-prop-cols-t, 2), 1fr); }
+}
+@media(max-width:640px){
+  body.hvn-theme-home .hvn-realty-prop-grid{ grid-template-columns:repeat(var(--hvn-prop-cols-m, 1), 1fr); }
+}
+body.hvn-theme-home .hvn-realty-section-desc{
+  margin:12px 0 0;
+  max-width:42rem;
+  color:var(--hvn-realty-ink-600, #4a5560);
+  font-size:1rem;
+  line-height:1.6;
+}
+body.hvn-theme-home .hvn-realty-prop-empty{
+  grid-column:1 / -1;
+  margin:0;
+  padding:28px 16px;
+  text-align:center;
+  color:var(--hvn-realty-ink-600, #4a5560);
+}
 
 body.hvn-theme-home .hvn-realty-prop-card{
   background:var(--hvn-realty-white); border-radius:var(--hvn-realty-radius-lg); overflow:hidden; box-shadow:var(--hvn-realty-shadow-sm);
@@ -555,19 +579,39 @@ body.hvn-theme-home .hvn-realty-prop-badge.hvn-realty-badge-new{ background:rgba
 body.hvn-theme-home .hvn-realty-prop-badge.hvn-realty-badge-open{ background:rgba(201,161,91,0.94); color:var(--hvn-realty-forest-900); }
 body.hvn-theme-home .hvn-realty-prop-badge.hvn-realty-badge-exclusive{ background:rgba(27,58,47,0.92); }
 body.hvn-theme-home .hvn-theme-home-main button.hvn-realty-fav-btn,
-body.hvn-theme-home button.hvn-realty-fav-btn{
-  position:absolute; top:14px; right:14px; width:42px; height:42px; min-width:42px; min-height:42px; border-radius:50%;
+body.hvn-theme-home button.hvn-realty-fav-btn,
+body.hvn-theme-home .hvn-theme-home-main button.hvnly-property--grid-list--compare,
+body.hvn-theme-home button.hvnly-property--grid-list--compare,
+body.hvn-theme-home .hvn-theme-home-main button.hvn-realty-cmp-btn,
+body.hvn-theme-home button.hvn-realty-cmp-btn{
+  position:absolute; top:14px; width:42px; height:42px; min-width:42px; min-height:42px; border-radius:50%;
   background:#fff !important; display:flex; align-items:center; justify-content:center;
   box-shadow:0 8px 20px rgba(15,36,29,0.18), 0 1px 3px rgba(15,36,29,0.08);
   transition:transform .3s var(--hvn-realty-ease), box-shadow .3s var(--hvn-realty-ease), background .25s;
-  z-index:3;
+  z-index:3; padding:0; border:none; color:var(--hvn-realty-forest-800);
 }
+body.hvn-theme-home .hvn-theme-home-main button.hvn-realty-fav-btn,
+body.hvn-theme-home button.hvn-realty-fav-btn{ right:14px; }
+body.hvn-theme-home .hvn-theme-home-main button.hvnly-property--grid-list--compare,
+body.hvn-theme-home button.hvnly-property--grid-list--compare,
+body.hvn-theme-home .hvn-theme-home-main button.hvn-realty-cmp-btn,
+body.hvn-theme-home button.hvn-realty-cmp-btn{ right:64px; }
 body.hvn-theme-home .hvn-realty-fav-btn svg{ width:18px; height:18px; color:var(--hvn-realty-forest-800); transition:all .25s; }
+body.hvn-theme-home .hvnly-property--grid-list--compare .hvnly-compare-toggle__icon::before,
+body.hvn-theme-home .hvn-realty-cmp-btn .hvnly-compare-toggle__icon::before{
+  content:'⇄'; font-size:16px; line-height:1; color:var(--hvn-realty-forest-800);
+}
 body.hvn-theme-home .hvn-theme-home-main button.hvn-realty-fav-btn:hover,
-body.hvn-theme-home button.hvn-realty-fav-btn:hover{
+body.hvn-theme-home button.hvn-realty-fav-btn:hover,
+body.hvn-theme-home .hvn-theme-home-main button.hvnly-property--grid-list--compare:hover,
+body.hvn-theme-home button.hvnly-property--grid-list--compare:hover,
+body.hvn-theme-home .hvn-theme-home-main button.hvn-realty-cmp-btn:hover,
+body.hvn-theme-home button.hvn-realty-cmp-btn:hover{
   background:#fff !important; transform:scale(1.08); box-shadow:0 12px 26px rgba(15,36,29,0.22);
 }
-body.hvn-theme-home .hvn-realty-fav-btn:focus-visible{ outline:2px solid var(--hvn-realty-gold-500); outline-offset:2px; }
+body.hvn-theme-home .hvn-realty-fav-btn:focus-visible,
+body.hvn-theme-home .hvnly-property--grid-list--compare:focus-visible,
+body.hvn-theme-home .hvn-realty-cmp-btn:focus-visible{ outline:2px solid var(--hvn-realty-gold-500); outline-offset:2px; }
 body.hvn-theme-home .hvn-realty-fav-btn.hvn-realty-is-active svg,
 body.hvn-theme-home .hvn-realty-fav-btn.is-favorited svg{ color:#C2483C; fill:#C2483C; }
 body.hvn-theme-home .hvn-realty-prop-price{
@@ -748,12 +792,16 @@ body.hvn-theme-home #hvnRealtyMapTooltipTitle{
   text-shadow:0 1px 10px rgba(15,36,29,0.55);
 }
 body.hvn-theme-home .hvn-theme-home-main .hvn-realty-map-tooltip-media button.hvn-realty-fav-btn,
-body.hvn-theme-home .hvn-realty-map-tooltip-media button.hvn-realty-fav-btn{
-  position:absolute; top:10px; left:10px; right:auto; z-index:3;
+body.hvn-theme-home .hvn-realty-map-tooltip-media button.hvn-realty-fav-btn,
+body.hvn-theme-home .hvn-theme-home-main .hvn-realty-map-tooltip-media button.hvn-realty-cmp-btn,
+body.hvn-theme-home .hvn-realty-map-tooltip-media button.hvn-realty-cmp-btn{
+  position:absolute; top:10px; right:auto; z-index:3;
   width:42px; height:42px; min-width:42px; min-height:42px;
   background:#fff !important;
   box-shadow:0 8px 20px rgba(15,36,29,0.22), 0 0 0 1px rgba(15,36,29,0.06);
 }
+body.hvn-theme-home .hvn-realty-map-tooltip-media button.hvn-realty-fav-btn{ left:10px; }
+body.hvn-theme-home .hvn-realty-map-tooltip-media button.hvn-realty-cmp-btn{ left:60px; }
 body.hvn-theme-home .hvn-realty-map-tooltip-media .hvn-realty-fav-btn svg{ width:18px; height:18px; color:var(--hvn-realty-forest-800); }
 body.hvn-theme-home .hvn-realty-map-tooltip-body{ position:relative; z-index:1; padding:14px 16px 16px; overflow:hidden; border-radius:0 0 var(--hvn-realty-radius-lg) var(--hvn-realty-radius-lg); }
 body.hvn-theme-home .hvn-realty-map-tooltip-address{ font-size:12px; color:var(--hvn-realty-ink-500); font-weight:600; margin:0 0 10px; }
@@ -884,7 +932,7 @@ body.hvn-theme-home .hvn-realty-blog-card:hover .hvn-realty-blog-media img{ tran
 body.hvn-theme-home .hvn-realty-blog-cat{ position:absolute; top:16px; left:16px; background:rgba(255,255,255,0.92); padding:6px 14px; border-radius:100px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--hvn-realty-forest-800); }
 body.hvn-theme-home .hvn-realty-blog-body{ padding:26px 24px 28px; }
 body.hvn-theme-home .hvn-realty-blog-meta{ display:flex; gap:14px; font-size:12.5px; color:var(--hvn-realty-ink-500); font-weight:600; margin-bottom:12px; }
-body.hvn-theme-home .hvn-realty-blog-body h3{ font-size:18.5px; font-weight:700; line-height:1.35; color:var(--hvn-realty-forest-900); margin-bottom:12px; }
+body.hvn-theme-home .hvn-realty-blog-body h3{ font-size:18.5px; font-weight:700; line-height:1.35; color:var(--hvn-realty-forest-900); margin-bottom:12px; overflow-wrap:anywhere; word-wrap:break-word; }
 body.hvn-theme-home .hvn-realty-blog-body p{ font-size:14px; color:var(--hvn-realty-ink-700); line-height:1.6; margin-bottom:18px; }
 
 /* ============ CTA ============ */

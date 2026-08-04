@@ -105,6 +105,12 @@ function hvn_realty_customize_controls_js() {
 		array( 'customize-controls', 'jquery', 'jquery-ui-sortable', 'hvn-realty-customizer-controls-framework' )
 	);
 
+	hvn_realty_enqueue_script_safe(
+		'hvn-realty-customizer-term-checklist-control',
+		'assets/js/customizer-term-checklist-control.js',
+		array( 'customize-controls', 'jquery' )
+	);
+
 	$controls_loaded = hvn_realty_enqueue_script_safe(
 		'hvn-realty-customizer-controls',
 		'assets/js/customizer-controls.js',

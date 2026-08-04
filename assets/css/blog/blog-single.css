@@ -36,6 +36,8 @@
 	margin: 0 0 1rem;
 	line-height: 1.2;
 	color: var(--hvn-text, var(--hvn-theme-text-primary));
+	overflow-wrap: anywhere;
+	word-wrap: break-word;
 }
 
 .hvn-layout-single .hvn-blog-single__meta {

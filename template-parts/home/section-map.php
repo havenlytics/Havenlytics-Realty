@@ -13,9 +13,15 @@ if ( ! post_type_exists( 'hvnly_property' ) ) {
 	return;
 }
 
-$hvn_map_eyebrow = (string) get_theme_mod( 'hvn_realty_home_map_subtitle', __( 'Explore The Map', 'havenlytics-realty' ) );
-$hvn_map_title   = (string) get_theme_mod( 'hvn_realty_home_map_title', __( 'Every listing, precisely placed', 'havenlytics-realty' ) );
-$hvn_map_text    = (string) get_theme_mod( 'hvn_realty_home_map_text', __( 'Pan the map, zoom into a block, and preview a home without leaving the page.', 'havenlytics-realty' ) );
+$hvn_map_eyebrow = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_map_subtitle', __( 'Explore The Map', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_map_subtitle', __( 'Explore The Map', 'havenlytics-realty' ) );
+$hvn_map_title   = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_map_title', __( 'Every listing, precisely placed', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_map_title', __( 'Every listing, precisely placed', 'havenlytics-realty' ) );
+$hvn_map_text    = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_map_text', __( 'Pan the map, zoom into a block, and preview a home without leaving the page.', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_map_text', __( 'Pan the map, zoom into a block, and preview a home without leaving the page.', 'havenlytics-realty' ) );
 $hvn_heart_svg   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 ?>
 <section class="hvn-realty-map-section" id="hvn-theme-home-map" aria-labelledby="hvn-theme-home-map-title">
@@ -60,6 +66,20 @@ $hvn_heart_svg   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 					aria-pressed="false"
 					aria-label="<?php esc_attr_e( 'Save property', 'havenlytics-realty' ); ?>"
 				><?php echo $hvn_heart_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
+				<button
+					type="button"
+					class="hvn-realty-cmp-btn hvnly-compare-toggle hvnly-compare-toggle--card hvnly-property--grid-list--compare"
+					id="hvnRealtyMapTooltipCmp"
+					tabindex="-1"
+					data-hvnly-compare="1"
+					data-hvnly-compare-native="1"
+					data-property-id=""
+					data-property-title=""
+					data-property-thumb=""
+					aria-pressed="false"
+					aria-label="<?php esc_attr_e( 'Add to compare', 'havenlytics-realty' ); ?>"
+					hidden
+				><span class="hvnly-compare-toggle__icon" aria-hidden="true"></span></button>
 				<div class="hvn-realty-map-tooltip-media-meta">
 					<span class="hvn-realty-map-tooltip-price" id="hvnRealtyMapTooltipPrice"></span>
 					<h3 id="hvnRealtyMapTooltipTitle"></h3>

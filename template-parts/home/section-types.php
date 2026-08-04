@@ -13,9 +13,13 @@ if ( ! function_exists( 'hvn_realty_get_home_property_type_terms' ) ) {
 	return;
 }
 
+// Intentional fixed layout: four type cards (no count Customizer control in this release).
 $hvn_terms = hvn_realty_get_home_property_type_terms( 4 );
-if ( empty( $hvn_terms ) ) {
+if ( empty( $hvn_terms ) && ! is_customize_preview() ) {
 	return;
+}
+if ( ! is_array( $hvn_terms ) ) {
+	$hvn_terms = array();
 }
 
 $hvn_type_icon_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>';

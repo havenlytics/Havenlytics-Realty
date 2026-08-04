@@ -19,6 +19,7 @@ $integration_files = array(
 	'carousel.php',
 	'homepage-settings.php',
 	'homepage-property-types.php',
+	'homepage-featured.php',
 	'homepage-testimonials.php',
 	'hero-search.php',
 	'mobile-search-drawer.php',

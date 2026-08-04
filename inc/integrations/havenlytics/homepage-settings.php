@@ -334,6 +334,26 @@ function hvn_realty_get_term_image_url( $term_id, $size = 'medium_large' ) {
 }
 
 /**
+ * Read a theme_mod text value with non-empty fallback.
+ *
+ * Saved empty strings must not blank section copy on the frontend or in
+ * Customizer selective refresh.
+ *
+ * @param string $key     Theme mod key.
+ * @param string $default Fallback when unset or blank.
+ * @return string
+ */
+function hvn_realty_get_theme_mod_text( $key, $default = '' ) {
+	$value = get_theme_mod( $key, null );
+
+	if ( null === $value || '' === trim( (string) $value ) ) {
+		return (string) $default;
+	}
+
+	return (string) $value;
+}
+
+/**
  * Homepage section title from Customizer.
  *
  * @param string $section Section key (featured, department, locations, agents, agencies).
@@ -343,7 +363,7 @@ function hvn_realty_get_term_image_url( $term_id, $size = 'medium_large' ) {
 function hvn_realty_get_home_section_title( $section, $default ) {
 	$key = 'hvn_realty_home_' . sanitize_key( $section ) . '_title';
 
-	return (string) get_theme_mod( $key, $default );
+	return hvn_realty_get_theme_mod_text( $key, $default );
 }
 
 /**
@@ -356,7 +376,7 @@ function hvn_realty_get_home_section_title( $section, $default ) {
 function hvn_realty_get_home_section_subtitle( $section, $default ) {
 	$key = 'hvn_realty_home_' . sanitize_key( $section ) . '_subtitle';
 
-	return (string) get_theme_mod( $key, $default );
+	return hvn_realty_get_theme_mod_text( $key, $default );
 }
 
 /**

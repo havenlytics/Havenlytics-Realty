@@ -22,7 +22,7 @@ $hvn_query = new WP_Query(
 	)
 );
 
-if ( ! $hvn_query->have_posts() ) {
+if ( ! $hvn_query->have_posts() && ! is_customize_preview() ) {
 	wp_reset_postdata();
 	return;
 }

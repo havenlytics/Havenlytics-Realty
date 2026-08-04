@@ -31,14 +31,16 @@ function hvn_realty_customizer_homepage_is_active() {
 }
 
 /**
- * Sanitize homepage property grid count (3–12).
+ * Sanitize homepage property grid count (3–24).
+ *
+ * Backward compatible with previously saved 3–12 values.
  *
  * @param int|string $input Input.
  * @return int
  */
 function hvn_realty_sanitize_home_property_count( $input ) {
 	$input = absint( $input );
-	return max( 3, min( 12, $input ) );
+	return max( 3, min( 24, $input ) );
 }
 
 /**
@@ -532,8 +534,8 @@ function hvn_realty_customizer_register_homepage( $wp_customize ) {
 		)
 	);
 
-	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_float_title', $s, esc_html__( 'Floating badge title', 'havenlytics-realty' ), __( 'Valuation Verified', 'havenlytics-realty' ) );
-	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_float_subtitle', $s, esc_html__( 'Floating badge subtitle', 'havenlytics-realty' ), __( 'Data-backed every listing', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_float_title', $s, esc_html__( 'Floating badge title (legacy)', 'havenlytics-realty' ), __( 'Valuation Verified', 'havenlytics-realty' ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_hero_float_subtitle', $s, esc_html__( 'Floating badge subtitle (legacy)', 'havenlytics-realty' ), __( 'Data-backed every listing', 'havenlytics-realty' ) );
 	$hero_stat_defaults = array(
 		1 => array( 2400, '', __( 'Homes Sold', 'havenlytics-realty' ) ),
 		2 => array( 98, '%', __( 'Client Satisfaction', 'havenlytics-realty' ) ),
@@ -619,7 +621,180 @@ function hvn_realty_customizer_register_homepage( $wp_customize ) {
 	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_home_show_properties', $s, esc_html__( 'Show Featured Properties', 'havenlytics-realty' ), true, 'postMessage' );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_featured_subtitle', $s, esc_html__( 'Eyebrow', 'havenlytics-realty' ), __( 'Featured Properties', 'havenlytics-realty' ) );
 	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_featured_title', $s, esc_html__( 'Title', 'havenlytics-realty' ), __( 'Handpicked homes worth a closer look', 'havenlytics-realty' ) );
-	hvn_realty_home_add_number( $wp_customize, 'hvn_realty_home_featured_count', $s, esc_html__( 'Number of properties', 'havenlytics-realty' ), 6, 'hvn_realty_sanitize_home_property_count', array( 'min' => 3, 'max' => 12 ) );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_featured_description', $s, esc_html__( 'Section Description', 'havenlytics-realty' ), '', 'textarea' );
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_featured_source',
+		array(
+			'default'           => 'all',
+			'sanitize_callback' => 'hvn_realty_sanitize_home_featured_source',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_featured_source',
+		array(
+			'label'       => esc_html__( 'Property Source', 'havenlytics-realty' ),
+			'description' => esc_html__( 'All Properties is the default. Featured Only shows curated listings. Selected Departments filters by taxonomy.', 'havenlytics-realty' ),
+			'section'     => $s,
+			'type'        => 'select',
+			'choices'     => array(
+				'all'         => esc_html__( 'All Properties', 'havenlytics-realty' ),
+				'featured'    => esc_html__( 'Featured Properties Only', 'havenlytics-realty' ),
+				'departments' => esc_html__( 'Selected Departments', 'havenlytics-realty' ),
+			),
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_featured_departments',
+		array(
+			'default'           => '[]',
+			'sanitize_callback' => 'hvn_realty_sanitize_home_featured_departments',
+			'transport'         => 'refresh',
+		)
+	);
+	if ( class_exists( 'HVN_Realty_Customize_Term_Checklist_Control' ) ) {
+		$wp_customize->add_control(
+			new HVN_Realty_Customize_Term_Checklist_Control(
+				$wp_customize,
+				'hvn_realty_home_featured_departments',
+				array(
+					'label'           => esc_html__( 'Property Departments', 'havenlytics-realty' ),
+					'description'     => esc_html__( 'Used when Property Source is Selected Departments (filters the grid), or when Tab Source is Selected Departments (filters tabs only). Leave empty to include all departments.', 'havenlytics-realty' ),
+					'section'         => $s,
+					'settings'        => 'hvn_realty_home_featured_departments',
+					'taxonomy'        => 'hvnly_prop_depts',
+					'active_callback' => 'hvn_realty_customizer_featured_is_departments_source',
+				)
+			)
+		);
+	}
+
+	hvn_realty_home_add_number( $wp_customize, 'hvn_realty_home_featured_count', $s, esc_html__( 'Maximum Properties', 'havenlytics-realty' ), 6, 'hvn_realty_sanitize_home_property_count', array( 'min' => 3, 'max' => 24 ) );
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_featured_orderby',
+		array(
+			'default'           => 'newest',
+			'sanitize_callback' => 'hvn_realty_sanitize_home_featured_orderby',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_featured_orderby',
+		array(
+			'label'   => esc_html__( 'Order By', 'havenlytics-realty' ),
+			'section' => $s,
+			'type'    => 'select',
+			'choices' => function_exists( 'hvn_realty_get_home_featured_orderby_choices' )
+				? hvn_realty_get_home_featured_orderby_choices()
+				: array( 'newest' => esc_html__( 'Newest', 'havenlytics-realty' ) ),
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_featured_order',
+		array(
+			'default'           => 'DESC',
+			'sanitize_callback' => 'hvn_realty_sanitize_home_featured_order',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_featured_order',
+		array(
+			'label'       => esc_html__( 'Order', 'havenlytics-realty' ),
+			'description' => esc_html__( 'Used for Price, Title, and Menu Order. Newest/Oldest set their own direction.', 'havenlytics-realty' ),
+			'section'     => $s,
+			'type'        => 'select',
+			'choices'     => array(
+				'DESC' => esc_html__( 'Descending', 'havenlytics-realty' ),
+				'ASC'  => esc_html__( 'Ascending', 'havenlytics-realty' ),
+			),
+		)
+	);
+
+	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_home_featured_enable_tabs', $s, esc_html__( 'Enable Filter Tabs', 'havenlytics-realty' ), true, 'refresh' );
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_featured_hide_empty_tabs',
+		array(
+			'default'           => true,
+			'sanitize_callback' => 'hvn_realty_sanitize_checkbox',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_featured_hide_empty_tabs',
+		array(
+			'label'           => esc_html__( 'Hide Empty Department Tabs', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'checkbox',
+			'active_callback' => 'hvn_realty_customizer_featured_tabs_enabled',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_featured_tab_source',
+		array(
+			'default'           => 'all',
+			'sanitize_callback' => 'hvn_realty_sanitize_home_featured_tab_source',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_featured_tab_source',
+		array(
+			'label'           => esc_html__( 'Tab Source', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'select',
+			'choices'         => array(
+				'all'      => esc_html__( 'All Departments', 'havenlytics-realty' ),
+				'selected' => esc_html__( 'Selected Departments', 'havenlytics-realty' ),
+			),
+			'active_callback' => 'hvn_realty_customizer_featured_tabs_enabled',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'hvn_realty_home_featured_active_tab',
+		array(
+			'default'           => 'all',
+			'sanitize_callback' => 'hvn_realty_sanitize_home_featured_active_tab',
+			'transport'         => 'refresh',
+		)
+	);
+	$wp_customize->add_control(
+		'hvn_realty_home_featured_active_tab',
+		array(
+			'label'           => esc_html__( 'Active Tab', 'havenlytics-realty' ),
+			'section'         => $s,
+			'type'            => 'select',
+			'choices'         => array(
+				'all'   => esc_html__( 'All', 'havenlytics-realty' ),
+				'first' => esc_html__( 'First Department', 'havenlytics-realty' ),
+			),
+			'active_callback' => 'hvn_realty_customizer_featured_tabs_enabled',
+		)
+	);
+
+	hvn_realty_home_add_number( $wp_customize, 'hvn_realty_home_featured_columns_desktop', $s, esc_html__( 'Desktop Columns', 'havenlytics-realty' ), 3, 'hvn_realty_sanitize_home_featured_columns_desktop', array( 'min' => 1, 'max' => 4 ) );
+	hvn_realty_home_add_number( $wp_customize, 'hvn_realty_home_featured_columns_tablet', $s, esc_html__( 'Tablet Columns', 'havenlytics-realty' ), 2, 'hvn_realty_sanitize_home_featured_columns_tablet', array( 'min' => 1, 'max' => 3 ) );
+	hvn_realty_home_add_number( $wp_customize, 'hvn_realty_home_featured_columns_mobile', $s, esc_html__( 'Mobile Columns', 'havenlytics-realty' ), 1, 'hvn_realty_sanitize_home_featured_columns_mobile', array( 'min' => 1, 'max' => 2 ) );
+
+	hvn_realty_customizer_add_checkbox( $wp_customize, 'hvn_realty_home_featured_show_view_all', $s, esc_html__( 'Show View All Button', 'havenlytics-realty' ), true, 'refresh' );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_featured_view_all_text', $s, esc_html__( 'View All Button Text', 'havenlytics-realty' ), '' );
+	hvn_realty_home_add_text( $wp_customize, 'hvn_realty_home_featured_view_all_url', $s, esc_html__( 'View All Button URL', 'havenlytics-realty' ), '', 'url' );
+
+	$view_all_text = $wp_customize->get_control( 'hvn_realty_home_featured_view_all_text' );
+	if ( $view_all_text ) {
+		$view_all_text->active_callback = 'hvn_realty_customizer_featured_view_all_enabled';
+	}
+	$view_all_url = $wp_customize->get_control( 'hvn_realty_home_featured_view_all_url' );
+	if ( $view_all_url ) {
+		$view_all_url->active_callback = 'hvn_realty_customizer_featured_view_all_enabled';
+	}
 
 	// --- Property types -----------------------------------------------------
 	$s = 'hvn_realty_home_property_types';

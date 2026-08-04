@@ -876,6 +876,18 @@
 
 		}
 
+		var cmpBtn = document.getElementById( 'hvnRealtyMapTooltipCmp' );
+		if ( cmpBtn ) {
+			cmpBtn.hidden = false;
+			cmpBtn.setAttribute( 'data-hvnly-compare', '1' );
+			cmpBtn.setAttribute( 'data-hvnly-compare-native', '1' );
+			cmpBtn.setAttribute( 'data-property-id', propertyId );
+			cmpBtn.setAttribute( 'data-property-title', titleText );
+			cmpBtn.setAttribute( 'data-property-thumb', thumbUrl );
+			cmpBtn.setAttribute( 'aria-pressed', 'false' );
+			cmpBtn.setAttribute( 'aria-label', i18n.compare || 'Add to compare' );
+		}
+
 		if ( closeBtn ) {
 
 			closeBtn.setAttribute( 'aria-label', i18n.closePreview || 'Close property preview' );

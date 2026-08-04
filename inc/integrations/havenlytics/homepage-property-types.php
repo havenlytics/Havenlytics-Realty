@@ -43,7 +43,8 @@ function hvn_realty_get_home_property_type_terms( $limit = 0 ) {
  * @return int
  */
 function hvn_realty_get_home_property_types_count() {
-	$count = absint( get_theme_mod( 'hvn_realty_home_property_types_count', 8 ) );
+	// Intentionally fixed homepage mosaic uses 4 cards; default matches section-types.php.
+	$count = absint( get_theme_mod( 'hvn_realty_home_property_types_count', 4 ) );
 
 	return max( 4, min( 24, $count ) );
 }

@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'HVN_REALTY_VERSION' ) ) {
-	define( 'HVN_REALTY_VERSION', '2.3.2' );
+	define( 'HVN_REALTY_VERSION', '2.3.4' );
 }
 
 if ( ! defined( 'HVN_REALTY_TEMPLATE_URL' ) ) {
@@ -548,6 +548,7 @@ if ( ! hvn_realty_load_theme_file( 'inc/integrations/havenlytics/bootstrap.php',
 		'header-auth.php',
 		'carousel.php',
 		'homepage-settings.php',
+		'homepage-featured.php',
 		'homepage.php',
 		'homepage-assets.php',
 		'breadcrumbs.php',

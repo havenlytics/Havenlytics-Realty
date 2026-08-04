@@ -64,9 +64,20 @@ function hvn_realty_get_home_section_partial_map() {
 			'settings' => array(
 				'hvn_realty_home_hero_image_a',
 				'hvn_realty_home_hero_image_b',
+				'hvn_realty_home_hero_eyebrow',
+				'hvn_realty_home_hero_title_before',
+				'hvn_realty_home_hero_title_highlight',
+				'hvn_realty_home_hero_title_after',
+				'hvn_realty_home_hero_subtitle',
 				'hvn_realty_home_hero_stat1_value',
+				'hvn_realty_home_hero_stat1_label',
+				'hvn_realty_home_hero_stat1_suffix',
 				'hvn_realty_home_hero_stat2_value',
+				'hvn_realty_home_hero_stat2_label',
+				'hvn_realty_home_hero_stat2_suffix',
 				'hvn_realty_home_hero_stat3_value',
+				'hvn_realty_home_hero_stat3_label',
+				'hvn_realty_home_hero_stat3_suffix',
 			),
 		),
 		'search'       => array(
@@ -79,34 +90,90 @@ function hvn_realty_get_home_section_partial_map() {
 			'selector' => '#hvn-theme-home-why',
 			'settings' => array(
 				'hvn_realty_home_why_items',
+				'hvn_realty_home_why_eyebrow',
+				'hvn_realty_home_why_title',
+				'hvn_realty_home_why_subtitle',
 			),
 		),
 		'properties'   => array(
 			'selector' => '#hvn-theme-home-properties',
 			'settings' => array(
 				'hvn_realty_home_featured_count',
+				'hvn_realty_home_featured_title',
+				'hvn_realty_home_featured_subtitle',
+				'hvn_realty_home_featured_description',
+				'hvn_realty_home_featured_columns_desktop',
+				'hvn_realty_home_featured_columns_tablet',
+				'hvn_realty_home_featured_columns_mobile',
+				'hvn_realty_home_featured_view_all_text',
+				'hvn_realty_home_featured_view_all_url',
+			),
+		),
+		'types'        => array(
+			'selector' => '#hvn-theme-home-types',
+			'settings' => array(
+				'hvn_realty_home_property_types_title',
+				'hvn_realty_home_property_types_subtitle',
+			),
+		),
+		'locations'    => array(
+			'selector' => '#hvn-theme-home-locations',
+			'settings' => array(
+				'hvn_realty_home_locations_title',
+				'hvn_realty_home_locations_subtitle',
+				'hvn_realty_home_locations_text',
 			),
 		),
 		'map'          => array(
 			'selector' => '#hvn-theme-home-map',
 			'settings' => array(
 				'hvn_realty_home_map_limit',
+				'hvn_realty_home_map_title',
+				'hvn_realty_home_map_subtitle',
+				'hvn_realty_home_map_text',
 			),
 		),
 		'collections'  => array(
 			'selector' => '#hvn-theme-home-collections',
-			'settings' => array(),
+			'settings' => array(
+				'hvn_realty_home_collections_title',
+				'hvn_realty_home_collections_subtitle',
+			),
+		),
+		'process'      => array(
+			'selector' => '#hvn-theme-home-process',
+			'settings' => array(
+				'hvn_realty_home_process_eyebrow',
+				'hvn_realty_home_process_title',
+				'hvn_realty_home_process_subtitle',
+				'hvn_realty_home_process_step1_title',
+				'hvn_realty_home_process_step1_text',
+				'hvn_realty_home_process_step1_url',
+				'hvn_realty_home_process_step2_title',
+				'hvn_realty_home_process_step2_text',
+				'hvn_realty_home_process_step2_url',
+				'hvn_realty_home_process_step3_title',
+				'hvn_realty_home_process_step3_text',
+				'hvn_realty_home_process_step3_url',
+				'hvn_realty_home_process_step4_title',
+				'hvn_realty_home_process_step4_text',
+				'hvn_realty_home_process_step4_url',
+			),
 		),
 		'agents'       => array(
 			'selector' => '#hvn-theme-home-agents',
 			'settings' => array(
 				'hvn_realty_home_agents_count',
+				'hvn_realty_home_agents_title',
+				'hvn_realty_home_agents_subtitle',
 			),
 		),
 		'testimonials' => array(
 			'selector' => '#hvn-theme-home-testimonials',
 			'settings' => array(
 				'hvn_realty_home_testimonials',
+				'hvn_realty_home_testimonials_title',
+				'hvn_realty_home_testimonials_subtitle',
 				'hvn_realty_home_show_testimonial_stars',
 				'hvn_realty_home_testimonials_autoplay',
 				'hvn_realty_home_testimonials_speed',
@@ -116,6 +183,19 @@ function hvn_realty_get_home_section_partial_map() {
 			'selector' => '#hvn-theme-home-blog',
 			'settings' => array(
 				'hvn_realty_home_blog_count',
+				'hvn_realty_home_blog_title',
+				'hvn_realty_home_blog_subtitle',
+			),
+		),
+		'cta'          => array(
+			'selector' => '#hvn-theme-home-cta',
+			'settings' => array(
+				'hvn_realty_home_cta_title',
+				'hvn_realty_home_cta_subtitle',
+				'hvn_realty_home_cta_primary_label',
+				'hvn_realty_home_cta_primary_url',
+				'hvn_realty_home_cta_secondary_label',
+				'hvn_realty_home_cta_secondary_url',
 			),
 		),
 	);
@@ -131,4 +211,3 @@ function hvn_realty_customize_partial_copyright() {
 
 	echo hvn_realty_get_copyright_text(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
-

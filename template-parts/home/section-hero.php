@@ -9,11 +9,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$hvn_eyebrow      = (string) get_theme_mod( 'hvn_realty_home_hero_eyebrow', __( 'Data-Backed Real Estate', 'havenlytics-realty' ) );
-$hvn_title_before = (string) get_theme_mod( 'hvn_realty_home_hero_title_before', __( 'Find a home that', 'havenlytics-realty' ) );
-$hvn_title_em     = (string) get_theme_mod( 'hvn_realty_home_hero_title_highlight', __( 'holds its value', 'havenlytics-realty' ) );
-$hvn_title_after  = (string) get_theme_mod( 'hvn_realty_home_hero_title_after', __( ', not just your attention.', 'havenlytics-realty' ) );
-$hvn_subtitle     = (string) get_theme_mod( 'hvn_realty_home_hero_subtitle', __( 'Havenlytics pairs licensed local agents with transparent market data, so every offer you make is grounded in evidence — not guesswork.', 'havenlytics-realty' ) );
+$hvn_eyebrow      = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_hero_eyebrow', __( 'Data-Backed Real Estate', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_hero_eyebrow', __( 'Data-Backed Real Estate', 'havenlytics-realty' ) );
+$hvn_title_before = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_hero_title_before', __( 'Find a home that', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_hero_title_before', __( 'Find a home that', 'havenlytics-realty' ) );
+$hvn_title_em     = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_hero_title_highlight', __( 'holds its value', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_hero_title_highlight', __( 'holds its value', 'havenlytics-realty' ) );
+$hvn_title_after  = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_hero_title_after', __( ', not just your attention.', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_hero_title_after', __( ', not just your attention.', 'havenlytics-realty' ) );
+$hvn_subtitle     = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text( 'hvn_realty_home_hero_subtitle', __( 'Havenlytics pairs licensed local agents with transparent market data, so every offer you make is grounded in evidence — not guesswork.', 'havenlytics-realty' ) )
+	: (string) get_theme_mod( 'hvn_realty_home_hero_subtitle', __( 'Havenlytics pairs licensed local agents with transparent market data, so every offer you make is grounded in evidence — not guesswork.', 'havenlytics-realty' ) );
 
 // Back-compat: read unused button/float theme_mods without rendering them.
 $unused_primary_label = (string) get_theme_mod( 'hvn_realty_home_hero_primary_label', '' );

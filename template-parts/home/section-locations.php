@@ -14,14 +14,22 @@ if ( ! function_exists( 'hvn_realty_get_property_locations' ) ) {
 }
 
 $hvn_terms = hvn_realty_get_property_locations( 4 );
-if ( empty( $hvn_terms ) ) {
+if ( empty( $hvn_terms ) && ! is_customize_preview() ) {
 	return;
 }
+if ( ! is_array( $hvn_terms ) ) {
+	$hvn_terms = array();
+}
 
-$hvn_locations_text = (string) get_theme_mod(
-	'hvn_realty_home_locations_text',
-	__( 'Every market we serve gets walked, photographed, and tracked by a local agent — not just listed.', 'havenlytics-realty' )
-);
+$hvn_locations_text = function_exists( 'hvn_realty_get_theme_mod_text' )
+	? hvn_realty_get_theme_mod_text(
+		'hvn_realty_home_locations_text',
+		__( 'Every market we serve gets walked, photographed, and tracked by a local agent — not just listed.', 'havenlytics-realty' )
+	)
+	: (string) get_theme_mod(
+		'hvn_realty_home_locations_text',
+		__( 'Every market we serve gets walked, photographed, and tracked by a local agent — not just listed.', 'havenlytics-realty' )
+	);
 ?>
 <section id="hvn-theme-home-locations" aria-labelledby="hvn-theme-home-locations-title">
 	<div class="hvn-realty-wrap">
